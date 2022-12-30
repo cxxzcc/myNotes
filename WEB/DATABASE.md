@@ -1951,6 +1951,34 @@ Normal Form  简称NF
 	一致性
 * 冗余字段
 * 优化数据类型   优先选择符合存储需要的最小的数据类型。
+	* 整型INT。非负型(如自增ID、 整型IP)，用无符号整型UNSIGNED
+	* 既可以使用文本类型也可以使用整数类型的字段，要选择使用整数类型
+	* 避免使用TEXT、BLOB数据类型
+	* 避免使用ENUM类型  使用TINYINT来代替ENUM类型。
+	* 使用TIMESTAMP存储时间
+	* 用DECIMAL代替FLOAT和DOUBLE存储精确浮点数
+* 插入优化
+	* myisam
+		* 禁用索引
+			禁用ALTER TABLE table_ name DISABLE KEYS;
+			开启ALTER TABLE table name ENABLE KEYS;
+		* 禁用唯一性检查
+			禁用SET UNIQUE_ CHECKS=0;
+			开启SET UNIQUE _ CHECKS=1 ;
+		* 批量插入 
+		* 使用LOAD DATA INFILE批量导入
+	* innodb
+		* 禁用唯一性检查
+			禁用SET UNIQUE_ CHECKS=0;
+			开启SET UNIQUE _ CHECKS=1 ;
+			* 禁用外键检查
+				禁用SET foreign_ key_ checks=0;
+开启SET foreign_ key checks=1 ;
+
+
+
+ 
+
 
 
 
