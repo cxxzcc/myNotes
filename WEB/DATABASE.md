@@ -1980,22 +1980,27 @@ Normal Form  简称NF
 * 非空约束
 * 分析表、检查表与优化表
 	```sql
+	分析表
 	ANALYZE [ LOCAL | NO_WRITE_TO_BINLOG] TABLE tbl_name [,tbl_name]..
 	
+	检查表
 	CHECK TABLE tb1_name[,tbl_name ]...[option]...
 	option = {QUICK | FAST| MEDIUM| EXTENDED| CHANGED}
 	QUICK:不扫描行，不检查错误的连接。
 	FAST :只检查没有被正确关闭的表。
-●CHANGED :只检查上次检查后被更改的表和没有被正确关闭的表。
-●MEDIUM: 扫描行，以验证被删除的连接是有效的。也可以计算各行的关键字校验和，并使用计算出的校验和
-验证这一点。
-●EXTENDED :对每行的所有关键字进行一个全面的关键字查找。这可以确保表是100%-致的，但是花的时间
-较长。
-option只对MyISAM类型的表有效，对InnoDB类型的表无效。比如: 
-
+	CHANGED :只检查上次检查后被更改的表和没有被正确关闭的表。
+	MEDIUM: 扫描行，以验证被删除的连接是有效的。也可以计算各行的关键字校验和，并使用计算出的校验和验证这一点。
+	EXTENDED :对每行的所有关键字进行一个全面的关键字查找。这可以确保表是100%-致的，但是花的时间较长。
+	option只对MyISAM类型的表有效，对InnoDB类型的表无效 
 	
+	优化表
+	只能优化表中的VARCHAR、BLOB或TEXT类型的字段。-个表使用了这些字段的数据类型，若已经删除了表的一大部分数据，或者已经对含有可变长度行的表(含有VARCHAR、 BLOB或TEXT列的表) 进行了很多更新，则应使用OPTIMIZE TABLE来重新利用末使用的空间，并整理数据文件的碎片。
+	OPTIMIZE [LOCAL | NO_WRITE_TO_BINLOG] TABLE tbl_ name [,tbl_name]...
+	或者
+	mysqlcheck -o DatabaseName TableName -U root -p******
+	mysqlcheck是Linux中的rompt, -o是代表Optimize。
 	```
-	使用ANALYZE TABLE 分析表的过程中，数据库系统会自动对表加-一个只读锁。能够分析InnoDB和MyISAM类型的表，但是不能作用于视图。
+	使用分析表、检查表与优化表的过程中，数据库系统会自动对表加-一个只读锁。能够分析InnoDB和MyISAM类型的表，但是不能作用于视图。
 	cardinality (区分度)，该值统计了表中某一键所在的列不重复的值的个数。该值越接近表中的总行数，则在表连接查询或者索引查询时，就越优先被优化器选择使用
 
 
