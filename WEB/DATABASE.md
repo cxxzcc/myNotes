@@ -1994,7 +1994,7 @@ Normal Form  简称NF
 	option只对MyISAM类型的表有效，对InnoDB类型的表无效 
 	
 	优化表
-	只能优化表中的VARCHAR、BLOB或TEXT类型的字段。-个表使用了这些字段的数据类型，若已经删除了表的一大部分数据，或者已经对含有可变长度行的表(含有VARCHAR、 BLOB或TEXT列的表) 进行了很多更新，则应使用OPTIMIZE TABLE来重新利用末使用的空间，并整理数据文件的碎片。
+	只能优化表中的VARCHAR、BLOB或TEXT类型的字段。一个表使用了这些字段的数据类型，若已经删除了表的一大部分数据，或者已经对含有可变长度行的表(含有VARCHAR、 BLOB或TEXT列的表) 进行了很多更新，则应使用OPTIMIZE TABLE来重新利用末使用的空间，并整理数据文件的碎片。
 	OPTIMIZE [LOCAL | NO_WRITE_TO_BINLOG] TABLE tbl_ name [,tbl_name]...
 	或者
 	mysqlcheck -o DatabaseName TableName -U root -p******
@@ -2003,8 +2003,11 @@ Normal Form  简称NF
 	使用分析表、检查表与优化表的过程中，数据库系统会自动对表加-一个只读锁。能够分析InnoDB和MyISAM类型的表，但是不能作用于视图。
 	cardinality (区分度)，该值统计了表中某一键所在的列不重复的值的个数。该值越接近表中的总行数，则在表连接查询或者索引查询时，就越优先被优化器选择使用
 
+#### 大表优化
+1. 限定查询范围   禁止不带任何限制数据范围条件的查询语句。
+2. 读写分离
+3. 垂直cha'fen
 
- 
 
 
 
