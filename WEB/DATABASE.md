@@ -1971,10 +1971,32 @@ Normal Form  简称NF
 		* 禁用唯一性检查
 			禁用SET UNIQUE_ CHECKS=0;
 			开启SET UNIQUE _ CHECKS=1 ;
-			* 禁用外键检查
-				禁用SET foreign_ key_ checks=0;
-开启SET foreign_ key checks=1 ;
+		* 禁用外键检查
+			禁用SET foreign_key_checks=0;
+			开启SET foreign_key_checks=1 ;
+		* 禁用自动提交 
+			set autocommit=0 ;
+			set autocommit=1 ;
+* 非空约束
+* 分析表、检查表与优化表
+	```sql
+	ANALYZE [ LOCAL | NO_WRITE_TO_BINLOG] TABLE tbl_name [,tbl_name]..
+	
+	CHECK TABLE tb1_name[,tbl_name ]...[option]...
+	option = {QUICK | FAST| MEDIUM| EXTENDED| CHANGED}
+	QUICK:不扫描行，不检查错误的连接。
+	FAST :只检查没有被正确关闭的表。
+●CHANGED :只检查上次检查后被更改的表和没有被正确关闭的表。
+●MEDIUM: 扫描行，以验证被删除的连接是有效的。也可以计算各行的关键字校验和，并使用计算出的校验和
+验证这一点。
+●EXTENDED :对每行的所有关键字进行一个全面的关键字查找。这可以确保表是100%-致的，但是花的时间
+较长。
+option只对MyISAM类型的表有效，对InnoDB类型的表无效。比如: 
 
+	
+	```
+	使用ANALYZE TABLE 分析表的过程中，数据库系统会自动对表加-一个只读锁。能够分析InnoDB和MyISAM类型的表，但是不能作用于视图。
+	cardinality (区分度)，该值统计了表中某一键所在的列不重复的值的个数。该值越接近表中的总行数，则在表连接查询或者索引查询时，就越优先被优化器选择使用
 
 
  
