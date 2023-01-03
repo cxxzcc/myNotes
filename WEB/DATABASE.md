@@ -2204,18 +2204,21 @@ purge线程两个主要作用是：清理undo页和清除page里面带有Delete_
 ```sql
 select ... LOCK IN SHARE MODE
 select ... FOR SHARE #8.0
-
 ```
-
-
-
 
 ##### 写锁-排他锁
 ```sql
-select ... f
-
-
+select ... FOR UPDATE
 ```
+在5.7及之前的版本，SELECT.FOR UPDATE,如果获取不到锁，会一直等待，直到innodb_lock_wait_timeout超时。在8.O版本中，SELECT..FOR UPDATE,SELECT ..FOR SHARE添加NOWAIT、SKIP LOCKED语法，跳过锁等待，或者跳过锁定。
+* 通过添加NOWAIT、SKIP LOCKED语法，能够立即返回。如果查询的行已经加锁：
+	* 那么NOWAIT会立即披错返回
+	* 而SKIP LOCKED也会立即返回，只是返回的结果中不包含被锁定的行。
+
+#### 粒度分
+##### 表锁
+* LOCK TABLES t READ:InnoDB存储引擎会对表t加表级别的S锁。
+。LOCK TABLES t WRITE:InnoDB存储引擎会对表t加表级别的X锁。
 
 
 
@@ -2224,7 +2227,10 @@ select ... f
 
 
 
+##### 页锁
 
+
+##### 行锁
 
 ## 日志与备份
 
