@@ -2089,14 +2089,13 @@ set global / session  transaction_isolation =
 * 而事务的原子性、一致性和持久性由事务的redo日志和undo日志来保证。
 	* REDO LOG称为重做日志，提供再写入操作，恢复提交事务修改的页操作，用来保证事务的持久性。
 	* UND0LOG称为回滚日志，回滚行记录到某个特定版本，用来保证事务的原子性、一致性。
-有的DBA或许会认为UNDO是REDO的逆过程，其实不然。REDO和UNDO都可以视为是一种恢复操作，但是：
-。redo log:是存储引擎层(innodb)生成的日志，记录的是"物理级别"上的页修改操作，比如页号xxx、偏移量yyy
-写入了'zzz'数据。主要为了保证数据的可靠性；
-·undo log:是存储引擎层(innodb)生成的日志，记录的是逻辑操作日志，比如对某一行数据进行了INSERT语句
-操作，那么undo log就记录一条与之相反的DELETE操作。主要用于事务的回滚(undo log记录的是每个修改操
-作的逆操作)和一致性非锁定读(undo log回滚行记录到某种特定的版本--MVCc,即多版本并发控制)。
 
+REDO和UNDO都可以视为是一种恢复操作
+* redo log:是存储引擎层(innodb)生成的日志，记录的是"物理级别"上的页修改操作，比如页号xxx、偏移量yyy 写入了'zzz'数据。主要为了保证数据的可靠性；
+* undo log:是存储引擎层(innodb)生成的日志，记录的是逻辑操作日志，比如对某一行数据进行了INSERT语句操作，那么undo log就记录一条与之相反的DELETE操作。主要用于事务的回滚(undo log记录的是每个修改操作的逆操作)和一致性非锁定读(undo log回滚行记录到某种特定的版本--MVCC,即多版本并发控制)。
 
+#### REDO log
+InnoDB页为单位存储 读取时从磁盘加载到Buffer pool 更新的zang'y
 
 
 
