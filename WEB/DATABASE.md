@@ -2029,7 +2029,13 @@ ACID
 * 隔离性
 * 持久性
 
+```sql
+# 显示事务
+begin /
+start transaction read only /read write/with consistent snapshot #一致性读
 
+
+```
 
 
 
