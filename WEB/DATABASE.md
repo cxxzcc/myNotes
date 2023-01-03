@@ -2034,6 +2034,16 @@ ACID
 begin /
 start transaction read only /read write/with consistent snapshot #一致性读
 
+release savepoint [savepoint_name] #删除保存点  
+savepoint [savepoint_name]  #保存点
+rollback to [savepoint_name] #回滚到保存点
+
+# 隐式事务
+show variables like 'autocommit';  
+
+set autocommit = false;#DML有效DDL无效
+#或使用显示事务不会自动提交
+
 
 ```
 
