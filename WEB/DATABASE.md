@@ -2217,14 +2217,31 @@ select ... FOR UPDATE
 
 #### 粒度分
 ##### 表锁
+###### 读写锁
 * LOCK TABLES t READ:InnoDB存储引擎会对表t加表级别的S锁。
-。LOCK TABLES t WRITE:InnoDB存储引擎会对表t加表级别的X锁。
+* LOCK TABLES t WRITE:InnoDB存储引擎会对表t加表级别的X锁。
 
+```sql
+show open tables where in_use > 0  #查锁住的表
+```
 
+###### 意向锁 intention lock
+InnoDB支持多粒度锁(multiple granularity locking),它允许行级锁与表级锁共存，而意向锁就是其中的一种表锁。
+1. 意向锁的存在是为了协调行锁和表锁的关系，支持多粒度（表锁与行锁）的锁并存。
+2. 意向锁是一种不与行级锁冲突表级锁，这一点非常重要。
+3. 表明“某个事务正在某些行持有了锁或该事务准备去持有锁”
 
+意向锁分为两种：
+* 意向共享锁(intention shared lock,IS):事务有意向对表中的某些行加共享锁(S锁)
+	事务要获取某些行的S锁，必须先获得表的IS锁。
+	SELECT column FROM table...LOCK IN SHARE MODE
+* 意向排他锁(intention exclusive lock,IX)：事务有意向对表中的某些行加排他锁(X锁)
+	事务要获取某些行的X锁，必须先获得表的工X锁。
+	SELECT column FROM table...FOR UPDATE;
 
+即：意向锁是由存储引擎自己维护的，用户无法手动操作意向锁，在为数据行加共享/排他锁之前InooDB会先获取该数据行所在数据表的对应意向锁。
 
-
+==给某一行数据加上了排它锁，数据库会自动给更大一级的空间，比如数据页或数据表加上意向锁，告诉其他人这个数据页或数据表已经有人上过排它锁了，==这样当其他人想要获取数据表排它锁的时候，只需要了解是否有人已经获取了这个数据表的意向排他锁即可。
 
 
 ##### 页锁
