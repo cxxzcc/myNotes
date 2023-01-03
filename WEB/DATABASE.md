@@ -2113,18 +2113,22 @@ InnoDB引擎的事务采用了WAL技术(Write-Ahead Logging),这种技术的思�
 ##### 组成
 
 * 重做日志的缓冲(redo log buffer),保存在内存中，是易失的。
-在服务器启动时就向操作系统申请了一大片称之为redo log buffer的连续内存空间，翻译成中文就是redo日志缓冲
-区。这片内存空间被划分成若干个连续的redo1ogb1ock。一个redo log block占用512字节大小。
+	在服务器启动时就向操作系统申请了一大片称之为redo log buffer的连续内存空间，翻译成中文就是redo日志缓冲区。这片内存空间被划分成若干个连续的redo log block。一个redo log block占用512字节大小。
 ```sql
 #默认16M  最大4096M 最小1M
 show variables like 'innodb_log_buffer_size';
 ```
+* 重做日志文件(redo log file),保存在硬盘中，是持久的。
+	其中的ib_logfile0和ib_logfile1即为REDO日志。
 
 
+注意，redo log buffer刷盘到redo log file的过程并不是真正的刷到磁盘中去，只是刷入到文件系统缓存(page cache)中去（这是现代操作系统为了提高文件写入效率做的一个优化），真正的写入会交给系统自己来决定（比如page cache足够大了)。那么对于InnoDB来说就存在一个问题，如果交给系统来同步，同样如果系统宕机，那么数据也丢失了（虽然整个系统宕机的概率还是比较小的）。
 
-
-
-
+针对这种情况，InnoDB给出innodb_f1ush_log_at_trx_commit参数，该参数控制commit提交事务时，如何
+将redo log buffer中的日志刷新到redo log file中。它支持三种策略：
+* 0：表示每次事务提交时不进行刷盘操作。（系统默认master thread每隔1s进行一次重做日志的同步）
+* 1：表示每次事务提交时都将进行同步，刷盘操作（默认值）
+* 2：表示每次事务提交时都只把redo log buffer内容写入page cache,不进行同步。由os自己决定什么时候同步到磁盘文件。
 
 
 
