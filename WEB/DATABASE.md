@@ -2076,7 +2076,8 @@ set completion_type = 2 # 提交事务断开连接
 隔离级别从小到大安全性越来越高，但是效率越来越低
 
 ```sql
-set global / session  transaction isolation level  +
+set global / session  transaction isolation level
+set global / session  transaction_isolation = 
 # read committed  
 # read uncommitted  
 # repeatable read  
