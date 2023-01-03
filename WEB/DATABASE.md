@@ -2171,10 +2171,38 @@ undo的存储结构
 	* undo log相关参数一般很少改动。
 
 undo页的重用
-当事务提交时，并不会立刻删除undo页。因为重用，所以这个undo页可能
-混杂着其他事务的undo log。undo logi在commit)后，会被放到一个链表中，然后判断undo页的使用空间是否小于
-3/4,如果小于3/4的话，则表示当前的undo页可以被重用，那么它就不会被回收，其他事务的undo log可以记录
-在当前undo页的后面。由于undo log是离散的，所以清理对应的磁盘空间时，效率不高。
+当事务提交时，并不会立刻删除undo页。因为重用，所以这个undo页可能混杂着其他事务的undo log。undo logi在commit后，会被放到一个链表中，然后判断undo页的使用空间是否小于3/4,如果小于3/4的话，则表示当前的undo页可以被重用，那么它就不会被回收，其他事务的undo log可以记录在当前undo页的后面。由于undo log是离散的，所以清理对应的磁盘空间时，效率不高。
+
+1. 回滚段与事务
+	1. 每个事务只会使用一个回滚段，一个回滚段在同一时刻可能会服务于多个事务。
+	2. 当一个事务开始的时候，会制定一个回滚段，在事务进行的过程中，当数据被修改时，原始的数据会被复制到回滚段。
+	3. 在回滚段中，事务会不断填充盘区，直到事务结束或所有的空间被用完。如果当前的盘区不够用，事务会在段中请求扩展下一个盘区，如果所有已分配的盘区都被用完，事务会覆盖最初的盘区或者在回滚段允许的情况下扩展新的盘区来使用。
+	4. 回滚段存在于undo表空间中，在数据库中可以存在多个undo表空间，但同一时刻只能使用一个undo表空间。
+		show variables like innodb_undo_tablespaces';
+		undo log的数量，最少为2，undo log的truncate操作有purge协调线程发起。在truncate某个undo log表空间的过程中，保证有一个可用的undo log可用。
+	5. 当事务提交时，InnoDB存储引擎会做以下两件事情：
+		* 将undo log放入列表中，以供之后的purge操作
+		* 判断undo log所在的页是否可以重用，若可以分配给下个事务使用
+2. 回滚段中的数据分类
+	1. 未提交的回滚数据(uncommitted undo information)：该数据所关联的事务并未提交，用于实现读一致性，所以该数据不能被其他事务的数据覆盖。
+	2. 己经提交但未过期的回滚数据(committed undo information):该数据关联的事务已经提交，但是仍受到undo retention参数的保持时间的影响。
+	3. 事务已经提交并过期的数据(expired undo information):事务已经提交，而且数据保存时间已经超过undo retention参数指定的时间，属于已经过期的数据。当回滚段满了之后，会优先覆盖"事务已经提交并过期的数据"。
+
+事务提交后并不能马上删除undo log及undo log所在的页。这是因为可能还有其他事务需要通过undo log来得到行记录之前的版本。故事务提交时将undo log)放入一个链表中，是否可以最终删除undo log及undo log所在页由purge线程来判断。
+##### 类型
+* insert undo log
+	insert undo log是指在insert操作中产生的undo log。因为insert操作的记录，只对事务本身可见，对其他事务不可见（这是事务隔离性的要求），故该undo log可以在事务提交后直接册删除。不需要进行purge操作。
+* update undo log
+	update undo logi记录的是对lelete和update操作产生的undo log。.该undo logi可能需要提供MVCC机制，因此不能在事务提交时就进行删除。提交时放入undo log链表，等待purge线程进行最后的删除。
+
+
+
+
+
+
+
+
+
 
 
 
