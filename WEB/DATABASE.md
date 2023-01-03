@@ -2154,14 +2154,27 @@ checkpoint
 * checkpoint是当前要擦除的位置，也是往后推移,  一边落库一边后移
 
 #### UNDO log(原子性)
+作用
+* 回滚
+* MVVC
+	InnoDB存储引擎中MVCC的实现是通过undo来完成。当用户读取一行记录时，若该记录已经被其他事务占用，当前事务可以通过undo读取之前的行版本信息，以此实现非锁定读取。
 
+undo的存储结构
+1. 回滚段与undo页
+	InnoDB对undo log的管理采用段的方式，也就是回滚段(rollback segment)。每个回滚段记录了1024个undo log segment,而在每个undo log segment段中进行undo页的申请。
+	* 在InnoDB1.1版本之前（不包括1.1版本），只有一个rollback segment,因此支持同时在线的事务限制为1024。虽然对绝大多数的应用来说都已经够用。
+	* 从1.1版本开始InnoDB支持最大128个rollback segment,故其支持同时在线的事务限制提高到了128 * 1024。
+	* 这些rollback segment都存储于共享表空间ibdata中
+	* innodb_undo_directory:设置rollback segment.文件所在的路径。这意味着rollback segment可以存放在共享表空间以外的位置，即可以设置为独立表空间。该参数的默认值为“./”，表示当前InnoDB存储引擎的目录。
+	* innodb-undo_logs：设置rollback segment的个数，默认值为128。在InnoDB1.2版本中，该参数用来替换之前版本的参数innodb_rollback_segments。
+	* innodb_undo_tablespaces：设置构成rollback segment文件的数量，这样rollback segmenti可以较为平均地分布在多个文件中。设置该参数后，会在路径innodb_undo_directory看到undo为前缀的文件，该文件就代表rollback segment文件
+	* undo log相关参数一般很少改动。
 
-
-
-
-
-
-
+undo页的重用
+当事务提交时，并不会立刻删除undo页。因为重用，所以这个undo页可能
+混杂着其他事务的undo log。undo logi在commit)后，会被放到一个链表中，然后判断undo页的使用空间是否小于
+3/4,如果小于3/4的话，则表示当前的undo页可以被重用，那么它就不会被回收，其他事务的undo log可以记录
+在当前undo页的后面。由于undo log是离散的，所以清理对应的磁盘空间时，效率不高。
 
 
 
