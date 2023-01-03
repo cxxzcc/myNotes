@@ -2064,6 +2064,17 @@ set completion_type = 2 # 提交事务断开连接
 	A改B未提交数据
 * 脏读Dirty Read
 	A读B未提交数据
+* 不可重复读 Non-Repeatable Read
+	A读B改A再读 A读的数据不一致
+* 幻读Phantom
+	A读B插 A再读数据多了
+
+* read uncommitted：读未提交   问题：脏读、不可重复读、幻读
+* read committed：读已提交 （Oracle） 问题：不可重复读、幻读
+* repeatable read：可重复读 （MySQL默认） 问题：幻读
+* serializable：串行化   可以解决所有的问题
+
+
 
 
 
