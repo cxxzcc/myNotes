@@ -2094,7 +2094,7 @@ REDO和UNDO都可以视为是一种恢复操作
 * redo log:是存储引擎层(innodb)生成的日志，记录的是"物理级别"上的页修改操作，比如页号xxx、偏移量yyy 写入了'zzz'数据。主要为了保证数据的可靠性；
 * undo log:是存储引擎层(innodb)生成的日志，记录的是逻辑操作日志，比如对某一行数据进行了INSERT语句操作，那么undo log就记录一条与之相反的DELETE操作。主要用于事务的回滚(undo log记录的是每个修改操作的逆操作)和一致性非锁定读(undo log回滚行记录到某种特定的版本--MVCC,即多版本并发控制)。
 
-#### REDO log
+#### REDO log (持久性)
 InnoDB页为单位存储 读取时从磁盘加载到Buffer pool 更新的脏页以一定频率落盘( checkpoint机制 )
 
 将修改的数据记录到日志文件 --- redo log
@@ -2144,12 +2144,16 @@ redo log block
 
 * innodb_log_group_home_dir:指定redo log文件组所在的路径，默认值为./，表示在数据库的数据目录下。MySQL的默认数据目录（var/lib/mysql)下默认有两个名为ib_logfile0和ib_logfile1的文件，
 * innodb_log_files_in_group:指明redo log file的个数，命名方式如：ib_logfile0,iblogfile1.....iblogfilen。默认2个，最大100个。
+* innodb_log_file_size:单个redo log文件设置大小，默认值为48M。最大值为512G,注意最大值指的是整个redo log系列文件之和，即(innodb_log_files_in_group* innodb_log_fle_size)不能大于最大值512G。
 
+###### 日志文件组
+循环写入日志文件组
 
+checkpoint
+* write pos是当前记录的位置，一边写一边后移
+* checkpoint是当前要擦除的位置，也是往后推移,  一边落库一边后移
 
-
-
-
+#### UNDO log(原子性)
 
 
 
