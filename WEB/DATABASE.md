@@ -2124,7 +2124,7 @@ show variables like 'innodb_log_buffer_size';
 
 注意，redo log buffer刷盘到redo log file的过程并不是真正的刷到磁盘中去，只是刷入到文件系统缓存(page cache)中去（这是现代操作系统为了提高文件写入效率做的一个优化），真正的写入会交给系统自己来决定（比如page cache足够大了)。那么对于InnoDB来说就存在一个问题，如果交给系统来同步，同样如果系统宕机，那么数据也丢失了（虽然整个系统宕机的概率还是比较小的）。
 
-针对这种情况，InnoDB给出innodb_f1ush_log_at_trx_commit参数，该参数控制commit提交事务时，如何
+针对这种情况，InnoDB给出 innodb_flush_log_at_trx_commit 参数，该参数控制commit提交事务时，如何
 将redo log buffer中的日志刷新到redo log file中。它支持三种策略：
 * 0：表示每次事务提交时不进行刷盘操作。（系统默认master thread每隔1s进行一次重做日志的同步）
 * 1：表示每次事务提交时都将进行同步，刷盘操作（默认值）
