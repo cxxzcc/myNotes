@@ -2130,12 +2130,20 @@ show variables like 'innodb_log_buffer_size';
 * 1：表示每次事务提交时都将进行同步，刷盘操作（默认值）
 * 2：表示每次事务提交时都只把redo log buffer内容写入page cache,不进行同步。由os自己决定什么时候同步到磁盘文件。
 
+###### redo log buffer
 
+Mini-Transaction
+MySQL把对底层页面中的一次原子访问的过程称之为一个Mini-Transaction,简称mtr,比如，向某个索引对
+应的B+树中插入一条记录的过程就是一个Mini-Transaction。一个所谓的mtr可以包含一组redo日志，在进行崩溃恢复时这一组redo日志作为一个不可分割的整体。
+一个事务可以包含若干条语句，每一条语句其实是由若干个mtr组成，每一个mtr又可以包含若干条redo日志
 
+redo log block
+一个redo log block;是由日志头、日志体、日志尾组成。日志头占用12字节，日志尾占用8字节，所以一个block.真正能存储的数据就是512-12-8=492字节。512对应机械硬盘一个扇区
 
+###### redo log file
 
-
-
+* innodb_log_group_home_dir:指定redo log文件组所在的路径，默认值为./，表示在数据库的数据目录下。MySQL的默认数据目录（var/lib/mysql)下默认有两个名为ib_logfile0和ib_logfile1的文件，
+* innodb_log_files_in_group:指明redo log file的个数，命名方式如：ib_logfile0,iblogfile1.....iblogfilen。默认2个，最大100个。
 
 
 
