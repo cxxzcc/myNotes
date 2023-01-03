@@ -2023,6 +2023,7 @@ Normal Form  简称NF
 
 
 ## 事务
+### 概述
 ACID
 * 原子性
 * 一致性
@@ -2044,11 +2045,19 @@ show variables like 'autocommit';
 set autocommit = false;#DML有效DDL无效
 #或使用显示事务不会自动提交
 
-
+#completion_type
+show variables like '%completion_type%';  
+set completion_type = 0 # 默认 提交一个事务 下一个还要开启
+set completion_type = 1 # 提交事务开启一个同隔离级别的事务
+set completion_type = 2 # 提交事务断开连接
 ```
 
-
-
+#### 分类
+* 扁平事务
+* 带保存点的扁平事务
+* 链事务
+* 嵌套事务
+* 分布式事务
 
 
 
