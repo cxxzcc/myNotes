@@ -2199,8 +2199,23 @@ purge线程两个主要作用是：清理undo页和清除page里面带有Delete_
 
 ### 锁
 隔离性
+#### 数据操作类型分
+##### 读锁-共享锁
+```sql
+select ... LOCK IN SHARE MODE
+select ... FOR SHARE #8.0
+
+```
 
 
+
+
+##### 写锁-排他锁
+```sql
+select ... f
+
+
+```
 
 
 
