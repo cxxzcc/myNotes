@@ -2095,7 +2095,56 @@ REDO和UNDO都可以视为是一种恢复操作
 * undo log:是存储引擎层(innodb)生成的日志，记录的是逻辑操作日志，比如对某一行数据进行了INSERT语句操作，那么undo log就记录一条与之相反的DELETE操作。主要用于事务的回滚(undo log记录的是每个修改操作的逆操作)和一致性非锁定读(undo log回滚行记录到某种特定的版本--MVCC,即多版本并发控制)。
 
 #### REDO log
-InnoDB页为单位存储 读取时从磁盘加载到Buffer pool 更新的zang'y
+InnoDB页为单位存储 读取时从磁盘加载到Buffer pool 更新的脏页以一定频率落盘( checkpoint机制 )
+
+将修改的数据记录到日志文件 --- redo log
+
+InnoDB引擎的事务采用了WAL技术(Write-Ahead Logging),这种技术的思想就是先写日志，再写磁盘
+
+好处
+* redo日志降低了刷盘频率
+* redo日志占用的空间非常小
+* 顺序写磁盘
+* 事务执行过程中，redo log不断记录
+	redo log跟bin log的区别
+	redo log是存储引擎层产生的，而bin log是数据库层产生的。
+	假设一个事务，对表做10万行的记录插入，在这个过程中，一直不断的往redo log)顺序记录，而bin log不会记录，直到这个事务提交，才会一次写入到bin log.文件中。
+
+##### 组成
+
+* 重做日志的缓冲(redo log buffer),保存在内存中，是易失的。
+在服务器启动时就向操作系统申请了一大片称之为redo log buffer的连续内存空间，翻译成中文就是redo日志缓冲
+区。这片内存空间被划分成若干个连续的redo1ogb1ock。一个redo log block占用512字节大小。
+```sql
+#默认16M  最大4096M 最小1M
+show variables like 'innodb_log_buffer_size';
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
