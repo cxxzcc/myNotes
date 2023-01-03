@@ -2195,7 +2195,10 @@ undo页的重用
 * update undo log
 	update undo logi记录的是对lelete和update操作产生的undo log。.该undo logi可能需要提供MVCC机制，因此不能在事务提交时就进行删除。提交时放入undo log链表，等待purge线程进行最后的删除。
 
+purge线程两个主要作用是：清理undo页和清除page里面带有Delete_.Bit标识的数据行。在InnoDB中，事务中的Deletej操作实际上并不是真正的删除掉数据行，而是一种Delete Markj操作，在记录上标识Delete_Bit,而不删除记录。是一种"假删除"，只是做了个标记，真正的删除工作需要后台puge线程去完成。
 
+### 锁
+隔离性
 
 
 
