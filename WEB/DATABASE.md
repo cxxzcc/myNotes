@@ -2252,11 +2252,20 @@ InnoDB支持多粒度锁(multiple granularity locking),它允许行级锁与表�
 3. X,IS是表级锁，不会和行级的X,S锁发生冲突。只会和表级的X,S发生冲突。
 4. 意向锁在保证并发性的前提下，实现了行锁和表锁共存且满足事务隔离性的要求。
 
+##### 自增锁(AUTO-INC锁)
+为某个列添加AUTO_INCREMENT属性
 
+插入数据的方式总共分为三类，分别是“Simple inserts”,“Bulk inserts”和“Mixed-mode inserts”。
 
-
-
-
+1. “Simple inserts”(简单插入)
+	可以预先确定要插入的行数（当语句被初始处理时）的语句。包括没有嵌套子查询的单行和多行INSERT...VALUES()和REPLACE语句。比如我们上面举的例子就属于该类插入，已经确定要插入的行数。
+1. “Bulk inserts'”(批量插入)
+事先不知道要插入的行数（和所需自动递增值的数量）的语句。比如INSERT,··SELECT,REPLACE..:
+SELECT和LOAD DATA语句，但不包括纯INSERT。InnoDB在每处理一行，为AUTO_INCREMENT列分配一个新值。
+3.“Mixed-mode inserts'”(混合模式插入)
+这些是“Simple inserts"”语句但是指定部分新行的自动递增值。例如INSERT INTO teacher(id,name)VALUES
+(1,'a'),(NULL,'b'),(5,'c'),(NULL,'d');只是指定了部分id的值。另一种类型的“混合模式插入”是
+INSERT···ON DUPLICATE KEY UPDATE。
 
 
 
