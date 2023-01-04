@@ -1,0 +1,11 @@
+{
+	"nodes":[
+		{"id":"23078c790cf6924a","x":213,"y":-345,"width":400,"height":400,"type":"file","file":"WEB/kubernetes.md"},
+		{"id":"dd038ac0bd2529ad","x":-334,"y":-127,"width":400,"height":250,"type":"file","file":"WEB/JVM.md"},
+		{"id":"cbacf0397ac62d2b","x":169,"y":175,"width":250,"height":54,"type":"text","text":""}
+	],
+	"edges":[
+		{"id":"3b2b541d226c9e0d","fromNode":"cbacf0397ac62d2b","fromSide":"top","toNode":"dd038ac0bd2529ad","toSide":"right"},
+		{"id":"8b085d90fd81b86e","fromNode":"dd038ac0bd2529ad","fromSide":"right","toNode":"23078c790cf6924a","toSide":"left"}
+	]
+}
