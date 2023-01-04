@@ -2503,8 +2503,19 @@ MVCC在MySQL InnoDB中的实现主要是为了提高数据库并发性能，用�
 
 ReadView就是事务A在使用MVCC机制进行快照读操作时产生的读视图。当事务启动时，会生成数据库系统当前的一个快照，InnoDB为每个事务构造了-个数组，用来记录并维护系统当前活跃事务的ID (“活跃’ 指的就是，启动了但还没提交)。
 
+##### 设计思路
+使用READ COMMITTED 和REPEATABLE READ‘ 隔离级别的事务，都必须保证读到已经提交了的事务修改过的记录。假如另一个事务已经修改了记录但是尚未提交，是不能直接读取最新版本的记录的，核心问题就是需要判断一下版本链中的哪个版本是当前事务可见的，这是ReadView要解决的主要问题。
 
+ReadView中主要包含4个比较重要的内容，分别如下: 
+1. creator_trx_id,创建这个Read View的事务ID。
+	说明:只有在对表中的记录做改动时(执行INSERT、 DELETE、 UPDATE这些语句时) 才会为事务分配事务id,否则在一个只读事务 中的事务id值都默认为0。
+2. trx_ids，表示在生成ReadView时当前系统中活跃的读写事务的事务id列表。
+3. up_limit_id,活跃的事务中最小的事务ID。
+4. low_limit_id,表示生成ReadView时系统中应该分配给下一个事务的id值。low_limit_id 是系统最大的事务id值，这里要注意是系统中的事务id,需要区别于正在活跃的事务ID。
 
+注意: low_limit_id并不是trx_ ids中的最大值，事务id是递增分配的。比如，现在有id为1， 2, 3这三个事
+务，之后id为3的事务提交了。那么一个新的读事务在生成ReadView时，trx_ jids就包括1和2，up_ limit id
+的值就是1，low_ limit_ id的值就是4。
 
 
 
