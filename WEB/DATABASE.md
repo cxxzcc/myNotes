@@ -2496,7 +2496,7 @@ MVCC在MySQL InnoDB中的实现主要是为了提高数据库并发性能，用�
 
 
 隐藏字段、Undo Log版本链,   ReadView
-* trx_ id:  记录事务id
+* trx_id:  记录事务id
 * roll_ pointer : 指向undo日志中修改前版本
 
 历史记录在undo log ReadView决定读哪个
@@ -2517,10 +2517,22 @@ ReadView中主要包含4个比较重要的内容，分别如下:
 务，之后id为3的事务提交了。那么一个新的读事务在生成ReadView时，trx_ jids就包括1和2，up_ limit id
 的值就是1，low_ limit_ id的值就是4。
 
+##### 规则
 
+1. trx_id = creator_trx_id 直接访问
+2. trx_id < up_limit_id    此记录在ReadView生成前已提交  直接访问
+3. trx_id >= low_limit_id  此记录在ReadView生成后开启事务 不能访问
+4. up_limit_id < trx_id < low_limit_id    判断trx_id是否在trx_ids中 
+	* 在 事务活跃 不能访问
+	* 不在 可以访问
 
-
-
+MVCC整体操作流程
+了解了这些概念之后，我们来看下当查询一条记录的时候，系统如何通过MVCC找到它:
+1.首先获取事务自己的版本号，也就是事务ID;
+2.获取ReadView;
+3.查询得到的数据，然后与ReadView中的事务版本号进行比较;
+4.如果不符合ReadView规则，就需要从Undo Log中获取历史快照;
+5.最后返回符合规则的数据。
 
 
 
