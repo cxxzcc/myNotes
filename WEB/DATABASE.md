@@ -2260,12 +2260,25 @@ InnoDB支持多粒度锁(multiple granularity locking),它允许行级锁与表�
 1. “Simple inserts”(简单插入)
 	可以预先确定要插入的行数（当语句被初始处理时）的语句。包括没有嵌套子查询的单行和多行INSERT...VALUES()和REPLACE语句。比如我们上面举的例子就属于该类插入，已经确定要插入的行数。
 1. “Bulk inserts'”(批量插入)
-事先不知道要插入的行数（和所需自动递增值的数量）的语句。比如INSERT,··SELECT,REPLACE..:
-SELECT和LOAD DATA语句，但不包括纯INSERT。InnoDB在每处理一行，为AUTO_INCREMENT列分配一个新值。
-3.“Mixed-mode inserts'”(混合模式插入)
-这些是“Simple inserts"”语句但是指定部分新行的自动递增值。例如INSERT INTO teacher(id,name)VALUES
-(1,'a'),(NULL,'b'),(5,'c'),(NULL,'d');只是指定了部分id的值。另一种类型的“混合模式插入”是
-INSERT···ON DUPLICATE KEY UPDATE。
+	事先不知道要插入的行数（和所需自动递增值的数量）的语句。比如INSERT,··SELECT,REPLACE..SELECT和LOAD DATA语句，但不包括纯INSERT。InnoDB在每处理一行，为AUTO_INCREMENT列分配一个新值。
+3. “Mixed-mode inserts'”(混合模式插入)
+	这些是“Simple inserts"”语句但是指定部分新行的自动递增值。例如INSERT INTO teacher(id,name)VALUES(1,'a'),(NULL,'b'),(5,'c'),(NULL,'d');只是指定了部分id的值。另一种类型的“混合模式插入”是INSERT···ON DUPLICATE KEY UPDATE。
+
+对于上面数据插入的案例，MySQL中采用了自增锁的方式来实现，AUTO-INC锁是当向使用含有AUTO_INCREMENT列的表中插入数据时需要获取的一种特殊的表级锁，在执行插入语句时就在表级别加一个AUTO-INC锁，然后为每条待插入记录的AUTO_INCREMENT修饰的列分配递增的值，在该语句执行结束后，再把AUTO-INC锁释放掉。一个事务在持有AUTO-NC锁的过程中，其他事务的插入语句都要被阻塞，可以保证一个语句中分配的递增值是连续的。也正因为此，其并发性显然并不高，当我们向一个有AUTO_INCREMENT关键字的主键插入值的时候，每条语句都要对这个表锁进行竞争，这样的并发潜力其实是很低下的，所以innodb通过innodb_autoinc_lock_mode的不同取值来提供不同的锁定机制，来显著提高SQL语句的可伸缩性和性能。
+
+innodb_autoinc_lock_mode有三种取值，分别对应与不同锁定模式：
+* 0   传统”锁定模式
+	表级锁 限制并发能力
+* 1   连续"锁定模式
+	在MySQL8.0之前，连续锁定模式是默认的。
+	在这个模式下，“bulk inserts'”仍然使用AUTO-INC表级锁，并保持到语句结束。这适用于所有INSERT.SELECT, REPLACE..SELECT和LOAD DATA语句。同一时刻只有一个语句可以持有AUTO-INC锁。
+对于“Simple inserts'”(要插入的行数事先已知)，则通过在mutex(轻量锁)的控制下获得所需数量的自动递增
+值来避免表级AUTO-INC锁，它只在分配过程的持续时间内保持，而不是直到语句完成。不使用表级AUTO-NC
+锁，除非AUTO-INc锁由另一个事务保持。如果另一个事务保持AUTO-INc锁，则“Simple inserts”等待AUTO-INc锁，
+如同它是一个“bulk inserts”。
+
+
+
 
 
 
