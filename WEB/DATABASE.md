@@ -2459,8 +2459,24 @@ Innodb_row_lock_waits             #总等待
 information_schema.INNODB_TRX  
 information_schema.INNODB_LOCK_WAITS  
 information_schema.INNODB_LOCKS
-
+#8.0新
+performance_schema.data_locks
+performance_schema.data_lock_waits
 ```
+
+### MVCC
+多版本并发控制
+
+MVCC (Multiversion Concurrency Control)，多版本并发控制。顾名思义，MVCC 是通过数据行的多个版本管理来实现数据库的并发控制。这项技术使得在InnoDB的事务隔离级别下执行一致性读 操作有了保证。换言之，就是为了查询一些正在被另一个事务更新的行，并且可以看到它们被更新之前的值，这样在做查询的时候就不用等待另一个事务释放锁。
+
+MVCC没有正式的标准，在不同的DBMS中MVCC的实现方式可能是不同的，也不是普遍使用的(大家可以参考相关的DBMS文档)。这里讲解InnoDB中MVCC的实现机制(MySQL其它的存储弓|擎并不支持它)。
+
+
+
+
+
+
+
 
 
 
