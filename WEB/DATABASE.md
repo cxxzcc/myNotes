@@ -2406,7 +2406,9 @@ Flush tables with read lock
 * 等待状态是一样的
 
 InnoDB存储擎中的锁结构如下：
-⚠️upload failed, check dev console
+![Uploading file...1pdcx]()
+
+
 
 
 
