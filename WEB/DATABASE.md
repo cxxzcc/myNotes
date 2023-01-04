@@ -2422,7 +2422,9 @@ InnoDB存储擎中的锁结构如下：
 		* Space ID:记录所在表空间。
 		* Page Number:记录所在页号。
 		* n_bits：对于行锁来说，一条记录就对应着一个比特位，一个页面中包含很多记录，用不同的比特位来区分到底是哪一条记录加了锁。为此在行锁结构的末尾放置了一堆比特位，这个nbits属性代表使用了多少比特位。nbits的值一般都比页面中记录条数多一些。主要是为了之后在页面中插入了新记录后也不至于重新分配锁结构
-
+4. type_mode
+	这是一个32位的数，被分成了lock_mode、lock_type和rec_lock_type三个部分，如图所示：
+	⚠️upload failed, check dev console
 
 
 
