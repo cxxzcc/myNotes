@@ -2425,35 +2425,42 @@ InnoDB存储擎中的锁结构如下：
 4. type_mode
 	这是一个32位的数，被分成了lock_mode、lock_type和rec_lock_type三个部分，如图所示：
 	![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230104160306.png)
-* 锁的模式(lock_ mode)，占用低4位，可选的值如下:
-	* LOCK Is (十进制的0) :表示共享意向锁，也就是IS锁。
-	* LOCK_ IX (十进制的1) :表示独占意向锁，也就是IX锁。
-	* LOCK_ S (十进制的2) :表示共享锁，也就是S锁。
-	* LOCK_ _X (十进制的3) :表示独占锁，也就是X锁。
-	* LOCK_ AUTO_INC (十进制的4) :表示AUTO-INC锁。
-	在InnoDB存储引擎中，LOCK_IS, LOCK_IX, LOCK_AUTO_INC都算是表级锁的模式，LOCK_S和LOCK_X既可以算是表级锁的模式，也可以是行级锁的模式。
-* 锁的类型(lock_type)，占用第5 ~8位，不过现阶段只有第5位和第6位被使用:
-	* LOCK_TABLE (十进制的16) ，也就是当第5个比特位置为1时，表示表级锁。
-	* LOCK_REC (十进制的32)，也就是当第6个比特位置为1时，表示行级锁。
-* 行锁的具体类型( rec_lock_type) ，使用其余的位来表示。只有在lock_ type的值为LOCK_ REC时，也就是只有在该锁为行级锁时，才会被细分为更多的类型: 
-	* LOCK_ ORDINARY (十进制的0) :表示next-key锁。
-	* LOCK_ GAP (十进制的512) :也就是当第10个比特位置为1时，表示gap锁。
-5 LOCK_ REC NOT GAP (+进制的1024) :也就是当第11个比特位置为1时，表示正经记录锁。
-。LOCK. INSERT. INTENTION (十进制的2048) :也就是当第12个比特位置为1时，表示插入意向锁。其他
-的类型:还有一一些不常用的类型我们就不多说了。
-●is. _waiting属性呢?基于内存空间的节省，所以把is_ waiting 属性放到了type_ mode 这个32位的数字
-中:
-) LOCK_ WAIT (十进制的256) :当第9个比特位置为1时I表示is. waiting为true
-，也就是当前事
-务尚未获取到锁，处在等待状态;当这个比特位为0时，表示is_ waiting 为false ,也就是当前事务获
-取锁成功。
-5.其他信息:
-为了更好的管理系统运行过程中生成的各种锁结构而设计了各种哈希表和链表。
+	* 锁的模式(lock_ mode)，占用低4位，可选的值如下:
+		* LOCK Is (十进制的0) :表示共享意向锁，也就是IS锁。
+		* LOCK_ IX (十进制的1) :表示独占意向锁，也就是IX锁。
+		* LOCK_ S (十进制的2) :表示共享锁，也就是S锁。
+		* LOCK_ _X (十进制的3) :表示独占锁，也就是X锁。
+		* LOCK_ AUTO_INC (十进制的4) :表示AUTO-INC锁。
+		在InnoDB存储引擎中，LOCK_IS, LOCK_IX, LOCK_AUTO_INC都算是表级锁的模式，LOCK_S和LOCK_X既可以算是表级锁的模式，也可以是行级锁的模式。
+	* 锁的类型(lock_type)，占用第5 ~8位，不过现阶段只有第5位和第6位被使用:
+		* LOCK_TABLE (十进制的16) ，也就是当第5个比特位置为1时，表示表级锁。
+		* LOCK_REC (十进制的32)，也就是当第6个比特位置为1时，表示行级锁。
+	* 行锁的具体类型( rec_lock_type) ，使用其余的位来表示。只有在lock_ type的值为LOCK_ REC时，也就是只有在该锁为行级锁时，才会被细分为更多的类型: 
+		* LOCK_ ORDINARY (十进制的0) :表示next-key锁。
+		* LOCK_ GAP (十进制的512) :也就是当第10个比特位置为1时，表示gap锁。
+		* LOCK_ REC_NOT_GAP (十进制的1024) :也就是当第11个比特位置为1时，表示正经记录锁。
+		* LOCK_INSERT_INTENTION (十进制的2048) :也就是当第12个比特位置为1时，表示插入意向锁。其他的类型:还有一一些不常用的类型我们就不多说了。
+	* is_waiting属性呢?基于内存空间的节省，所以把is_waiting 属性放到了type_mode 这个32位的数字中:
+		* LOCK_ WAIT (十进制的256) :当第9个比特位置为1时表示is. waiting为true，也就是当前事务尚未获取到锁，处在等待状态;当这个比特位为0时，表示is_ waiting 为false ,也就是当前事务获取锁成功。
+5. 其他信息:
+	为了更好的管理系统运行过程中生成的各种锁结构而设计了各种哈希表和链表。
+6. 一堆比特位:
+	如果是行锁结构的话，在该结构末尾还放置了一堆比特位， 比特位的数量是由上边提到的n_ bits 属性表示的。InnoDB数据页中的每条记录在记录头信息中都包含一个 heap- no属性，伪记录Infimum的heap_ no值为0，Supremum的heap- no值为1，之后每插入-条记录，heap- no值就增1。锁结构最后的一堆比特位就对应着一个页面中的记录，-个比特位映射一个heap_ no,即一个比特位映射到页内的一条记录。
+#### 锁监控
+```sql
+show status like '%innodb_row_lock%'
+Innodb_row_lock_current_waits   #当前锁
+Innodb_row_lock_time             #总时长
+Innodb_row_lock_time_avg
+Innodb_row_lock_time_max
+Innodb_row_lock_waits             #总等待
 
 
+information_schema.INNODB_TRX  
+information_schema.INNODB_LOCK_WAITS  
+information_schema.INNODB_LOCKS
 
-
-
+```
 
 
 
