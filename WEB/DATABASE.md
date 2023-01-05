@@ -2580,12 +2580,18 @@ mysqladmin -uroot -p flush-logs
 install -omysql -gmysql -m0644 /dev/nu1l /var /log/mysqld. log
 mysqladmin -uroot -p flush-logs
 #刷新日志
+
+show variables like '%log_error%';
 ```
 ### bin log
 记录所有变更操作
+* 数据恢复
+* 数据复制
 
+```sql
+show variables like '%log_bin%';
 
-
+```
 
 
 
