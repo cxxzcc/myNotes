@@ -2654,11 +2654,27 @@ PURGE {MASTER| BINARY} LOGS BEFORE ' 指定日期'
 #删除全部
 reset master
 ```
+#### 写入机制
+binlog的写入时机也非常简单，事务执行过程中，先把日志写到binlog cache ，事务提交的时候，再把binlog cache写到binlog文件中。因为一一个事务的binlog不能被拆开，无论这个事务多大，也要确保一次性写入，所以系统会给每个线程分配一一个块内存作为binlog cache。
+
+我们可以通过binlog_cache_size 参数控制单个线程binlog cache大小，如果存储内容超过了这个参数，就要暂存到磁盘(Swap) 。binlog日志刷盘流程如下:
+![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230105144845.png)
+
+* write,是指把日志写入到文件系统的page cache,并没有把数据持久化到磁盘，所以速度比较快
+* fsync,才是将数据持久化到磁盘的操作
+
+write和fsync的时机，可以由参数sync_binlog 控制，
+* 默认是0。表示每次提交事务都只write,由系统自行判断什么时候执行fsync。虽然性能得到提升，但是机器宕机，page cache里面的binglog会丢失
+* 1，表示每次提交事务都会执行fsync, 就如同redo log刷盘流程一样。
+* N(N>1)，表示每次提交事务都write,但累积N个事务后才fsync。
 
 
+#### 两阶段提交
+在执行更新语句过程，会记录redo log与binlog两块日志，以基本的事务为单位，redo log在事务执行过程中可以不断写入，而binlog只有在提交事务时才写入，所以redo log与binlog的写入时机不一样。
 
 
-
+为了解决两份日志之间的逻辑一致问题，InnoDB存储引擎使用两阶段提交方案。原理很简单，将redo log的写入拆成了两个步骤prepare和commit,这就是两阶段提交。
+![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230105145606.png)
 
 
 
