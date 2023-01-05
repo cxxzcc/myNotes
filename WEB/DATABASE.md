@@ -2616,20 +2616,26 @@ mysqlbin1og --no-defaults --help
 mysqlbinlog --no-defaults --base64-output=decode-rows -vv atguigu-bin. 00002 |tail 100
 #根据position查找 
 mysqlbinlog --no-defaults --base64-output=decode-rows -vv atguigu-bin.00002 | grep -A 20 '4939002'
-
-
-
-
 ```
 
 
+格式
+* Statement
+	每一条会修改数据的sqI都会记录在binlog中。
+	优点:不需要记录每一行的变化，减少了binlog日志量，节约了I0， 提高性能。
+* Row
+	5.1.5版本的MySQL才开始支持row level的复制，它不记录sql语句上下文相关信息，仅保存哪条记录被修改。
+	优点: row level的日志内容会非常清楚的记录下每一行数据修改的细节。 而且不会出现某些特定情况下的存储过程，或function,以及trigger的调用和触发无法被正确复 制的问题。
+* Mixed
+	从5.1.8版本开始，MySQL提供了Mixed格式，实际上就是Statement与Row的结合。
+
+#### 数据恢复
+
+```sql
+flush logs
 
 
-
-
-
-
-
+```
 
 
 
