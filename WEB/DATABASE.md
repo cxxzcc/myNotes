@@ -2633,9 +2633,28 @@ mysqlbinlog --no-defaults --base64-output=decode-rows -vv atguigu-bin.00002 | gr
 
 ```sql
 flush logs
-
-
 ```
+
+```shell
+/usr/bin/mysqlbinlog --start-position=464 --stop-position=1308 --database=atguigu14
+/var/lib/mysql/binlog/atguigu-bin.00005 | /usr/bin/mysql -uroot -pabc123 -v atguigu14
+#数据恢复 基于show binlog events
+
+#数据恢复 基于mysqlbinlog 时间
+/usr/bin/mysqlbinlog --start-datetime="2222-12-22 12:12:12" --stop-datetime="2222-12-22 12:21:22" --database=atguigu14
+/var/lib/mysql/binlog/atguigu-bin.00005 | /usr/bin/mysql -uroot -pabc123 -v atguigu14
+```
+
+#### 删除
+```sql
+#删部分
+PURGE {MASTER| BINARY} LOGS TO ' 指定日志文件名'
+PURGE {MASTER| BINARY} LOGS BEFORE ' 指定日期'
+
+#删除全部
+reset master
+```
+
 
 
 
