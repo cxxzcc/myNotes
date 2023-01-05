@@ -2619,7 +2619,7 @@ mysqlbinlog --no-defaults --base64-output=decode-rows -vv atguigu-bin.00002 | gr
 ```
 
 
-格式
+#### 格式
 * Statement
 	每一条会修改数据的sqI都会记录在binlog中。
 	优点:不需要记录每一行的变化，减少了binlog日志量，节约了I0， 提高性能。
@@ -2742,18 +2742,28 @@ relay-log=mysql-relay
 #在主机MySQL里执行授权主从复制的命令
 GRANT REPLICATION SLAVE ON *.* TO 'slave1'@'从机器数据库IP' IDENTIFIED BY'abc123';#5.5,5.7
 注意：如果使用的是MySQL8,需要如下的方式建立账户，并授权slave:
-mysql
-CREATE USER slave1'@'%'IDENTIFIED BY '123456';
+CREATE USER 'slave1'@'%' IDENTIFIED BY '123456';
 GRANT REPLICATION SLAVE ON *.TO slave1'@'%';
 #此语句必须执行。否则见下面。
-ALTER USER slave1'@'%'IDENTIFIED WITH mysq1_native_password BY 123456';
+ALTER USER 'slave1'@'%'IDENTIFIED WITH mysq1_native_password BY '123456';
 flush privileges;
 
+show master status;
 
 
+从机上复制主机的命令
+CHANGE MASTER TO
+MASTER_HOST='主机的IP地址:’
+MASTER_USER='主机用户名
+MASTER_PASSWORD='主机用户名的密码'，
+MASTER_LOG_FILE= ' mysql-bin.具体数字'，
+MASTER_LOG_POS=具体值;
 
 
-
+START SALVE
+RESET SALVE
+SHOW SLAVE STATUS
+```
 
 
 
