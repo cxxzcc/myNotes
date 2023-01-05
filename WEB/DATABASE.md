@@ -2704,6 +2704,30 @@ write和fsync的时机，可以由参数sync_binlog 控制，
 * Slave 将Master的binary log events拷贝到它的中继日志( relay log) ; 
 * Slave 重做中继日志中的事件，将改变应用到自己的数据库中。MySQL 复制是异步的且串行化的，而且重启后从接入点开始复制。
 
+#### 配置文件
+建议mysql版本一致且后台以服务运行
+```properties
+#主从所有配置项都配置在[mysqld]节点下，且都是小写字母
+#必选
+#[必须]主服务器唯一-ID
+server-id=1
+#[必须]启用二进制日志,指名路径。比如:自己本地的路径/1og/mysqlbin
+log-bin=atguigu-bin
+
+#可选
+proper ties
+#[可选] 0 (默认)表示读写(主机)，1表示只读(从机)
+read-only=0
+#设置日志文件保留的时长，单位是秒
+binlog_expire_logs_seconds=6000
+#控制单个二进制日志大小。此参数的最大和默认值是1GB
+max_binlog_size=200M
+#[可选]设置不要复制的数据库
+binlog-ignore-db=test
+#[可选]设置需要复制的数据库，默认全部记录。比如: binlog-do-db=atguigu master . slave
+binlog-do-db=需要复制的主数据库名字
+#[可选]设置binlog格式
+binlog_format=STATEMENT
 
 
 
