@@ -2704,10 +2704,12 @@ write和fsync的时机，可以由参数sync_binlog 控制，
 * Slave 将Master的binary log events拷贝到它的中继日志( relay log) ; 
 * Slave 重做中继日志中的事件，将改变应用到自己的数据库中。MySQL 复制是异步的且串行化的，而且重启后从接入点开始复制。
 
-#### 配置文件
+#### 配置
 建议mysql版本一致且后台以服务运行
 ```properties
 #主从所有配置项都配置在[mysqld]节点下，且都是小写字母
+
+#主机
 #必选
 #[必须]主服务器唯一-ID
 server-id=1
@@ -2729,7 +2731,11 @@ binlog-do-db=需要复制的主数据库名字
 #[可选]设置binlog格式
 binlog_format=STATEMENT
 
-
+#从机  [mysql]下
+#[必须]从服务器唯一ID
+server-id=2
+#[可选]启用中继日志
+relay-log=mysql-relay
 
 
 
