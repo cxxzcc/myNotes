@@ -2567,11 +2567,22 @@ set global general_log_file =
 [mysqld]
 general_log=ON
 general_log_file= [path[filename]]
+
+
+#刷新通用日志
+mysqladmin -uroot -p flush-logs
 ```
 
-
-
-
+### error log
+默认开启无法关闭
+默认linux mysql.log  mac hostname.err   改路径文件名在my.cnf/my.ini中改log-error=
+```shell
+install -omysql -gmysql -m0644 /dev/nu1l /var /log/mysqld. log
+mysqladmin -uroot -p flush-logs
+#刷新日志
+```
+### bin log
+记录所有变更操作
 
 
 
