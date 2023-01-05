@@ -799,9 +799,9 @@ set session optimizer_switch="use_invisible_indexes=on"
 4. UPDATE、 DELETE的WHERE条件列
 5. .DISTINCT字段需要创建索引
 6. 多表JOIN连接操作时，创建索引注意事项
-  连接表的数量尽量不要超过3
-  对WHERE 条件创建索引
-  对用于连接的字段创建索引 且数据类型一致
+    连接表的数量尽量不要超过3
+    对WHERE 条件创建索引
+    对用于连接的字段创建索引 且数据类型一致
 7. 使用列的类型小的创建索引
 8. 使用字符串前缀创建索引
    ```sql
@@ -1427,7 +1427,7 @@ EXPLAIN/DESCRIBE
 ##### id
 
 select查询的序列号，包含一组数字，表示查询中执行select子句或操作表的==顺序==  一个select对应一个id
- 
+
 - id相同，执行顺序由上至下
 - id不同，id值越大优先级越高，越先被执行
 - id越少越好
@@ -1665,7 +1665,7 @@ MySQL8.0.2废弃BNLJ, 引入了hash join默认都会使用hash join
 	* 这种方式适用于较小的表完全可以放于内存中的情况，这样总成本就是访问两个表的成本之和。
 	* 在表很大的情况下并不能完全放入内存，这时优化器会将它分割成若干不同的分区，不能放入内存的部分就把该分区写入磁盘的临时段，此时要求有较大的临时段从而尽量提高I/O的性能。
 	* 它能够很好的工作于没有索引的大表和并行查询的环境中，并提供最好的性能。大多数人都说它是Join的重型升降机。Hash Join,只能应用于等值连接（如WHERE A.CoL1=B.COL2),这是由Hash的特点决定的。
-![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20221228173459.png)
+	![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20221228173459.png)
 
 #### 子查询优化
 
@@ -2693,9 +2693,16 @@ write和fsync的时机，可以由参数sync_binlog 控制，
 * 高可用
 
 
+#### 原理
 
+* 二进制日志转储线程(Binlog dump thread)是一个主库线程。 当从库线程连接的时候，主库可以将进制日志发送给从库，当主库读取事件(Event) 的时候，会在Binlog上加锁，读取完成之后，再将锁释放掉。
+* 从库I/0线程会连接到主库，向主库发送请求更新Binlog。这时从库的I/0线程就可以读取到主库的二进制日志转储线程发送的Binlog更新部分，并且拷贝到本地的中继日志(Relay log)。
+* 从库SQL线程会读取从库中的中继日志，并且执行日志中的事件，将从库中的数据与主库保持同步。
+![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230105151105.png)
 
-
+* Master 将写操作记录到进制日志( binlog)。这些记录叫做=进制日志事件(binary log events);
+* Slave 将Master的binary log events拷贝到它的中继日志( relay log) ; 
+* Slave 重做中继日志中的事件，将改变应用到自己的数据库中。MySQL 复制是异步的且串行化的，而且重启后从接入点开始复制。
 
 
 
@@ -3310,8 +3317,6 @@ InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙�
 尽可能较少检索条件，避免间隙锁
 尽量控制事务大小，减少锁定资源量和时间长度
 尽可能低级别事务隔离
-
-## 主从复制
 
 
 
