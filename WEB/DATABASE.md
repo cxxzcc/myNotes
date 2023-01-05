@@ -2550,9 +2550,24 @@ ReadView中主要包含4个比较重要的内容，分别如下:
 * **中继日志**:用于主从服务器架构中，从服务器用来存放主服务器二进制日志内容的一个中间文件。从服务器通过读取中继日志的内容，来同步主服务器上的操作。
 * **数据定义语句日志**:记录数据定义语句执行的元数据操作。
 
+弊端
+* 影响性能
+* 占用磁盘
 
+### 通用查询日志(general query log)
+通用查询日志用来记录用户的所有操作
+```sql
+show variables like '%general%'
 
+#临时开启
+set global general_log = off;  
+set global general_log_file =
 
+#修改my.cnf或者my.ini配置文件来设置
+[mysqld]
+general_log=ON
+general_log_file= [path[filename]]
+```
 
 
 
