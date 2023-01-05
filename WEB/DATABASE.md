@@ -2794,7 +2794,7 @@ SHOW SLAVE STATUS
 mysqldump -u 用户名称 -h 主机称 -p 密码 待备份的数据库名称[tbname,[tbname..] > 备份文件名称.sql
 
 #恢复
-mysql -u root -p [dbname]backup.sql
+mysql -u root -p [dbname] < backup.sql
 ```
 
 
