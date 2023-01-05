@@ -2591,7 +2591,30 @@ show variables like '%log_error%';
 ```sql
 show variables like '%log_bin%';
 
+#修改MySQL的my.cnf或my.ini文件可以设置二进制日志的相关参数：
+[mysqld]
+#启用二进制日志
+log-bin=atguigu-bin
+binlog_expire_logs_seconds=600
+max_binlog_size=100M
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
