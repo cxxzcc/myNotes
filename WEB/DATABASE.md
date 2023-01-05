@@ -2595,11 +2595,32 @@ show variables like '%log_bin%';
 [mysqld]
 #启用二进制日志
 log-bin=atguigu-bin
-binlog_expire_logs_seconds=600
-max_binlog_size=100M
+binlog_expire_logs_seconds=600 #秒 默认30天
+max_binlog_size=100M   #最大和默认1G 不能严格控制文件大小
+
+
+show BINARY logs
+
+show binlog events [IN 'log_name'] [FROM pos] [LIMIT [offset, ] row_ count] ;
+●IN 'log_ name':指定要查询的binlog文件名(不指定就是第一个binlog文件)
+●FROM pos:指定从哪个pos起始点开始查起(不指定就是从整个文件首个pos点开始算)
+●LIMIT [offset] :偏移量(不指定就是0)
+●row_ count :查询总条数(不指定就是所有行)
 ```
 
+```shell
+mysqlbinlog -v --base64-output=DECODE-ROWS + 文件  #查看bin log
+#可查看参数帮助
+mysqlbin1og --no-defaults --help
+#查看最后100行
+mysqlbinlog --no-defaults --base64-output=decode-rows -vv atguigu-bin. 00002 |tail 100
+#根据position查找 
+mysqlbinlog --no-defaults --base64-output=decode-rows -vv atguigu-bin.00002 | grep -A 20 '4939002'
 
+
+
+
+```
 
 
 
