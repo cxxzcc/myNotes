@@ -2738,7 +2738,16 @@ server-id=2
 relay-log=mysql-relay
 
 
-
+主机：建立账户并授权
+#在主机MySQL里执行授权主从复制的命令
+GRANT REPLICATION SLAVE ON *.* TO 'slave1'@'从机器数据库IP' IDENTIFIED BY'abc123';#5.5,5.7
+注意：如果使用的是MySQL8,需要如下的方式建立账户，并授权slave:
+mysql
+CREATE USER slave1'@'%'IDENTIFIED BY '123456';
+GRANT REPLICATION SLAVE ON *.TO slave1'@'%';
+#此语句必须执行。否则见下面。
+ALTER USER slave1'@'%'IDENTIFIED WITH mysq1_native_password BY 123456';
+flush privileges;
 
 
 
