@@ -2798,13 +2798,6 @@ mysql -u root -p [dbname] < backup.sql
 ```
 
 
-
-
-
-
-
-
-
 ## mysql安装
 
 ```shell
