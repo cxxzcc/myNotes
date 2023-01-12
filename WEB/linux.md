@@ -79,6 +79,9 @@ mv /home/yourhomedirectory/* /dev/null #移动主目录
 
 ## 监控系统
 
+top
+free
+
 ### vmstat
 
 ```shell

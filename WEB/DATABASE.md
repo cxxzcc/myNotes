@@ -1995,6 +1995,7 @@ Normal Form  简称NF
 	```sql
 	分析表
 	ANALYZE [ LOCAL | NO_WRITE_TO_BINLOG] TABLE tbl_name [,tbl_name]..
+	自动分析字段和数据，并会给你一些有用的建议。表中有实际的数据，建议才会变得有用
 	
 	检查表
 	CHECK TABLE tb1_name[,tbl_name ]...[option]...
@@ -2923,116 +2924,17 @@ esc  -> :w 保存但不退出
 18. 尽可能的使⽤用 varchar/nvarchar 代替 char/nchar ，因为首先变长字段存储空间小，可以节省存储空间，其次对于查询来说，在一个相对较小的字段内搜索效率显然要高些。
 19. 任何地方都不要使用 select * from t ，用具体的字段列表代替“*”，不要返回用不到的任何字段。
 20. 尽量使用表变量来代替临时表。如果表变量包含大量数据，请注意索引非常有限（只有主键索引）。
-
-22. 避免频繁创建和删除临时表，以减少系统表资源的消耗。临时表并不是不可使用，适当地使用它们可以使某些例程更有效，例如，当需要重复引用大型表或常用表中的某个数据集时。但是，对于一次性事件， 最好使用导出表。
-23. 在新建临时表时，如果一次性插入数据量很大，那么可以使用 select into 代替 create table，避免造成大量 log ，
+21. 避免频繁创建和删除临时表，以减少系统表资源的消耗。临时表并不是不可使用，适当地使用它们可以使某些例程更有效，例如，当需要重复引用大型表或常用表中的某个数据集时。但是，对于一次性事件， 最好使用导出表。
+22. 在新建临时表时，如果一次性插入数据量很大，那么可以使用 select into 代替 create table，避免造成大量 log ，
     以提⾼高速度；如果数据量不⼤，为了缓和系统表的资源，应先create table，然后insert。
-24. 如果使用到了临时表，在存储过程的最后务必将所有的临时表显式删除，先 truncate table ，然后 drop table ，这样
+23. 如果使用到了临时表，在存储过程的最后务必将所有的临时表显式删除，先 truncate table ，然后 drop table ，这样
     可以避免系统表的较长时间锁定。
-25. 尽量避免使用游标，因为游标的效率较差，如果游标操作的数据超过1万⾏，那么就应该考虑改写。
-26. 使用基于游标的方法或临时表方法之前，应先寻找基于集的解决方案来解决问题，基于集的方法通常更有效。
-27. 与临时表一样，游标并不是不可使用。对小型数据集使用 FAST_FORWARD 游标通常要优于其他逐行处理方法，尤其是在必须引用几个表才能获得所需的数据时。在结果集中包括“合计”的例程通常要比使用游标执行的速度快。如果开发时 间允许，基于游标的方法和基于集的方法都可以尝试一下，看哪一种方法的效果更好。
-28. 在所有的存储过程和触发器的开始处设置 SET NOCOUNT ON ，在结束时设置 SET NOCOUNT OFF 。无需在执行存储过程和触发器的每个语句后向客户端发送 DONE_IN_PROC 消息。
-29. 尽量避免大事务操作，提高系统并发能力。
-30. 尽量避免向客户端返回大数据量，若数据量过大，应该考虑相应需求是否合理。
-
-
-
-## mysql优化
-
-
-服务器硬件的性能瓶颈: top,free, iostat和vmstat来查看系统的性能状态
-
-### 查询优化
-
-1. 慢查询的开启并捕获 
-2. explain+慢SQL分析
-3. show profile查询SQL在Mysq1服务器里面的执行细节和生命周期情况
-4. SQL数据库服务器的参数调优。
-5. 分库分表
-
-```sql
-PROCEDURE ANALYSE() --自动分析字段和其实际的数据，并会给你一些有用的建议。表中有实际的数据，建议才会变得有用
-SELECT * FROM table PROCEDURE analyse(4);
-```
-
-
-
-### **批量插入**
-
-```sql
---只对当前数据库生效，重启失效
-show variables like 'log_bin_trust_function_creators';
-set global log_bin_trust_function_creators=1;
-
---随机字符串
-DELIMITER $$
-CREATE FUNCTION rand_string(n INT) RETURNS VARCHAR(255)
-BEGIN
-    DECLARE chars_str VARCHAR(100) DEFAULT 'abcdefghijklmnopqrstuvwxyZABCDEFJHIJKLMNOPQRSTUVWXYZ';
-    DECLARE return_str VARCHAR(255)DEFAULT";
-    DECLARE i INT DEFAULT 0;
-    WHILEi<nDO
-    SET return_str =CONCAT(return_str,SUBSTRING(chars_str,FLOOR(1+RAND()*52),1);
-    SETi=i+1;
-    END WHILE;
-    RETURN return_str;
-END $$ I
-```
-
-```sql
---用于随机产生部门编号
-DELIMITER $$
-CREATE FUNCTION rand_num()
-RETURNS INT(5)
-BEGIN
-    DECLARE i INT DEFAULT 0;
-    SETi=FLOOR(100+RAND()*10);
-RETURN i;
-END$$I
---假如要删除
-#drop function rand_num;
-
---批量插入
-DELIMITER $$
-CREATE PROCEDURE insert_emp(IN START INT(10),IN max_num INT(10))
-BEGIN
-DECLARE i INT DEFAULT 0;
-#set autocommit=0把autocommit设置成0
-    SET autocommit = 0;
-    REPEAT
-    SETi=i+1;
-    INSERT INTO emp (empno, ename ,job ,mgr ,hiredate ,sal ,comm ,deptno ) VALUES ((START+i)
-    ,rand_string(6),'SALESMAN',0001,CURDATE(),2000,400,rand_num();
-    UNTILi=max_num
-END REPEAT;
-COMMIT;
-END $$
-```
-
-```sql
---执行存储过程，往dept表添加随机数据
-DELIMITER $$
-CREATE PROCEDURE insert_dept(IN START INT(10),IN max_num INT(10))
-BEGIN
-    DECLARE i INT DEFAULT 0;
-    SET autocommit =0;
-    REPEAT
-    SETi=i+1;
-    INSERT INTO dept (deptno ,dname,loc ) VALUES ((START+i) ,rand_string(10),rand_string(8);
-    UNTILi=max_num
-    END REPEAT;
-	COMMIT ; 
-END $$
-                                                  
---调用
-DELIMITER ;
-CALL insert_dept(100,10); 
-```
-
-
-
-
+24. 尽量避免使用游标，因为游标的效率较差，如果游标操作的数据超过1万⾏，那么就应该考虑改写。
+25. 使用基于游标的方法或临时表方法之前，应先寻找基于集的解决方案来解决问题，基于集的方法通常更有效。
+26. 与临时表一样，游标并不是不可使用。对小型数据集使用 FAST_FORWARD 游标通常要优于其他逐行处理方法，尤其是在必须引用几个表才能获得所需的数据时。在结果集中包括“合计”的例程通常要比使用游标执行的速度快。如果开发时 间允许，基于游标的方法和基于集的方法都可以尝试一下，看哪一种方法的效果更好。
+27. 在所有的存储过程和触发器的开始处设置 SET NOCOUNT ON ，在结束时设置 SET NOCOUNT OFF 。无需在执行存储过程和触发器的每个语句后向客户端发送 DONE_IN_PROC 消息。
+28. 尽量避免大事务操作，提高系统并发能力。
+29. 尽量避免向客户端返回大数据量，若数据量过大，应该考虑相应需求是否合理。 
 
 
 
