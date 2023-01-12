@@ -1327,6 +1327,7 @@ slow_query_log=ON #开启慢查询日志的开关
 slow_query_log_file=/var/lib/mysql/atguigu-slow.1og
 #慢查询日志的目录和文件名信息
 long_query_Time=3 #设置慢查询的阙值为3秒，超出此设定值的SQL即被记录到慢查询日志
+SHOW VARIABLES LIKE 'long_query_time%';--查看阈值
 log_output=FILE
 --如果不指定存储路径，慢查询日志将默认存储到MySQL数据库的数据文件夹下。如果不指定默认为hostname-slow.log
 
@@ -1700,7 +1701,7 @@ SHOW VARIABLES LIKE' %max_length_for_sort_data%';     #默认1024字节
 
 
 ```
-1. Order by时select*是一个大忌。最好只Query需要的字段。原因:
+1. Order by时select * 是一个大忌。最好只Query需要的字段。原因:
 	* 当Query的字段大小总和小于max. length_ for_ sort_ data，而且排序字段不是TEXT|BLOB类型时，会用改进后的算法- -单路排序，否则用老算法- -多路排序。
 	* 两种算法的数据都有可能超出sort_ buffer size的容量，超出之后，会创建tmp文件进行合并排序，导致多次I/O，但是用单路排序算法的风险会更大一一些， 所以要提高sort_ .buffer. size 
 
@@ -2939,72 +2940,6 @@ SELECT * FROM table PROCEDURE analyse(4);
 被驱动表join字段加索引  左连接 索引加右表  右连接  索引加左表
 
 设置JoinBuffer
-
-#### order by 优化
-
-* 使用index排序, 避免FileSort排序
-
-  index利用索引效率高
-
-  * order by使用索引最左前列
-  * where和order by 条件列组合满足索引最左前列
-
-* FileSort  分为两种算法: 双路排序  单路排序
-  * 双路排序  : mysql4.1之前使用   读两次磁盘
-  * 单路排序  : 读一次 , 占空间大 效率快
-
-##### 优化策略
-
-增大sort_buffer_size
-
-增大max_length_for_sort_data
-
-
-
-1.Order by时select*是一个大忌只Query需要的字段，这点非常重要。在这里的影响是：
-
-​		1.1当Query的字段大小总和小于max_length_for_sort_data而且排序字段不是TEXTIBLOB类型时，会用改进后的算法——单路排序，否则用老算法——多路排序。
-
-​		1.2两种算法的数据都有可能超出sort_buffer的容量，超出之后，会创建tmp文件进行合并排序，导致多次I/O,但是用单路排序算法的风险会更大一些，所以要提高sort_buffer_size.
-
-2.尝试提高sort_buffer_size
-
-不管用哪种算法，提高这个参数都会提高效率，当然，要根据系统的能力去提高，因为这个参数	是针对每个进程的
-
-3.尝试提高max_length_for_sort_data
-
-提高这个参数，会增加用改进算法的概率。但是如果设的太高，数据总容量超出sort_buffer_size的概率就增大，明显症状是高的磁盘I/O活动和低的处理器使用率.
-
-#### group by 优化
-
-group by实质是先排序后进行分组，遵照索引建的最佳左前缀
-当无法使用索引列，增大max_ Jength_ for, sort. ,data参数的设置+增大sort_ buffer size参数的设置
-where高于having,能写在where限定的条件就不要去having限定了。
-
-### 慢查询
-
-```sql
-SHOW VARIABLES LIKE '%slow_query_log%'; 
-set global slow_query_log=1  --开启  只对当前数据库生效，重启失效
-
-set global long_query_time=3; --设置阈值--默认10s
-SHOW VARIABLES LIKE 'long_query_time%';--查看阈值
-
---修改后需要新开会话
-SHOW VARIABLES LIKE 'long_query_time%'
---或
-SHOW global VARIABLES LIKE 'long_query_time'
-```
-
-永久生效修改my.cnf配置文件
-
-修改my.cnf文件，[mysqld]下增加或修改参数
-
-slow_query_log 和slow_query_log_file后，然后重启MySQL服务器。也即将如下两行配置进my.cnf文件
-
-slow_query_log=1
-
-slow_query_log_file=/var/lib/mysql/atguigu-slow.log
 
 #### **mysqldumpslow**  日志查看工具
 
