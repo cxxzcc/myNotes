@@ -1653,7 +1653,7 @@ select from sys.innodb_lock_waits;
 
 ### 优化
 #### 关联查询优化
-* 小结果集驱动大结果集
+* ==小结果集驱动大结果集==
 * 驱动表匹配的条件增加索引|(减少内层表的循环匹配次数)
 * 增大join buffer size的大小(-次缓存的数据越多，那么内层包的扫表次数就越少)
 * 减少驱动表不必要的字段查询(字段越少，join buffer 所缓存的数据就越多)
@@ -2235,7 +2235,14 @@ select ... FOR UPDATE
 * LOCK TABLES t WRITE:InnoDB存储引擎会对表t加表级别的X锁。
 
 ```sql
+lock table 表名字 read(write),表名字2 read(write),其它；
+unlock tables;
+
 show open tables where in_use > 0  #查锁住的表
+show status like 'table%';
+
+Table_locks_immediate:产生表级锁定的次数，表示可以立即获取锁的查询次数，每立即获取锁值加1;
+Table_locks_waited:出现表级锁定争用而发生等待的次数（不能立即获取锁的次数，每等待一次锁值加1),此值高则说明存在着较严重的表级锁争用情况；
 ```
 
 ###### 意向锁 intention lock
@@ -2949,13 +2956,7 @@ PROCEDURE ANALYSE() --自动分析字段和其实际的数据，并会给你一�
 SELECT * FROM table PROCEDURE analyse(4);
 ```
 
-==小结果集驱动大结果集==
 
-优先优化内层循环
-
-被驱动表join字段加索引  左连接 索引加右表  右连接  索引加左表
-
-设置JoinBuffer
 
 ### **批量插入**
 
@@ -3028,78 +3029,6 @@ END $$
 DELIMITER ;
 CALL insert_dept(100,10); 
 ```
-
-### 锁机制
-
-```sql
---常看当前数据库的事务隔离级别：
-show variables like'tx_isolation';
-
---锁一行
-select xxx...for update读定某一行后，其它的操作会被阻塞，直到锁定行的会话提交commit
-```
-
-```sql
-lock table 表名字 read(write),表名字2 read(write),其它；
-unlock tables;
---看锁
-show open tables;
-show status like 'table%';
-
-Table_locks_immediate:产生表级锁定的次数，表示可以立即获取锁的查询次数，每立即获取锁值加1;
-Table_locks_waited:出现表级锁定争用而发生等待的次数（不能立即获取锁的次数，每等待一次锁值加1),此值高则说明存在着较严重的表级锁争用情况；
-```
-
-```sql
-show status like 'innodb_row_lock%';
---查看行锁
-Innodb_row_lock_current_waits:当前正在等待锁定的数量；
-Innodb_row_lock_time:从系统启动到现在锁定总时间长度工
-Innodb_row_lock_time_avg:每次等待所花平均时间；
-Innodb_row_lock_time_max:从系统启动到现在等待最常的一次所花的时间；
-Innodb_row_lock_waits:系统启动后到现在总共等待的次数；
---对于5个状态变量，比较重要的主要
-Innodb_row_lock_time_avg(等待平均时长)
-Innodb_row_lock_waits（等待总次数）
-Innodb_row_lock_time(等待总时长）
-```
-
-**什么是间隙锁**
-
-当我们用范围条件而不是相等条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据记录的索引项加锁；对于键值在条件范围内但并不存在的记录，叫做“间隙（GAP)”，
-
-InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙锁（Next-Key锁）。
-
-**危害**
-
-因为Query执行过程中通过过范围查找的话，他会锁定整个范围内所有的索引键值，即使这个键值并不存在。
-
-间隙锁有一个比较致命的弱点，就是当锁定一个范围键值之后，即使某些不存在的键值也会被无辜的锁定，而造成在锁定的时候无法插入锁定键值范围内的任何数据。在某些场景下这可能会对性能造成很大的危害
-
-|                | session1                   | session2                       |
-| -------------- | -------------------------- | ------------------------------ |
-| session1加读锁 | 可读加锁表不可读其他无锁表 | 可读加锁表可读可更新其他无锁表 |
-|                | 不可更新加锁表             | 更新加锁表会阻塞               |
-|                | 释放锁                     | 更新操作完成                   |
-
-|                | session1         | session2       |
-| -------------- | ---------------- | -------------- |
-| session1加写锁 | 可读可更新加锁表 | 查询加锁表阻塞 |
-|                | 释放锁           | 查询操作完成   |
-
-
-
-#### 页锁
-
-开销和加锁时间界于表锁和行锁之间;会出现死锁;锁定粒度界于表锁和行锁之间，并发度一般。
-
-#### 优化建议
-
-尽可能让所有数据检索都通过索引来完成，避免无索引行锁升级为表锁。
-合理设计索引，尽量缩小锁的范围
-尽可能较少检索条件，避免间隙锁
-尽量控制事务大小，减少锁定资源量和时间长度
-尽可能低级别事务隔离
 
 
 
