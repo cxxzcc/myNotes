@@ -4,7 +4,7 @@
 
 ### 1.1 NoSQL数据库
 
-#### **1.1.1  **NoSQL数据库概述
+#### 1.1.1  NoSQL数据库概述
 
 NoSQL(NoSQL = **Not Only SQL** )，意即“不仅仅是SQL”，泛指**非关系型的数据库**。 
 
@@ -88,7 +88,7 @@ Apache Cassandra是一款免费的开源NoSQL数据库，其设计目的在于�
 * 区别的是Redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件。
 * 并且在此基础上实现了master-slave(主从)同步。
 
-### **1.1.**  **应用场景**
+### 1.1应用场景
 
 配合关系型数据库做高速缓存
 
@@ -105,7 +105,7 @@ Apache Cassandra是一款免费的开源NoSQL数据库，其设计目的在于�
 * 构建队列----利用list集合
 * 发布订阅消息系统----pub/sub模式
 
-### **1.2  **Redis**安装**
+### 1.2  Redis安装
 
 http://redis.io
 
@@ -177,10 +177,10 @@ redis-cli
 * 多实例关闭，指定端口关闭：redis-cli -p 6379 shutdown
 * kill -9 pid
 
-### **1.3  **Redis**介绍相关知识**
+### 1.3  Redis介绍相关知识
 
 * 默认16个数据库，类似数组下标从0开始，初始默认使用0号库
-* 使用命令 select  <dbid>来切换数据库。如: select 8 
+* 使用命令 select  < dbid > 来切换数据库。如: select 8 
 * 统一密码管理，所有库同样密码。
 * dbsize查看当前数据库的key的数量
 * flushdb清空当前库
@@ -194,11 +194,11 @@ redis-cli
 
 （与Memcache三点不同: 支持多数据类型，支持持久化，单线程+多路IO复用）
 
-## 3 **常用五大数据类型**
+## 3 常用五大数据类型
 
 http://www.redis.cn/commands.html
 
-### 3.1 **Redis**键**(key)**
+### 3.1 Redis键(key)
 
 ```bash
 keys * #查看当前库所有key  (匹配：keys *1)
@@ -215,7 +215,7 @@ flushdb  #清空当前库
 flushall  #通杀全部库
 ```
 
-### 3.2 **Redis**字符串(String)
+### 3.2 Redis字符串(String)
 
 String是Redis最基本的类型，你可以理解成与Memcached一模一样的类型，一个key对应一个value。
 
@@ -223,7 +223,7 @@ String类型是二进制安全的。意味着Redis的string可以包含任何数
 
 String类型是Redis最基本的数据类型，一个Redis中字符串value最多可以是512M
 
-#### 3.2.1. **常用命令**
+#### 3.2.1. 常用命令**
 
 ```bash
 set   <key><value>  #添加键值对
@@ -277,7 +277,7 @@ getset <key><value>
 
 Redis单命令的原子性主要得益于Redis的单线程。
 
-#### 3.2.2 **数据结构**
+#### 3.2.2 数据结构**
 
 String的数据结构为简单动态字符串(Simple Dynamic String,缩写SDS)。是可以修改的字符串，内部结构实现上类似于Java的ArrayList，采用预分配冗余空间的方式来减少内存的频繁分配.
 
@@ -285,7 +285,7 @@ String的数据结构为简单动态字符串(Simple Dynamic String,缩写SDS)�
 
 如图中所示，内部为当前字符串实际分配的空间capacity一般要高于实际字符串长度len。当字符串长度小于1M时，扩容都是加倍现有的空间，如果超过1M，扩容时一次只会多扩1M的空间。需要注意的是字符串最大长度为512M
 
-### 3.3 **List**
+### 3.3 List
 
 单键多值
 
@@ -312,7 +312,7 @@ lrem <key><n><value>#从左边删除n个value(从左到右)
 lset<key><index><value>#将列表key下标为index的值替换成value
 ```
 
-#### 3.3.2 **数据结构**
+#### 3.3.2 数据结构
 
 List的数据结构为快速链表quickList。
 
@@ -353,7 +353,7 @@ sunion <key1><key2>#返回两个集合的并集元素。
 sdiff <key1><key2>#返回两个集合的差集元素(key1中的，不包含key2中的)
 ```
 
-#### 3.4.2**数据结构**
+#### 3.4.2数据结构**
 
 Set数据结构是dict字典，字典是用哈希表实现的。
 
@@ -384,7 +384,7 @@ hsetnx <key><field><value>  #将哈希表 key 中的域 field 的值设置为 va
 
 Hash类型对应的数据结构是两种：ziplist（压缩列表），hashtable（哈希表）。当field-value长度较短且个数较少时，使用ziplist，否则使用hashtable。
 
-### 3.6 **Zset**
+### 3.6 Zset**
 
 Redis有序集合zset与普通集合set非常相似，是一个没有重复元素的字符串集合。
 
@@ -429,7 +429,7 @@ zset底层使用了两个数据结构
 
 ![image-20210507090636159](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210507090636159.png)
 
-## 4 **配置文件**
+## 4 配置文件**
 
 ### 4.1 Units单位
 
@@ -441,7 +441,7 @@ zset底层使用了两个数据结构
 
 多实例的情况可以把公用的配置文件提取出来
 
-### 4.3 **网络相关配置**
+### 4.3 网络相关配置**
 
 #### 4.3.1 bind
 
@@ -461,7 +461,7 @@ zset底层使用了两个数据结构
 
 端口号，默认 6379
 
-#### 4.3.4 **tcp-backlog**
+#### 4.3.4 tcp-backlog**
 
 设置tcp的backlog，backlog其实是一个连接队列，backlog队列总和=未完成三次握手队列 + 已经完成三次握手队列。
 
@@ -469,45 +469,45 @@ zset底层使用了两个数据结构
 
 注意Linux内核会将这个值减小到/proc/sys/net/core/somaxconn的值（128），所以需要确认增大/proc/sys/net/core/somaxconn和/proc/sys/net/ipv4/tcp_max_syn_backlog（128）两个值来达到想要的效果
 
-#### 4.3.5 **timeout**
+#### 4.3.5 timeout**
 
 一个空闲的客户端维持多少秒会关闭，0表示关闭该功能。即永不关闭。
 
-#### 4.3.6 **tcp-keepalive**
+#### 4.3.6 tcp-keepalive**
 
 对访问客户端的一种心跳检测，每个n秒检测一次。
 
 单位为秒，如果设置为0，则不会进行Keepalive检测，建议设置成60
 
-### 4.4 **GENERAL**
+### 4.4 GENERAL**
 
-#### 4.4.1 **daemonize**
+#### 4.4.1 daemonize
 
 是否为后台进程，设置为yes
 
 守护进程，后台启动
 
-#### 4.4.2 **pidfile**
+#### 4.4.2 pidfile
 
 存放pid文件的位置，每个实例会产生一个不同的pid文件
 
-#### 4.4.3 **loglevel** 
+#### 4.4.3 **loglevel 
 
 指定日志记录级别，Redis总共支持四个级别：debug、verbose、notice、warning，默认为**notice**
 
 四个级别根据使用阶段来选择，生产环境选择notice 或者warning
 
-#### 4.4.4 **logfile** 
+#### 4.4.4 logfile** 
 
 日志文件名称
 
-#### 4.4.5 **databases 16** 
+#### 4.4.5 databases 16** 
 
-设定库的数量 默认16，默认数据库为0，可以使用SELECT <dbid>命令在连接上指定数据库id
+设定库的数量 默认16，默认数据库为0，可以使用SELECT < dbid>命令在连接上指定数据库id
 
 ### 4.5 SECURITY
 
-#### 4.5.1 **设置密码**
+#### 4.5.1 **设置密码
 
 访问密码的查看、设置和取消
 
@@ -522,22 +522,22 @@ config get requirerepass
 config set requirerepass "123456"
 ```
 
-### 4.6 **LIMITS**
+### 4.6 **LIMITS
 
-#### 4.6.1 **maxclients**
+#### 4.6.1 **maxclients
 
 * 设置redis同时可以与多少个客户端进行连接。
 * 默认情况下为10000个客户端。
 * 如果达到了此限制，redis则会拒绝新的连接请求，并且向这些连接请求方发出“max number of clients reached”以作回应。
 
-#### 4.6.2 **maxmemory** 
+#### 4.6.2 **maxmemory 
 
 * 建议**必须设置**，否则，将内存占满，造成服务器宕机
 * 设置redis可以使用的内存量。一旦到达内存使用上限，redis将会试图移除内部数据，移除规则可以通过maxmemory-policy来指定。
 * 如果redis无法根据移除规则来移除内存中的数据，或者设置了“不允许移除”，那么redis则会针对那些需要申请内存的指令返回错误信息，比如SET、LPUSH等。
 * 但是对于无内存申请的指令，仍然会正常响应，比如GET等。如果你的redis是主redis（说明你的redis有从redis），那么在设置内存使用上限时，需要在系统中留出一些内存空间给同步队列缓存，只有在你设置的是“不移除”的情况下，才不用考虑这个因素。
 
-#### 4.6.3 **maxmemory-policy**
+#### 4.6.3 maxmemory-policy**
 
 * volatile-lru：使用LRU算法移除key，只对设置了过期时间的键；（最近最少使用）
 
@@ -551,12 +551,12 @@ config set requirerepass "123456"
 
 * noeviction：不进行移除。针对写操作，只是返回错误信息
 
-#### 4.6.4 **maxmemory-samples**
+#### 4.6.4 maxmemory-samples
 
 * 设置样本数量，LRU算法和最小TTL算法都并非是精确的算法，而是估算值，所以你可以设置样本的大小，redis默认会检查这么多个key并选择其中LRU的那个。
 * 一般设置3到7的数字，数值越小样本越不准确，但性能消耗越小
 
-## 5 **Redis的发布和订阅**
+## 5 Redis的发布和订阅
 
 Redis 发布订阅 (pub/sub) 是一种消息通信模式：发送者 (pub) 发送消息，订阅者 (sub) 接收消息。
 
@@ -578,9 +578,9 @@ Redis 客户端可以订阅任意数量的频道。
 
 注：发布的消息没有持久化，如果在订阅的客户端收不到hello，只能收到订阅后发布的消息
 
-## 6 **新数据类型**
+## 6 **新数据类型
 
-### 6.1 **Bitmaps**
+### 6.1 **Bitmaps
 
 现代计算机用二进制（位） 作为信息的基础单位， 1个字节等于8位
 
@@ -606,7 +606,7 @@ bitop  and(or/not/xor) <destkey> [key…]
 #bitop是一个复合操作， 它可以做多个Bitmaps的and（交集）、or（并集）、not（非）、xor（异或）操作并将结果保存在destkey中。
 ```
 
-**实例**
+**实例
 
 每个独立用户是否访问过网站存放在Bitmaps中， 将访问的用户记做1， 没有访问的用户记做0， 用偏移量作为用户的id。
 
@@ -1607,7 +1607,7 @@ slave1、slave2是从头开始复制
 
 上一个Slave可以是下一个slave的Master，Slave同样可以接收其他 slaves的连接和同步请求，那么该slave作为了链条中下一个的master, 可以有效减轻master的写压力,去中心化降低风险。
 
-用 slaveof <ip><port>
+用 slaveof < ip>< port>
 
 中途变更转向:会清除之前的数据，重新建立拷贝最新的
 
