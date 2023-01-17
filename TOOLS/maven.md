@@ -19,3 +19,51 @@
 
 
 
+# 生命周期
+
+* Clean
+	pre-clean
+	clean
+	post-clean
+* site  生成站点
+	pre-site 
+	site 
+	post-site 
+	deploy-site
+* default
+	validate  
+	generate-sources  
+	process-sources  
+	generate-resources  
+	process-resources复制并处理资源文件，至目标目录，准备打包。 
+	compile编译项目main目录下的源代码。 
+	process-classes  
+	generate-test-sources  
+	process-test-sources 
+	generate-test-resources  
+	process-test-resources复制并处理资源文件，至目标测试目录。 
+	test-compile编译测试源代码。 
+	process-test-classes
+	test使用合适的单元测试框架运行测试。这些测试代码不会被打包或部署。
+	prepare-package  
+	package接受编译好的代码，打包成可发布的格式，如JAR。 
+	pre-integration-test  
+	integration-test 
+	post-integration-test  
+	verify 
+	instal将包安装至本地仓库，以让其它项目依赖。 
+	deploy将最终的包复制到远程的仓库，以让其它开发人员共享;或部署到服务器
+
+
+
+
+
+
+
+
+
+
+
+
+
+
