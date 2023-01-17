@@ -1623,7 +1623,7 @@ slave1、slave2是从头开始复制
 
 用 slaveof no one  将从机变为主机
 
-### **11.2 原理**
+### 11.2 原理
 
 * Slave启动成功连接到master后会发送一个sync命令
 
@@ -2055,9 +2055,9 @@ public void testLockLua() {
 
 * 加锁和解锁必须具有原子性。
 
-## 15 **Redis6.0新功能**
+## 15 Redis6.0新功能
 
-### 15.1  **ACL**
+### 15.1  ACL
 
 Redis ACL是Access Control List（访问控制列表）的缩写，该功能允许根据可以执行的命令和可以访问的键来限制某些连接。
 
@@ -2099,10 +2099,10 @@ ACL规则
 | 权限添加             | **+<command>**   | 将指令添加到用户可以调用的指令列表中                         |
 | 权限删除             | **-<command>**   | 从用户可执行指令列表移除指令                                 |
 |                      | **+@<category>** | 添加该类别中用户要调用的所有指令，有效类别为@admin、@set、@sortedset…等，通过调用ACL CAT命令查看完整列表。特殊类别@all表示所有命令，包括当前存在于服务器中的命令，以及将来将通过模块加载的命令。 |
-|                      | -@<actegory>     | 从用户可调用指令中移除类别                                   |
+|                      | -@< actegory >     | 从用户可调用指令中移除类别                                   |
 |                      | **allcommands**  | +@all的别名                                                  |
 |                      | **nocommand**    | -@all的别名                                                  |
-| 可操作键的添加或删除 | **~<pattern>**   | 添加可作为用户可操作的键的模式。例如~*允许所有的键           |
+| 可操作键的添加或删除 | **~< pattern>**   | 添加可作为用户可操作的键的模式。例如~*允许所有的键           |
 
 * 通过命令创建新用户默认权限
 
@@ -2114,7 +2114,7 @@ ACL规则
 
   acl setuser user2 on >password ~cached:* +get
 
-### 15.2 **IO多线程**
+### 15.2 IO多线程
 
 IO多线程其实指**客户端交互部分**的**网络IO**交互处理模块**多线程**，而非**执行命令多线程**。Redis6执行命令依然是单线程。
 
@@ -2130,7 +2130,7 @@ io-threads-do-reads yes
 
 io-threads 4
 
-### 15.3 **工具支持Cluster**
+### 15.3 工具支持Cluster
 
 之前老版Redis想要搭集群需要单独安装ruby环境，Redis 5 将 redis-trib.rb 的功能集成到 redis-cli 。另外官方 redis-benchmark 工具开始支持 cluster 模式了，通过多线程的方式对多个分片进行压测。
 
