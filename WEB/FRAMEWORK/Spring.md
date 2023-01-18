@@ -8982,7 +8982,7 @@ spring:
 
 - 默认所有的Endpoint除过shutdown都是开启的。
 
-- 需要开启或者禁用某个Endpoint。配置模式为  **management.endpoint.<endpointName>.enabled = true**
+- 需要开启或者禁用某个Endpoint。配置模式为  **management.endpoint.< endpointName>.enabled = true**
 
   ```yaml
   management:
@@ -9363,9 +9363,19 @@ https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-featu
 
 
 
+# Spring Cache
 
 
+```java
+//启动类
+@EnableCaching
 
+  
+
+@Cacheable(value = "gathering",key="#id") //存 
+@CacheEvict(value = "gathering",key="#gathering.id")//删
+```
+不能设置过期时间
 
 
 
