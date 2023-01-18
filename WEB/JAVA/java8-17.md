@@ -141,7 +141,7 @@ jdk9 私有方法
 
 
 
-<font color="red">面试题:抽象类和接口的异同?</font>
+<font color="red"> 面试题:抽象类和接口的异同? </font>
 
 1. 二者的定义: a. 声明的方式b. 内部的结构(jdk 7 ;jdk 8 ; jdk 9)
 2. 共同点:不能实例化;以多态的方式使用
@@ -826,11 +826,9 @@ Flight Recorder源自飞机的黑盒子
 
 Flight Recorder以前是商业版的特性，在java11当中开源出来，它可以导出事件到文件中，之后可以用Java Mission Control来分析。可以在应用启动时配置java -XX:StartFlightRecording，或者在应用启动之后，使用jcmd来录制，比如
 
-$ jcmd <pid> JFR.start
-
-$ jcmd <pid> JFR.dump filename=recording.jfr
-
-$ jcmd <pid> JFR.stop
+$ jcmd < pid> JFR.start
+$ jcmd < pid> JFR.dump filename=recording.jfr
+$ jcmd < pid> JFR.stop
 
  
 

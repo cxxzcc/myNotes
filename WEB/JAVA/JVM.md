@@ -279,34 +279,34 @@ classLoader只负责class文件的加载，至于它是否可以运行，则由E
 - 从专有数据库中提取.class文件，比较少见
 - 从加密文件中获取，典型的防class文件被反编译的保护措施
 
-##### **链接(linking)**
+##### 链接(linking)
 
-###### **验证（Verify)**:
+###### 验证（Verify):
 
 - 目的在于确保class文件的字节流中包含信息符合当前虚拟机要求，保证被加载类的正确性，不会危害虚拟机自身安全。
 - 主要包括四种验证，文件格式验证，元数据验证，字节码验证，符号引用验证。
 
-###### **准备（Prepare)**:
+###### 准备（Prepare):
 
 - ==为类变量分配内存并且设置该类变量的默认初始值，即零值==。
 - ==这里不包含用final修饰的static,因为final在编译的时候就会分配了，准备阶段会显式初始化==；
 - ==这里不会为实例变量分配初始化，类变量会分配在方法区中，而实例变量是会随着对象一起分配到Java堆中==。
 
-###### **解析（Resolve)**:
+###### 解析（Resolve):
 
 - ==将常量池内的符号引用转换为直接引用的过程。==
 - 事实上，解析操作往往会伴随着JVM在执行完初始化之后再执行。
 - 符号引用就是一组符号来描述所引用的目标。符号引用的字面量形式明确定义在《java虚拟机规范》的class文件格式中。直接引用就是直接指向目标的指针、相对偏移量或一个间接定位到目标的句柄。
 - 解析动作主要针对类或接口、字段、类方法、接口方法、方法类型等。对应常量池中的CONSTANT_Class_info、CONSTANT_Fieldref_info、CONSTANT_Methodref_info等。
 
-##### **初始化(initialization)：**
+##### 初始化(initialization)：
 
-- ==初始化阶段就是执行类构造器方法<clinit>()的过程。==
+- ==初始化阶段就是执行类构造器方法< clinit>()的过程。==
 - 此方法不需定义，是javac编译器自动收集类中的所有==类变量的赋值动作和静态代码块中的语句合并==而来。
 - 构造器方法中指令按语句在源文件中出现的顺序执行。
-- ==<clinit>()不同于类的构造器。（关联：构造器是虚拟机视角下的<init>())==
-- 若该类具有父类，JVM会保证子类的<clinit>()执行前，父类的<clinit>()已经执行完毕。
-- 虚拟机必须保证一个类的<clinit>（)方法在多线程下被同步加锁。
+- ==< clinit>()不同于类的构造器。（关联：构造器是虚拟机视角下的< init>())==
+- 若该类具有父类，JVM会保证子类的< clinit>()执行前，父类的< clinit>()已经执行完毕。
+- 虚拟机必须保证一个类的< clinit>（)方法在多线程下被同步加锁。
 
 ##### 案例
 
@@ -330,7 +330,7 @@ public class ClassInitTest {
 
 ![image-20210831092722465](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210831092722465.png)
 
-#### **类加载器分类**
+#### 类加载器分类
 
 - JVM支持两种类型的类加载器，分别为==引导类加载器（Bootstrap ClassLoader)==和==自定义类加载器(User-Defined ClassLoader)。==
 - 从概念上来讲，自定义类加载器一般指的是程序中由开发人员自定义的一类类加载器，但是Java虚拟机规范却没有这么定义，而是将所有派生于抽象类ClassLoader的类加载器都划分为自定义类加载器。
@@ -349,9 +349,9 @@ ClassLoader parent = systemClassLoader.getParent();
 ClassLoader classLoader = ClassLoaderTest.class.getClassLoader();
 ```
 
-##### **虚拟机自带的加载器**
+##### 虚拟机自带的加载器
 
-###### **启动类加载器（引导类加载器，Bootstrap ClassLoader)**
+###### 启动类加载器（引导类加载器，Bootstrap ClassLoader)
 
 - 这个类加载==使用C/C++语言实现的==，嵌套在JVM内部。
 - 它用来加载Java的核心库（JAVA_HOME/jre/lib/rt.jar、resources.jar或sun.boot.class.path路径下的内容）,用于提供JVM自身需要的类
@@ -359,14 +359,14 @@ ClassLoader classLoader = ClassLoaderTest.class.getClassLoader();
 - 加载扩展类和应用程序类加载器，并指定为他们的父类加载器。
 - 出于安全考虑，Bootstrap启动类加载器只加载包名为java、javax、sun等开头的类
 
-###### **扩展类加载器（Extension ClassLoader)**
+###### 扩展类加载器（Extension ClassLoader)
 
 - ==Java语言编写==，由sun.misc.Launcher$ExtClassLoader实现。
 - ==派生于classLoader类==
 - 父类加载器为启动类加载器
 - 从java.ext.dirs系统属性所指定的目录中加载类库，或从JDK的安装目录的jre/lib/ext子目录（扩展目录）下加载类库。==如果用户创建的JAR放在此目录下，也会自动由扩展类加载器加载==。
 
-###### **应用程序类加载器（系统类加载器，AppClassLoader)**
+###### 应用程序类加载器（系统类加载器，AppClassLoader)
 
 - java语言编写，由sun.misc.Launcher$AppClassLoader实现
 - 派生于ClassLoader类
@@ -385,7 +385,7 @@ for (URL urL : urLs) {
 System.getProperty("java.ext.dirs");
 ```
 
-##### **用户自定义类加载器**
+##### 用户自定义类加载器
 
 在Java的日常应用程序开发中，类的加载几乎是由上述3种类加载器相互配合执行的，在必要时，我们还可以自定义类加载器，来定制类的加载方式。
 
@@ -417,11 +417,11 @@ ClassLoader.getSystemClassLoader();
 DriverManager.getCallerClassLoader()
 ```
 
-#### **双亲委派机制**
+#### 双亲委派机制
 
 Java虚拟机对class文件采用的是==按需加载==的方式，也就是说当需要使用该类时才会将它的class文件加载到内存生成class对象。而且加载某个类的class文件时，Java虚拟机采用的是==双亲委派模式==，即把请求交由父类处理，它是一种任务委派模式。
 
-##### **工作原理**
+##### 工作原理
 
 1. 如果一个类加载器收到了类加载请求，它并不会自己先去加载，而是把这个请求委托给父类的加载器去执行；
 
@@ -431,7 +431,7 @@ Java虚拟机对class文件采用的是==按需加载==的方式，也就是说�
 
 ![image-20210831095939644](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210831095939644.png)
 
-##### **优势**
+##### 优势
 
 - 避免类的重复加载
 - 保护程序安全，防止核心API被随意墓改
@@ -439,7 +439,7 @@ Java虚拟机对class文件采用的是==按需加载==的方式，也就是说�
 - - - 自定义类：java.lang.String
     - 自定义类：java.lang.Shkstart
 
-##### **沙箱安全机制**
+##### 沙箱安全机制
 
 自定义string类，但是在加载自定义string类的时候会率先使用引导类加载器加载，而引导类加载器在加载的过程中会先加载jdk自带的文件(rt.jar包中java\lang\string.class),报错信息说没有main方法，就是因为加载的是rt.jar包中的string类。这样可以保证对java核心源代码的保护，这就是沙箱安全机制。
 
@@ -450,11 +450,11 @@ Java虚拟机对class文件采用的是==按需加载==的方式，也就是说�
 
 换句话说，在JVM中，即使这两个类对象（class对象）来源同一个Class文件，被同一个虚拟机所加载，但只要加载它们的ClassLoader实例对象不同，那么这两个类对象也是不相等的。
 
-##### **对类加载器的引用**
+##### 对类加载器的引用
 
 JVM必须知道一个类型是由启动加载器加载的还是由用户类加载器加载的。如果一个类型是由用户类加载器加载的，那么JVM会==将这个类加载器的一个引用作为类型信息的一部分保存在方法区中==。当解析一个类型到另一个类型的引用的时候，JVM需要保证这两个类型的类加载器是相同的。
 
-##### **Java程序对类的使用方式：主动使用和被动使用。**
+##### Java程序对类的使用方式：主动使用和被动使用。
 
 主动使用，又分为七种情况：
 
@@ -2408,13 +2408,13 @@ CMS整个过程比之前的收集器要复杂，整个过程分为4个主要阶�
 
 
 
-###### **CMS的弊端：**
+###### CMS的弊端：
 
 - ==会产生内存碎片==，导致并发清除后，用户线程可用的空间不足。在无法分配大对象的情况下，不得不提前触发Full GC。
 - ==CMs收集器对CPU资源非常敏感==。在并发阶段，它虽然不会导致用户停顿，但是会因为占用了一部分线程而导致应用程序变慢，总吞吐量会降低。
 - ==CMs收集器无法处理浮动垃圾==。可能出现“Concurrent Mode Failure"失败而导致另一次Full GC的产生。在并发标记阶段由于程序的工作线程和垃圾收集线程是同时运行或者交叉运行的，那么==在并发标记阶段如果产生新的垃圾对象，CMs将无法对这些垃圾对象进行标记，最终会导致这些新产生的垃圾对象没有被及时回收，==从而只能在下一次执行GC时释放这些之前未被回收的内存空间。
 
-###### **参数设置**
+###### 参数设置
 
 - ==-XX:+UseConcMarkSweepGC==手动指定使用CMS收集器执行内存回收任务。
 
@@ -3150,7 +3150,7 @@ information about local objects
 
 
 
-##### **使用2:显示堆内存相关信息**
+##### 使用2:显示堆内存相关信息
 
 ```shell
 -jmap -heap pid
@@ -4178,11 +4178,11 @@ select * from INSTANCEOF java.util.Vector
 
 Java提供了java.lang.management包用于监视和管理Java虚拟机和Java运行时中的其他组件，它允许本地和远程监控和管理运行的Java虚拟机。其中ManagementFactory这个类还是挺常用的。另外还有Runtime类也可以获取一些内存、CPU核数等相关的数据。通过这些api可以监控我们的应用服务器的堆内存使用情况，设置一些國值进行报警等处理。
 
-### **类型一：标准参数选项**
+### 类型一：标准参数选项
 
 比较稳定，特点以-开头
 
-### **类型二：-X参数选项**
+### 类型二：-X参数选项
 
 非标准化参数
 
@@ -4271,7 +4271,7 @@ java -XX:+PrintFlagsFinal -version | grep manageable
 -XX:+PrintVMOptions #打印JVM的参数
 ```
 
-#### **栈**
+#### 栈
 
 ```shell
 -Xss128k   = -XXThreadStackSize=128k
