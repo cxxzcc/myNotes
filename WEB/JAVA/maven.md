@@ -105,6 +105,10 @@ import 依赖导入  使用要求:
 * 路径最短
 * 路径相同先声明优先
 
+jar包冲突
+* idea maven helper 插件
+* maven 插件
+	mvn clean package enforcer:enforce
 
 
 
