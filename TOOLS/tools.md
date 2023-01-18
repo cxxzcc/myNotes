@@ -121,8 +121,13 @@ vagrant destroy 删除虚拟机
 
 ```shell
 git init //初始化
-git config --global user.name ""
+git config --global user.name ""  //修改作者的名字和邮箱  未commit
 git config --global user.email ""
+
+
+git commit --amend --author="Author Name <email@address.com>" //改已commit最近一次commit
+git commit --amend --reset-author --no-edit   //已改过git config 改已commit
+
 
 git add ./文件路径         //存储到git仓库第一步
 git add ./          //全部

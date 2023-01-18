@@ -461,7 +461,7 @@ zset底层使用了两个数据结构
 
 端口号，默认 6379
 
-#### 4.3.4 tcp-backlog**
+#### 4.3.4 tcp-backlog
 
 设置tcp的backlog，backlog其实是一个连接队列，backlog队列总和=未完成三次握手队列 + 已经完成三次握手队列。
 
@@ -469,17 +469,17 @@ zset底层使用了两个数据结构
 
 注意Linux内核会将这个值减小到/proc/sys/net/core/somaxconn的值（128），所以需要确认增大/proc/sys/net/core/somaxconn和/proc/sys/net/ipv4/tcp_max_syn_backlog（128）两个值来达到想要的效果
 
-#### 4.3.5 timeout**
+#### 4.3.5 timeout
 
 一个空闲的客户端维持多少秒会关闭，0表示关闭该功能。即永不关闭。
 
-#### 4.3.6 tcp-keepalive**
+#### 4.3.6 tcp-keepalive
 
 对访问客户端的一种心跳检测，每个n秒检测一次。
 
 单位为秒，如果设置为0，则不会进行Keepalive检测，建议设置成60
 
-### 4.4 GENERAL**
+### 4.4 GENERAL
 
 #### 4.4.1 daemonize
 
@@ -491,23 +491,23 @@ zset底层使用了两个数据结构
 
 存放pid文件的位置，每个实例会产生一个不同的pid文件
 
-#### 4.4.3 **loglevel 
+#### 4.4.3 loglevel 
 
 指定日志记录级别，Redis总共支持四个级别：debug、verbose、notice、warning，默认为**notice**
 
 四个级别根据使用阶段来选择，生产环境选择notice 或者warning
 
-#### 4.4.4 logfile** 
+#### 4.4.4 logfile 
 
 日志文件名称
 
-#### 4.4.5 databases 16** 
+#### 4.4.5 databases 16 
 
 设定库的数量 默认16，默认数据库为0，可以使用SELECT < dbid>命令在连接上指定数据库id
 
 ### 4.5 SECURITY
 
-#### 4.5.1 **设置密码
+#### 4.5.1 设置密码
 
 访问密码的查看、设置和取消
 
@@ -522,22 +522,22 @@ config get requirerepass
 config set requirerepass "123456"
 ```
 
-### 4.6 **LIMITS
+### 4.6 LIMITS
 
-#### 4.6.1 **maxclients
+#### 4.6.1 maxclients
 
 * 设置redis同时可以与多少个客户端进行连接。
 * 默认情况下为10000个客户端。
 * 如果达到了此限制，redis则会拒绝新的连接请求，并且向这些连接请求方发出“max number of clients reached”以作回应。
 
-#### 4.6.2 **maxmemory 
+#### 4.6.2 maxmemory 
 
 * 建议**必须设置**，否则，将内存占满，造成服务器宕机
 * 设置redis可以使用的内存量。一旦到达内存使用上限，redis将会试图移除内部数据，移除规则可以通过maxmemory-policy来指定。
 * 如果redis无法根据移除规则来移除内存中的数据，或者设置了“不允许移除”，那么redis则会针对那些需要申请内存的指令返回错误信息，比如SET、LPUSH等。
 * 但是对于无内存申请的指令，仍然会正常响应，比如GET等。如果你的redis是主redis（说明你的redis有从redis），那么在设置内存使用上限时，需要在系统中留出一些内存空间给同步队列缓存，只有在你设置的是“不移除”的情况下，才不用考虑这个因素。
 
-#### 4.6.3 maxmemory-policy**
+#### 4.6.3 maxmemory-policy
 
 * volatile-lru：使用LRU算法移除key，只对设置了过期时间的键；（最近最少使用）
 
@@ -578,9 +578,9 @@ Redis 客户端可以订阅任意数量的频道。
 
 注：发布的消息没有持久化，如果在订阅的客户端收不到hello，只能收到订阅后发布的消息
 
-## 6 **新数据类型
+## 6 新数据类型
 
-### 6.1 **Bitmaps
+### 6.1 Bitmaps
 
 现代计算机用二进制（位） 作为信息的基础单位， 1个字节等于8位
 
@@ -618,7 +618,7 @@ bitop  and(or/not/xor) <destkey> [key…]
 
 在第一次初始化Bitmaps时， 假如偏移量非常大， 那么整个初始化过程执行会比较慢， 可能会造成Redis的阻塞。
 
-#### 6.3 **Bitmaps与set对比**
+#### 6.3 Bitmaps与set对比
 
 假设网站有1亿用户， 每天独立访问的用户有5千万， 如果每天用集合类型和Bitmaps分别存储活跃用户可以得到表
 
@@ -632,7 +632,7 @@ bitop  and(or/not/xor) <destkey> [key…]
 
 但Bitmaps并不是万金油， 假如该网站每天的独立访问用户很少， 例如只有10万（大量的僵尸用户） ， 那么两者的对比如下表所示， 很显然， 这时候使用Bitmaps就不太合适了， 因为基本上大部分位都是0。
 
-### 6.2 **HyperLogLog**
+### 6.2 HyperLogLog
 
 在工作当中，我们经常会遇到与统计相关的功能需求，比如统计网站PV（PageView页面访问量）,可以使用Redis的incr、incrby轻松实现。
 
@@ -660,7 +660,7 @@ Redis HyperLogLog 是用来做基数统计的算法，HyperLogLog 的优点是�
 
 比如数据集 {1, 3, 5, 7, 5, 7, 8}， 那么这个数据集的基数集为 {1, 3, 5 ,7, 8}, 基数(不重复元素)为5。 基数估计就是在误差可接受的范围内，快速计算基数。
 
-#### 6.2.1 **命令**
+#### 6.2.1 命令
 
 ```bash
 pfadd <key>< element> [element ...]   #添加指定元素到 HyperLogLog 中
@@ -673,13 +673,13 @@ pfmerge<destkey><sourcekey> [sourcekey ...]
 #将一个或多个HLL合并后的结果存储在另一个HLL中，比如每月活跃用户可以使用每天的活跃用户来合并计算可得
 ```
 
-### 6.3 **Geospatial**
+### 6.3 Geospatial
 
-**1.1.**  **Geospatial**
+**1.1.**  Geospatial
 
 Redis 3.2 中增加了对GEO类型的支持。GEO，Geographic，地理信息的缩写。该类型，就是元素的2维坐标，在地图上就是经纬度。redis基于该类型，提供了经纬度设置，查询，范围查询，距离查询，经纬度Hash等常见操作
 
-#### 6.3.1 **命令**
+#### 6.3.1 命令
 
 ```bash
 geoadd<key>< longitude><latitude><member> [longitude latitude member...]   
@@ -711,7 +711,7 @@ geoadd china:city 106.50 29.53 chongqing 114.05 22.52 shenzhen 116.38 39.90 beij
 
 已经添加的数据，是无法再次往里面添加的。
 
-## 7 **Jedis**
+## 7 Jedis
 
 ```xml
 <dependency>
@@ -939,7 +939,7 @@ public class RedisTestController {
 }
 ```
 
-## 9 **事务-锁机制-秒杀**
+## 9 事务-锁机制-秒杀
 
 ### 9.1 事务
 
@@ -983,7 +983,7 @@ unwatch
 
 http://doc.redisfans.com/transaction/exec.html
 
-#### 9.1.1 **Redis事务三特性**
+#### 9.1.1 Redis事务三特性
 
 * **单独的隔离操作** 
 
@@ -1113,7 +1113,7 @@ public class JedisPoolUtil {
 
 
 
-#### 9.2.1 **秒杀并发模拟**
+#### 9.2.1 秒杀并发模拟
 
 使用工具ab模拟测试
 
@@ -1278,7 +1278,7 @@ rdb文件的保存路径，也可以修改。默认为Redis启动时命令行所
 
 dir "/myredis/"
 
-#### 10.1.1 **如何触发RDB快照；保持策略**
+#### 10.1.1 如何触发RDB快照；保持策略
 
 **配置文件中默认的快照配置**
 
@@ -1356,7 +1356,7 @@ rdb的恢复
 
 * 启动Redis, 备份数据会直接加载
 
-#### 10.1.2 **优势**
+#### 10.1.2 优势
 
 * 适合大规模的数据恢复
 
