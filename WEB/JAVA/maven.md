@@ -1,4 +1,4 @@
-
+https://maven.apache.org/index.html
 
 项目管理工具
 * 项目对象模型 (POM：Project Object Model)，
@@ -22,6 +22,20 @@
 * 父pom  单继承
 * 当前pom
 * effective pom 有效pom   mvn help:effective-pom
+
+
+
+
+
+
+
+# Plugin
+https://maven.apache.org/plugins/index.html
+
+
+
+
+
 
 
 
