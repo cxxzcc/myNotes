@@ -8,7 +8,11 @@ https://maven.apache.org/index.html
 * 运行定义在生命周期阶段(phase)中插件(plugin)目标(goal)的逻辑。
 
 
+全局 setting 与用户 setting
 
+conf/setting.xml 全局配置。
+${user.dir}/.m2/settings.xml 用户配置
+maven 会先找用户配置，如果找到则以用户配置文件为准，否则使用全局配置文件。
 
 依赖范围
 * compile：编译范围会被打包。
@@ -24,6 +28,29 @@ https://maven.apache.org/index.html
 * effective pom 有效pom   mvn help:effective-pom
 
 
+
+```xml
+
+
+
+```
+
+
+
+
+
+```xml
+<project > ：文件的根节点
+<modelversion > ： pom.xml 使用的对象模型版本
+<groupId > ：项目名称，一般写项目的域名
+<artifactId > ：模块名称，子项目名或模块名称
+<version > ：产品的版本号 .
+<packaging > ：打包类型，一般有 jar、war、pom 等
+<name > ：项目的显示名，常用于 Maven 生成的文档。
+<description > ：项目描述，常用于 Maven 生成的文档
+<dependencies> ：项目依赖构件配置，配置项目依赖构件的坐标
+<build> ：项目构建配置，配置编译、运行插件等。
+```
 
 
 
@@ -42,6 +69,7 @@ https://maven.apache.org/plugins/index.html
 
 
 # Lifecycle
+Lifecycle 基于插件完成
 
 * Clean
 	pre-clean
