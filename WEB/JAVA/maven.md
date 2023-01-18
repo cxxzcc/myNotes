@@ -65,9 +65,11 @@ maven 会先找用户配置，如果找到则以用户配置文件为准，否�
  test （测试有效）
  强到弱顺序：compile > provided > runtime > test
 
- system：system 范围依赖与 provided 类似，但是你必须显式的提供一个对于本地系统中 JAR文件的路径，需要指定 systemPath 磁盘路径，system依赖不推荐使用。
+system
+	 system 范围依赖与 provided 类似
+	 显式的提供一个对于本地系统中 JAR文件的路径，需要指定 systemPath 磁盘路径，system依赖不推荐使用。
 
-import依赖范围使用要求:
+import 依赖导入  使用要求:
 	打包类型必须是pom
 	必须放在dependencyManagement中
 
@@ -98,8 +100,9 @@ import依赖范围使用要求:
 
 ```
 
-
-
+版本仲裁
+* 路径最短
+* 路径相同先声明优先
 
 
 
