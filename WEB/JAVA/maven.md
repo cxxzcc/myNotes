@@ -17,6 +17,14 @@
 * test：test范围依赖 不会被打包。
 * system：system范围依赖与provided类似，必须显式的提供一个对于本地系统中JAR文件的路径，需要指定systemPath磁盘路径，system依赖不推荐使用
 
+# pom
+* super pom 所有pom的父pom
+* 父pom  单继承
+* 当前pom
+* effective pom 有效pom   mvn help:effective-pom
+
+
+
 
 
 # Lifecycle
