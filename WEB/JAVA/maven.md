@@ -1,5 +1,8 @@
 https://maven.apache.org/index.html
 
+
+![](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/maven概念模型图.png)
+
 项目管理工具
 * 项目对象模型 (POM：Project Object Model)，
 * 标准集合，
@@ -31,26 +34,75 @@ maven 会先找用户配置，如果找到则以用户配置文件为准，否�
 
 ```xml
 
+<!--项目名称，定义为组织名+项目名，类似包名-->
+<groupId>com.itheima</groupId>
+<!-- 模块名称 -->
+<artifactId>hello_maven</artifactId>
+<!-- 当前项目版本号，snapshot 为快照版本即非正式版本，release 为正式发布版本 -->
+<version>0.0.1-SNAPSHOT</version>
+<packaging > ：打包类型
+    jar：执行 package 会打成 jar 包
+    war：执行 package 会打成 war 包
+    pom ：用于 maven 工程的继承，通常父工程设置为 pom
 
-
-```
-
-
-
-
-
-```xml
 <project > ：文件的根节点
 <modelversion > ： pom.xml 使用的对象模型版本
-<groupId > ：项目名称，一般写项目的域名
-<artifactId > ：模块名称，子项目名或模块名称
-<version > ：产品的版本号 .
-<packaging > ：打包类型，一般有 jar、war、pom 等
 <name > ：项目的显示名，常用于 Maven 生成的文档。
 <description > ：项目描述，常用于 Maven 生成的文档
 <dependencies> ：项目依赖构件配置，配置项目依赖构件的坐标
 <build> ：项目构建配置，配置编译、运行插件等。
+
+
+<scope>  </scope>
+<scope>system</scope>
+<systemPath>
+/${project.basedir}/../mes-biz/src/main/resources/lib/sapjco-3.0.6.jar
+</systemPath>
+<!--
+ compile 默认范围 可以不写（编译、测试、运行 都有效 ）
+ provided （编译、测试 有效，运行时无效 防止和 tomcat 下 jar 冲突）
+ runtime （测试、运行 有效 ）
+ test （测试有效）
+ 强到弱顺序：compile > provided > runtime > test
+
+ system：system 范围依赖与 provided 类似，但是你必须显式的提供一个对于本地系统中 JAR文件的路径，需要指定 systemPath 磁盘路径，system依赖不推荐使用。
+
+import依赖范围使用要求:
+	打包类型必须是pom
+	必须放在dependencyManagement中
+
+-->
+
+//排除jar包
+<exclusions>  
+    <exclusion>        
+	    <groupId></groupId>        
+	    <artifactId></artifactId>    
+    </exclusion>
+</exclusions>
+
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+                <encoding>UTF-8</encoding>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+
 ```
+
+
+
+
+
+
 
 
 
