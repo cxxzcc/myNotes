@@ -19,18 +19,18 @@
 
 
 
-# 生命周期
+# Lifecycle
 
 * Clean
 	pre-clean
 	clean
 	post-clean
-* site  生成站点
+* site     生成项目报告，站点，发布站点
 	pre-site 
 	site 
 	post-site 
 	deploy-site
-* default
+* default        构建的核心部分，编译，测试，打包，部署等等
 	validate  
 	generate-sources  
 	process-sources  
