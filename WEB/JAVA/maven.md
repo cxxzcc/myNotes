@@ -98,6 +98,7 @@ import 依赖导入  使用要求:
     </plugins>
 </build>
 
+<profiles> 切环境
 ```
 
 版本仲裁
@@ -161,9 +162,9 @@ Lifecycle 基于插件完成
 
 
 
+# 私服
 
-
-
+nexus
 
 
 
