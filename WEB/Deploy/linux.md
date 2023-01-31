@@ -79,10 +79,17 @@ mv /home/yourhomedirectory/* /dev/null #移动主目录
 
 ## 监控
 
-top
-free
+### 整机top
+整机监控：top htop uptime简版
 
-### vmstat
+
+### 内存free
+查看内存用量
+
+可用/总<20% 内存不足
+
+
+### CPU vmstat
 
 ```shell
 #间隔五秒打印
@@ -130,13 +137,13 @@ wa 列 高
 
 
 
-### iostat
+### IO iostat
 
 默认情况下，它显示了与vmstat相同的CPU使用信息
 
 ```shell
 #查看IO子系统
-# iostat -dx 5
+# iostat -dx 5   -iostat -xdk 2 3
 Linux 3.10.0-957.12.1.el7.x86_64 (iz94pnb6dghz) 	11/19/2021 	_x86_64_	(4 CPU)
 
 Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
