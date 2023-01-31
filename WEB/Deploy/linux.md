@@ -5,7 +5,17 @@ vim /etc/sysconfig/network-scripts/ifcfg-ens33
 #修改ip
 ```
 
-## 常用
+## 常见
+
+### 查看开放端口
+```
+firewall-cmd --list-ports 
+firewall-cmd --reload 
+firewall-cmd --zone=public --add-port=9200/tcp --permanent 
+firewall-cmd --remove-port=8082/tcp --permanent
+```
+
+
 
 
 
