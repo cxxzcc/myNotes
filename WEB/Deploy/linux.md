@@ -77,7 +77,7 @@ mv /home/yourhomedirectory/* /dev/null #移动主目录
 
 
 
-## 监控系统
+## 监控
 
 top
 free
