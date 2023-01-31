@@ -5,6 +5,18 @@ vim /etc/sysconfig/network-scripts/ifcfg-ens33
 #修改ip
 ```
 
+## 常用
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## 破坏
@@ -175,9 +187,13 @@ concurrency = (r/s + w/s) * (svctm/1000)
 
 ```
 
+### 硬盘df -h
 
+### 网络IO ifstat 1
 
 ### mpstat
+查看所有CPU核信息 mpstat -P ALL 2 
+每个进程使用CPU的用量分解信息 pidstat -u 1 -p 进程编号
 
 ### sar
 
