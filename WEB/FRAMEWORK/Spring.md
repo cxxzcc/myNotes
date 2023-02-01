@@ -1,5 +1,7 @@
 # https://spring.io/
 
+
+
 # Spring注解
 
 ## 1.IOC
@@ -879,7 +881,6 @@ AnnotationAwareAspectJAutoProxyCreator.initBeanFactory()
       1. resolveBeforeInstantiation(beanName, mbdToUse);解析BeforeInstantiation
          希望后置处理器在此能返回一个代理对象；如果能返回代理对象就使用，如果不能就继续
          1. 后置处理器先尝试返回对象；
-                         
                          ```java
                          bean = applyBeanPostProcessorsBeforeInstantiation（）：
                              //拿到所有后置处理器，如果是InstantiationAwareBeanPostProcessor;
@@ -3846,7 +3847,7 @@ public class HelloController {
 
 ### 测试HelloWorld
 
-##### a>实现对首页的访问
+##### a > 实现对首页的访问
 
 在请求控制器中创建处理请求的方法
 
