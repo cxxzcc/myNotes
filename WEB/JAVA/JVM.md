@@ -3431,7 +3431,7 @@ MAT提供了一个称为支配树（Dominator Tree)的对象图。支配树体�
 
 ![image-20211119155643090](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20211119155643090.png)
 
-#### **JProfiler**
+#### JProfiler
 
 特点：
 
