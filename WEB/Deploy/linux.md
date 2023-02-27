@@ -93,6 +93,7 @@ systemctl status firewalld 
 	- /etc/X11
 	- /etc/sysconfig
 	- /etc/xinetd.d
+	- /etc/profile 环境变量
 - /home：系统默认的用户家目录，新增用户账号时，用户的家目录都存放在此目录下
 	- ~ 表示当前用户的家目录
 	- ~edu 表示用户 edu 的家目录
@@ -116,7 +117,10 @@ systemctl status firewalld 
 	- /var/log：随时更改的日志文件
 	- /var/spool/mail：邮件存放的目录
 	- /var/run：程序或服务启动后，其 PID 存放在该目录下
-
+* 6个特殊目录 脚本任意位置可执行
+	* /bin   /sbin 
+	* /usr/bin   /usr/sbin 
+	* /usr/local/bin   usr/local/bin 
 
 
 
