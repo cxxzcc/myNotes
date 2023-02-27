@@ -15,6 +15,7 @@ Ctrl+Alt+Shift+T	重构
 
 ctrl+alt+t     Surround With
 ctrl+alt+m  	抽取
+ctrl+f12         文件structure
 ```
 
 
