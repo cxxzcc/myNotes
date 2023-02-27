@@ -14,8 +14,11 @@ firewall-cmd --reload
 firewall-cmd --zone=public --add-port=9200/tcp --permanent 
 firewall-cmd --remove-port=8082/tcp --permanent
 ```
-
-
+### 端口占用
+```shell
+netstat -nlp|grep 8089 
+kill 9578
+```
 
 
 
