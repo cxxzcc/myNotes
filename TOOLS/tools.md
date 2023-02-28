@@ -126,7 +126,7 @@ git config --global user.email ""
 
 
 git commit --amend --author="Author Name <email@address.com>" //改已commit最近一次commit
-git commit --amend --reset-author --no-edit   //已改过git config 改已commit
+git commit --amend --reset-author --no-edit   //已改过git config中的用户名邮箱 改已commit
 
 
 git add ./文件路径         //存储到git仓库第一步
