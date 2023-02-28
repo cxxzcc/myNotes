@@ -34,6 +34,55 @@ nohup java -jar xxx.jar >./logs.txt &
 
 
 
+### 权限
+```shell
+linux文件权限的描述格式
+d rwx rwx rwx
+	d：标识节点类型（d：文件夹 -：文件 |：链接）
+	r：可读
+	w：可写
+	x：可执行
+第一组rwx：表示这个文件的拥有者对它的权限
+第二组rwx：表示这个文件的所属组用户对它的权限
+第三组rwx：表示这个文件的其他用户(除以上两种)对它的权限
+使用二进制表示权限：例如-rw-rw-r--二进制表示为110,110,100，十进制表示为664
+
+添加权限：chmod +r 1.txt 
+删除权限：chmod -r 1.txt
+
+
+
+
+```
+
+### 用户
+```shell
+添加用户
+useradd fred 
+passwd 1234
+
+userdel -r 用户名 ---删除用户 加一个-r表示把用户及用户的主目录都删除 
+exit ---退出会话
+
+增加用户组
+groupadd 组名 ---增加组
+usermod -g 组名 用户名 ---将用户添加到组中 
+usermod -G 组名1,组名2 用户名 ---将用户添加到多个组中 
+gpasswd -d 用户名 组名 ---将用户从组中删除 
+例如：gpasswd -d jack root | gpasswd -d jack sys
+
+groups ---查看当前用户所属组 
+groups jack ---查看指定用户所属组
+
+su：身份切换 su username 输入密码（root切换不需要输入密码） 
+sudo：让普通用户具备root的权限(需要配置 /etc/sudoers)
+
+
+
+
+```
+
+
 
 
 ### 防火墙
