@@ -62,12 +62,17 @@ chmod -R 755 文件名|目录名
 
 ### 用户
 ```shell
-添加用户
-useradd fred 
-passwd 1234
 
-userdel -r 用户名 ---删除用户 加一个-r表示把用户及用户的主目录都删除 
-exit ---退出会话
+useradd -m -g 组 新建用户名 添加新用户 
+	-m 自动建立用户家目录 
+	-g 指定用户所在的组 否则会建立一个和同名的组 
+passwd 用户名 设置密码 
+userdel -r 用户名 删除用户 -r 选项会自动删除用户家目录 
+cat /etc/passwd | grep 用户名 确认用户信息用户信息会保存在 /etc/passwd 文件中
+
+id [用户名] 查看用户 UID 和 GID 信息 
+who 查看当前所有登录的用户列表 
+whoami 查看当前登录用户的账户名
 
 增加用户组
 groupadd 组名 ---增加组
