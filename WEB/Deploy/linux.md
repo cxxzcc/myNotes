@@ -34,6 +34,32 @@ nohup java -jar xxx.jar >./logs.txt &
 
 
 
+  
+
+### 系统信息相关
+```shell
+时间和日期 
+date 查看系统时间 
+cal calendar 查看日历，-y 选项可以查看一年的日历
+
+磁盘信息 
+df -h disk free 显示磁盘剩余空间 
+du -h [目录名] disk usage 显示目录下的文件大小 
+-h 以人性化的方式显示文件大小
+
+进程信息 
+ps aux process status 查看进程的详细状况 
+	x 显示没有控制终端的进程 
+	u 显示进程的详细状态 
+	a 显示终端上的所有进程，包括其他用户的进程 
+	
+top 动态显示运行中的进程并且排序 
+kill [-9] 进程代号 终止指定代号的进程，-9 表示强行终止
+
+
+```
+
+
 ### 权限
 ```shell
 linux文件权限的描述格式
