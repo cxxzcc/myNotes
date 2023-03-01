@@ -80,6 +80,12 @@ commit/rollback/savepoint/grant/revoke
 
 
 
+
+
+
+
+
+
 ## 批量插入
 
 ```sql
