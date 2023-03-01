@@ -34,7 +34,28 @@ nohup java -jar xxx.jar >./logs.txt &
 
 
 
-  
+### 远程管理
+```shell
+shutdown 选项 时间 关机／重启 -r 重启 
+不指定选项和参数，默认表示 1 分钟之后 关闭电脑 
+shutdown -r now # 重新启动操作系统，其中 now 表示现在 
+shutdown now # 立刻关机，其中 now 表示现在
+shutdown 20:25 # 系统在今天的 20:25 会关机 
+shutdown +10 # 系统再过十分钟后自动关机 
+shutdown -c # 取消之前指定的关机计划 
+
+ifconfig 查看网卡配置信息 
+# 查看网卡对应的 IP 地址
+ifconfig | grep inet 
+一台计算机中有可能会有一个 物理网卡 和 多个虚拟网卡， 
+在 Linux 中物理网卡的名字通常以 ensXX 表示 
+127.0.0.1 被称为 本地回环/环回地址，一般用来测试本机网卡是否正常
+
+```
+
+
+
+
 
 ### 系统信息相关
 ```shell
