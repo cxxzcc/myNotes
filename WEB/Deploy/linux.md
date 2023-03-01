@@ -75,11 +75,17 @@ who 查看当前所有登录的用户列表
 whoami 查看当前登录用户的账户名
 
 增加用户组
-groupadd 组名 ---增加组
+groupadd 组名 增加组
+groupdel 组名 删除组
 usermod -g 组名 用户名 ---将用户添加到组中 
 usermod -G 组名1,组名2 用户名 ---将用户添加到多个组中 
 gpasswd -d 用户名 组名 ---将用户从组中删除 
 例如：gpasswd -d jack root | gpasswd -d jack sys
+
+cat /etc/group 确认组信息 
+chgrp -R 组名 文件/目录名 递归修改文件/目录的所属组
+组信息保存在 /etc/group 文件中 
+/etc 目录是专门用来保存 系统配置信息 的目录
 
 groups ---查看当前用户所属组 
 groups jack ---查看指定用户所属组
@@ -88,8 +94,31 @@ su：身份切换 su - username 输入密码（root切换不需要输入密码�
 sudo：让普通用户具备root的权限(需要配置 /etc/sudoers)
 
 
+passwd 文件
+/etc/passwd 文件存放的是用户的信息，由 6 个分号组成的 7 个信息，分别是
+	1.用户名
+	2.密码（x，表示加密的密码）
+	3.UID（用户标识）
+	4.GID（组标识）
+	5.用户全名或本地帐号
+	6.家目录
+	7.登录使用的 Shell，就是登录之后，使用的终端命令，ubuntu 默认是 dash
 
+usermod
+	usermod 可以用来设置 用户 的 主组 ／ 附加组 和 登录 Shell，命令格式如下：
+	主组：通常在新建用户时指定，在 etc/passwd 的第 4 列 GID 对应的组
+	附加组：在 etc/group 中最后一列表示该组的用户列表，用于指定 用户的附加权限
+设置了用户的附加组之后，需要重新登录才能生效！
+# 修改用户的主组（passwd 中的 GID） 
+usermod -g 组 用户名 
+# 修改用户的附加组 
+usermod -G 组 用户名 
+# 修改用户登录 Shell 
+usermod -s /bin/bash 用户名
 
+默认使用 useradd 添加的用户是没有权限使用 sudo 以 root 身份执行命令的 
+可以使用以下命令，将用户添加到 sudo 附加组中 
+usermod -G sudo 用户名
 ```
 
 
