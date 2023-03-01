@@ -32,6 +32,29 @@ nohup java -jar xxx.jar >./logs.txt &
 ```
 ## 命令
 
+### 查
+```shell
+find [路径] -name "*.py" 查找指定路径下扩展名是 .py 的文件，包括子目录
+
+which（重要） 
+/etc/passwd 是用于保存用户信息的文件 
+/usr/bin/passwd 是用于修改用户密码的程序 
+which 命令可以查看执行命令所在位置，例如： 
+which ls # 输出  /bin/ls 
+which useradd # 输出  /usr/sbin/useradd
+```
+  
+
+bin 和 sbin
+
+-   在 Linux 中，绝大多数可执行文件都是保存在 /bin、/sbin、/usr/bin、/usr/sbin
+-   /bin（binary）是二进制执行文件目录，主要用于具体应用
+-   /sbin（system binary）是系统管理员专用的二进制代码存放目录，主要用于系统管理
+-   /usr/bin（user commands for applications）后期安装的一些软件
+-   /usr/sbin（super user commands for applications）超级用户的一些管理程序
+
+cd 这个终端命令是内置在系统内核中的，没有独立的文件，因此用 which 无法找到 cd 命令的位置
+
 
 
 ### 远程管理
@@ -52,8 +75,42 @@ ifconfig | grep inet
 127.0.0.1 被称为 本地回环/环回地址，一般用来测试本机网卡是否正常
 
 ```
+#### 远程登录和复制文件
+```shell
+ssh 用户名@ip 
+ssh [-p port] user@remote 
+	user 是在远程机器上的用户名，如果不指定的话默认为当前用户 
+	remote 是远程机器的地址，可以是 IP／域名，或者是 后面会提到的别名 
+	port 是 SSH Server 监听的端口，如果不指定，就为默认值 22
+免密码登录 
+执行 ssh-keygen 即可生成 SSH 钥匙，一路回车即可 
+执行 ssh-copy-id -p port user@remote，可以让远程服务器记住我们的公钥
+非对称加密算法 
+使用 公钥 加密的数据，需要使用 私钥 解密 
+使用 私钥 加密的数据，需要使用 公钥 解密
+配置别名 ~/.ssh/config 里面追加以下内容：
+Host mac 
+	HostName ip地址 
+	User itheima 
+	Port 22
 
 
+scp 用户名@ip:文件名或路径 用户名@ip:文件名或路径
+-P若远程 SSH 服务器的端口不是 22，需要使用大写字母 -P 选项指定端口
+# 把本地当前目录下的 01.py 文件 复制到 远程 家目录下的 Desktop/01.py 
+# 注意：`:` 后面的路径如果不是绝对路径，则以用户的家目录作为参照路径 
+scp -P port 01.py user@remote:Desktop/01.py 
+# 把远程 家目录下的 Desktop/01.py 文件 复制到 本地当前目录下的 01.py 
+scp -P port user@remote:Desktop/01.py 01.py 
+# 加上 -r 选项可以传送文件夹 
+# 把当前目录下的 demo 文件夹 复制到 远程 家目录下的 Desktop 
+scp -r demo user@remote:Desktop 
+# 把远程 家目录下的 Desktop 复制到 当前目录下的 demo 文件夹 
+scp -r user@remote:Desktop demo
+
+
+
+```
 
 
 
