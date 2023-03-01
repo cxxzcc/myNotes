@@ -95,6 +95,8 @@ q 退出
 ### 查
 ```shell
 find [路径] -name "*.py" 查找指定路径下扩展名是 .py 的文件，包括子目录
+find / -type f -size +1024M
+
 
 which（重要） 
 /etc/passwd 是用于保存用户信息的文件 
@@ -439,8 +441,18 @@ ln -s 被链接的源文件 链接文件
 
 ```
 
+## VM
+网络配置
 
-
+在VMware中修改网关 编辑-虚拟网络编辑器-更改设置-选择对应网卡-子网ip-NAT设置
+修改网络配置文件 /etc/sysconfig/network-scripts/ifcfg-ens33
+重启网络服务 service network restart
+解决 ifconfig 命令不存在， 因为centos7.2的mini版没有安装 yum -y install net-tools
+配置网络：
+IPADDR:192.168.33.89
+NETMASK=255.255.255.0
+GATEWAY=192.168.33.1
+DNS1=192.168.33.1
 
 
 
