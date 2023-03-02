@@ -37,10 +37,134 @@ SQL>select * from player where player_id :player_id;
 
 Oracle和MySQL在进行SQL的查询上面有软件实现层面的差异。Oracle提出了共享池的概念，通过共享池来判断是进行软解析，还是硬解析。
 
+## 基础
+oracle 数据库与其它数据库产品的区别：表和其它的数据库对象都是存储在用户下的
+```sql
+--创建表空间
+create tablespace itheima
+datafile 'c:\itheima.dbf'
+size 100m
+autoextend on  //自动扩展
+next 10m;  //每次10m
+--删除表空间
+drop tablespace itheima;
+
+--创建用户
+create user itheima
+identified by itheima   //密码
+default tablespace itheima;
+
+--给用户授权
+--oracle数据库中常用角色
+connect--连接角色，基本角色
+resource--开发者角色
+dba--超级管理员角色
+--给itheima用户授予dba角色
+grant dba to itheima;
+
+---创建一个person表
+create table person(
+       pid number(20),
+       pname varchar2(10)
+);
+
+---修改表结构
+---添加一列
+alter table person add (gender number(1));
+---修改列类型
+alter table person modify gender char(1);
+---修改列名称
+alter table person rename column gender to sex;
+---删除一列
+alter table person drop column sex;
+
+--删除表中全部记录
+delete from person;
+--删除表结构
+drop table person;
+--先删除表，再次创建表。效果等同于删除表中全部记录。
+--在数据量大的情况下，尤其在表中带有索引的情况下，该操作效率高。
+--索引可以提供查询效率，但是会影响增删改效率。
+truncate table person;
+
+----序列不真的属于任何一张表，但是可以逻辑和表做绑定。
+----序列：默认从1开始，依次递增，主要用来给主键赋值使用。
+----dual：虚表，只是为了补全语法，没有任何意义。
+create sequence s_person;
+select s_person.nextval from dual;
+
+insert into person (pid, pname) values (s_person.nextval, '小明');
+
+----scott用户，密码tiger。
+--解锁scott用户
+alter user scott account unlock;
+--解锁scott用户的密码【此句也可以用来重置密码】
+alter user scott identified by tiger;
+
+单行函数：作用于一行，返回一个值。
+upper('yes')//变大写
+lower('YES')//变小写
+round(56.16, -2)//四舍五入 ， 保留几位
+trunc(56.16, -1)//截取   ，  截到那位
+mod(10, 3)//取余
+nvl()//空值转换
+
+---日期转字符串
+select to_char(sysdate, 'fm yyyy-mm-dd hh24:mi:ss') from dual;
+---字符串转日期
+select to_date('2018-6-7 16:39:50', 'fm yyyy-mm-dd hh24:mi:ss') from dual;
+
+---oracle中专用外连接
+select *
+from emp e, dept d
+where e.deptno(+) = d.deptno;
+
+排序操作会影响rownum的顺序排序操作会影响rownum的顺序
+rownum行号不能写上大于一个正数。
+
+
+
+```
+
+### 条件表达式
+```sql
+---条件表达式的通用写法，mysql和oracle通用
+---给emp表中员工起中文名
+select e.ename, 
+       case e.ename
+         when 'SMITH' then '曹贼'
+           when 'ALLEN' then '大耳贼'
+             when 'WARD' then '诸葛小儿'
+               --else '无名'
+                 end
+from emp e;
+---判断emp表中员工工资，如果高于3000显示高收入，如果高于1500低于3000显示中等收入，
+-----其余显示低收入
+select e.sal, 
+       case 
+         when e.sal>3000 then '高收入'
+           when e.sal>1500 then '中等收入'
+               else '低收入'
+                 end
+from emp e;
+----oracle中除了起别名，都用单引号。
+----oracle专用条件表达式
+select e.ename, 
+        decode(e.ename,
+          'SMITH',  '曹贼',
+            'ALLEN',  '大耳贼',
+              'WARD',  '诸葛小儿',
+                '无名') "中文名"             
+from emp e;
 
 
 
 
+
+
+
+
+```
 
 
 
