@@ -171,3 +171,47 @@ docker run -di --name=gogs -p 10022:22 -p 3000:3000 -v /var/gogsdata:/data gogs/
 
 
 
+# fore-end tools
+
+## NPM
+
+node.js package management
+
+全球最大的模块生态系统，里面所有的模块都是开源免费的；也是Node.js的包管理工具。
+https://www.npmjs.com/ 
+
+安装
+	全局安装 -g：
+    全局安装的包位于Node.js环境的node_modules目录下，全局安装的包一般用于命令行工具
+    本地安装：
+    本地安装的包在当前目录下的node_modules里面，本地安装的包一般用于实际的开发工作
+
+命令
+
+```shell
+安装包（如果没有指定版本号，那么安装最新版本）
+npm install -g 包名称 (全局安装)
+npm install 包名称 (本地安装)
+
+安装包的时候可以指定版本
+npm install -g 包名称@版本号
+
+卸载包
+npm uninstall -g 包名
+
+更新包（更新到最新版本）
+npm update -g 包名
+
+--save 向生产环境添加依赖 dependencies
+--save-dev 向开发环境添加依赖 DevDependencies
+
+```
+
+## yarn
+js包管理工具
+
+
+
+
+
+
