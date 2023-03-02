@@ -121,8 +121,13 @@ where e.deptno(+) = d.deptno;
 
 排序操作会影响rownum的顺序排序操作会影响rownum的顺序
 rownum行号不能写上大于一个正数。
+select * from(
+    select rownum rn, tt.* from(
+          select * from emp order by sal desc
+    ) tt where rownum<11
+) where rn>5
 
-
+ORACLE 的 NULL 只能用 IS 或 IS NOT 进行比较，而不能用 = 、!= 、<> 进行比较
 
 ```
 
@@ -156,16 +161,145 @@ select e.ename,
               'WARD',  '诸葛小儿',
                 '无名') "中文名"             
 from emp e;
-
-
-
-
-
-
-
-
 ```
 
 
 
+
+
+
+
+## pl/sql
+Procedure Language/SQL
+是对sql语言的扩展，使得sql语言具有过程化编程的特性。
+比一般的过程化编程语言，更加灵活高效。
+主要用来编写存储过程和存储函数等
+```sql
+declare
+    说明部分 （变量说明，游标申明，例外说明 〕
+begin
+    语句序列 （DML 语句〕…
+exception
+    例外处理语句
+End;
+--常量定义：married constant boolean:=true
+
+---声明方法
+---赋值操作可以使用:=也可以使用into查询语句赋值
+declare
+    i number(2) := 10;
+    s varchar2(10) := '小明';
+    ena emp.ename%type;---引用型变量
+    emprow emp%rowtype;---记录型变量
+begin
+    dbms_output.put_line(i);
+    dbms_output.put_line(s);
+    select ename into ena from emp where empno = 7788;
+    dbms_output.put_line(ena);
+    select * into emprow from emp where empno = 7788;
+    dbms_output.put_line(emprow.ename || '的工作为：' || emprow.job);
+end;
+
+```
+
+### 条件
+```sql
+语法 1：
+    IF 条件 THEN 语句 1;
+        语句 2;
+        END IF;
+语法 2：
+    IF 条件 THEN 语句序列 1；
+        ELSE 语句序列 2；
+        END IF；
+语法 3：
+    IF 条件 THEN 语句;
+    ELSIF 语句 THEN 语句;
+    ELSE 语句;
+    END IF;
+
+---pl/sql中的if判断
+---输入小于18的数字，输出未成年
+---输入大于18小于40的数字，输出中年人
+---输入大于40的数字，输出老年人
+declare
+  i number(3) := &ii; //输入 & + 任意变量名
+begin
+  if i<18 then
+    dbms_output.put_line('未成年');
+  elsif i<40 then
+    dbms_output.put_line('中年人');
+  else
+    dbms_output.put_line('老年人');
+  end if;
+end;
+```
+### 循环
+```sql
+---pl/sql中的loop循环
+---用三种方式输出1到10是个数字
+---while循环
+declare
+  i number(2) := 1;
+begin
+  while i<11 loop
+     dbms_output.put_line(i);
+     i := i+1;
+  end loop;  
+end;
+---exit循环
+declare
+  i number(2) := 1;
+begin
+  loop
+    exit when i>10;
+    dbms_output.put_line(i);
+    i := i+1;
+  end loop;
+end;
+---for循环
+declare
+begin
+  for i in 1..10 loop
+     dbms_output.put_line(i);  
+  end loop;
+end;
+```
+
+### 游标
+```sql
+---游标：可以存放多个对象，多行记录。
+---输出emp表中所有员工的姓名
+declare
+  cursor c1 is select * from emp;
+  emprow emp%rowtype;
+begin
+  open c1;
+     loop
+         fetch c1 into emprow;
+         exit when c1%notfound;
+         dbms_output.put_line(emprow.ename);
+     end loop;
+  close c1; 
+end;
+
+-----给指定部门员工涨工资
+declare
+  cursor c2(eno emp.deptno%type) 
+  is select empno from emp where deptno = eno;
+  en emp.empno%type;
+begin
+  open c2(10);
+     loop
+        fetch c2 into en;
+        exit when c2%notfound;
+        update emp set sal=sal+100 where empno=en;
+        commit;
+     end loop;  
+  close c2;
+end;
+```
+##存储过程
+
+存储过程：存储过程就是提前已经编译好的一段pl/sql语言，放置在数据库端可以直接被调用。这一段pl/sql一般都是固定步骤的业务。
 
