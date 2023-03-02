@@ -109,6 +109,29 @@ TaskGroup：负责启动Task。
 	高访问量高并发对数据库的压力。 
 	读写请求数据不一致
 
+① Cobar属于阿里B2B事业群，始于2008年，在阿里服役3年多，接管3000+个MySQL数据库的schema, 集群日处理在线SQL请求50亿次以上。由于Cobar发起人的离职，Cobar停止维护。 
+② Mycat是开源社区在阿里cobar基础上进行二次开发，解决了cobar存在的问题，并且加入了许多新 的功能在其中。青出于蓝而胜于蓝。 
+③ OneProxy基于MySQL官方的proxy思想利用c进行开发的，OneProxy是一款商业收费的中间件。舍 弃了一些功能，专注在性能和稳定性上。 
+④ kingshard由小团队用go语言开发，还需要发展，需要不断完善。 
+⑤ Vitess是Youtube生产在使用，架构很复杂。不支持MySQL原生协议，使用需要大量改造成本。 
+⑥ Atlas是360团队基于mysql proxy改写，功能还需完善，高并发下不稳定。 
+⑦ MaxScale是mariadb（MySQL原作者维护的一个版本） 研发的中间件 
+⑧ MySQLRoute是MySQL官方Oracle公司发布的中间件
+
+[http://www.mycat.io/](http://www.mycat.io/)
+[http://www.mycat.org.cn/](http://www.mycat.org.cn/)
+
+作用
+* 读写分离
+* 数据分片 垂直拆分（分库）、水平拆分（分表）、垂直+水平拆分（分库分表）
+* 多数据源整合
+
+
+
+
+
+
+
 
 
 
