@@ -96,3 +96,21 @@ TaskGroup：负责启动Task。
 ### 与 Sqoop 的对比
 
 ![image-20211013103257614](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20211013103257614.png)
+
+
+## MyCat
+数据库中间件
+
+中间件：连接软件组件和应用的计算机软件，以便于软件各部件之间的沟通
+数据库中间件：连接java应用程序和数据库
+
+为什么要用Mycat？
+	Java与数据库紧耦合。 
+	高访问量高并发对数据库的压力。 
+	读写请求数据不一致
+
+
+
+
+
+
