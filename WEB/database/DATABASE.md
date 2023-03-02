@@ -35,36 +35,11 @@ insert/delete/update/select
 
 ```
 DESCRIBE 表名   显示表结构
+delete from 表名; -- 不推荐使用。有多少条记录就会执行多少次删除操作
+TRUNCATE TABLE 表名; -- 推荐使用，效率更高 先删除表，然后再创建一张一样的表。
 ```
 
 ## DQL数据查询语言
-
-### 运算符
-
-```
-+-* /(DIV)  %(MOD)
-
-#比较运算符
-=  <=> (可以对null判断)  <> != 
-IS NULL / IS NOT NULL / ISNULL
-GREATEST(最大) LEAST(最小)
-in/not in
-like
-REGEXP/RLIKE 正则表达式
-
-逻辑运算符
-not/!
-and/&&
-or/||
-xor 异或 只满足一个
-```
-
-### 分页
-
-```
-limit a,b
-limit b offset a (8.0新)
-```
 
 
 
@@ -86,80 +61,6 @@ commit/rollback/savepoint/grant/revoke
 
 
 
-
-
-
-## 批量插入
-
-```sql
---只对当前数据库生效，重启失效
-show variables like 'log_bin_trust_function_creators';
-set global log_bin_trust_function_creators=1;
-
---随机字符串
-DELIMITER $$
-CREATE FUNCTION rand_string(n INT) RETURNS VARCHAR(255)
-BEGIN
-    DECLARE chars_str VARCHAR(100) DEFAULT 'abcdefghijklmnopqrstuvwxyZABCDEFJHIJKLMNOPQRSTUVWXYZ';
-    DECLARE return_str VARCHAR(255)DEFAULT";
-    DECLARE i INT DEFAULT 0;
-    WHILEi<nDO
-    SET return_str =CONCAT(return_str,SUBSTRING(chars_str,FLOOR(1+RAND()*52),1);
-    SETi=i+1;
-    END WHILE;
-    RETURN return_str;
-END $$ I
-```
-
-```sql
---用于随机产生部门编号
-DELIMITER $$
-CREATE FUNCTION rand_num()
-RETURNS INT(5)
-BEGIN
-    DECLARE i INT DEFAULT 0;
-    SETi=FLOOR(100+RAND()*10);
-RETURN i;
-END$$I
---假如要删除
-#drop function rand_num;
-
---批量插入
-DELIMITER $$
-CREATE PROCEDURE insert_emp(IN START INT(10),IN max_num INT(10))
-BEGIN
-DECLARE i INT DEFAULT 0;
-#set autocommit=0把autocommit设置成0
-    SET autocommit = 0;
-    REPEAT
-    SETi=i+1;
-    INSERT INTO emp (empno, ename ,job ,mgr ,hiredate ,sal ,comm ,deptno ) VALUES ((START+i)
-    ,rand_string(6),'SALESMAN',0001,CURDATE(),2000,400,rand_num();
-    UNTILi=max_num
-END REPEAT;
-COMMIT;
-END $$
-```
-
-```sql
---执行存储过程，往dept表添加随机数据
-DELIMITER $$
-CREATE PROCEDURE insert_dept(IN START INT(10),IN max_num INT(10))
-BEGIN
-    DECLARE i INT DEFAULT 0;
-    SET autocommit =0;
-    REPEAT
-    SETi=i+1;
-    INSERT INTO dept (deptno ,dname,loc ) VALUES ((START+i) ,rand_string(10),rand_string(8);
-    UNTILi=max_num
-    END REPEAT;
-	COMMIT ; 
-END $$
-                                                  
---调用
-DELIMITER ;
-CALL insert_dept(100,10); 
-```
 
 
 

@@ -4,6 +4,33 @@
 ## 基础
 
 
+### 运算符
+
+```
++-* /(DIV)  %(MOD)
+
+#比较运算符
+=  <=> (可以对null判断)  <> != 
+IS NULL / IS NOT NULL / ISNULL
+GREATEST(最大) LEAST(最小)
+in/not in
+like
+REGEXP/RLIKE 正则表达式
+
+逻辑运算符
+not/!
+and/&&
+or/||
+xor 异或 只满足一个
+```
+
+### 分页
+
+```
+limit a,b
+limit b offset a (8.0新)
+```
+
 
 
 
