@@ -299,7 +299,251 @@ begin
   close c2;
 end;
 ```
-##存储过程
+### 存储过程
 
 存储过程：存储过程就是提前已经编译好的一段pl/sql语言，放置在数据库端可以直接被调用。这一段pl/sql一般都是固定步骤的业务。
 
+```sql
+create [or replace] PROCEDURE 过程名[(参数名 in/out 数据类型)]
+AS
+begin
+    PLSQL 子程序体；
+End;
+或者
+create [or replace] PROCEDURE 过程名[(参数名 in/out 数据类型)]
+is
+begin
+    PLSQL 子程序体；
+End 过程名; 
+
+----给指定员工涨100块钱
+create or replace procedure p1(eno emp.empno%type)
+is
+
+begin
+   update emp set sal=sal+100 where empno = eno;
+   commit;
+end;
+
+
+---out类型参数如何使用
+---使用存储过程来算年薪
+create or replace procedure p_yearsal(eno emp.empno%type, yearsal out number)
+is
+   s number(10);
+   c emp.comm%type;
+begin
+   select sal*12, nvl(comm, 0) into s, c from emp where empno = eno;
+   yearsal := s+c;
+end;
+
+---测试p_yearsal
+declare
+  yearsal number(10);
+begin
+  p_yearsal(7788, yearsal);
+  dbms_output.put_line(yearsal);
+end;
+
+
+```
+
+### 存储函数
+```sql
+create or replace function 函数名(Name in type, Name in type, ...) return 数据类型 is
+    结果变量 数据类型;
+begin
+    return(结果变量);
+end 函数名;
+
+----通过存储函数实现计算指定员工的年薪
+----存储过程和存储函数的参数都不能带长度
+----存储函数的返回值类型不能带长度
+create or replace function f_yearsal(eno emp.empno%type) return number
+is
+  s number(10);     
+begin
+  select sal*12+nvl(comm, 0) into s from emp where empno = eno;
+  return s;
+end;
+
+----测试f_yearsal
+----存储函数在调用的时候，返回值需要接收。
+declare
+  s number(10); 
+begin
+  s := f_yearsal(7788);
+  dbms_output.put_line(s);
+end;
+
+in和out类型参数的区别
+凡是涉及到into查询语句赋值或者:=赋值操作的参数，都必须使用out来修饰。
+
+存储过程和存储函数的区别
+	语法区别：关键字不一样，
+		存储函数比存储过程多了两个return。
+	本质区别：存储函数有返回值，而存储过程没有返回值。
+		如果存储过程想实现有返回值的业务，我们就必须使用out类型的参数。
+		即便是存储过程使用了out类型的参数，起本质也不是真的有了返回值，
+		而是在存储过程内部给out类型参数赋值，在执行完毕后，我们直接拿到输出类型参数的值。
+
+----使用存储函数有返回值的特性，来自定义函数
+----使用存储函数来实现提供一个部门编号，输出一个部门名称。
+create or replace function fdna(dno dept.deptno%type) return dept.dname%type
+is
+  dna dept.dname%type;
+begin
+  select dname into dna from dept where deptno = dno;
+  return dna;
+end;
+---使用fdna存储函数来实现案例需求：查询出员工姓名，员工所在部门名称。
+select e.ename, fdna(e.deptno)
+from emp e;
+
+
+```
+
+### 触发器
+
+就是制定一个规则，==增删改==操作时，只要满足该规则，自动触发，无需调用。
+语句级触发器：不包含有for each row的触发器。
+行级触发器：包含有for each row的就是行级触发器。
+加for each row是为了使用:old或者:new对象或者一行记录。
+```sql
+CREATE [or REPLACE] TRIGGER 触发器名
+    {BEFORE | AFTER}
+    {DELETE | INSERT | UPDATE [OF 列名]}
+    ON 表名
+    [FOR EACH ROW [WHEN(条件) ] ]
+begin
+    PLSQL 块
+End 触发器名
+
+
+---语句级触发器
+----插入一条记录，输出一个新员工入职
+create or replace trigger t1
+after
+insert
+on person
+declare
+
+begin
+  dbms_output.put_line('一个新员工入职');
+end;
+---触发t1
+insert into person values (1, '小红');
+commit;
+
+
+---语句级触发器
+----插入一条记录，输出一个新员工入职
+create or replace trigger t1
+after
+insert
+on person
+declare
+
+begin
+  dbms_output.put_line('一个新员工入职');
+end;
+---触发t1
+insert into person values (1, '小红');
+commit;
+
+
+----触发器实现主键自增。【行级触发器】
+---分析：在用户做插入操作的之前，拿到即将插入的数据，
+------给该数据中的主键列赋值。
+create or replace trigger auid
+before
+insert
+on person
+for each row
+declare
+
+begin
+  select s_person.nextval into :new.pid from dual;
+end;
+
+```
+### javaDemo
+```java
+public class OracleDemo {
+
+    @Test
+    public void javaCallOracle() throws Exception {
+        //加载数据库驱动
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        //得到Connection连接
+        Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@192.168.88.6:1521:orcl", "itheima", "itheima");
+        //得到预编译的Statement对象
+        PreparedStatement pstm = connection.prepareStatement("select * from emp where empno = ?");
+        //给参数赋值
+        pstm.setObject(1, 7788);
+        //执行数据库查询操作
+        ResultSet rs = pstm.executeQuery();
+        //输出结果
+        while(rs.next()){
+            System.out.println(rs.getString("ename"));
+        }
+        //释放资源
+        rs.close();
+        pstm.close();
+        connection.close();
+    }
+
+    /**
+     * java调用存储过程
+     * {?= call <procedure-name>[(<arg1>,<arg2>, ...)]}   调用存储函数使用
+     *  {call <procedure-name>[(<arg1>,<arg2>, ...)]}   调用存储过程使用
+     * @throws Exception
+     */
+    @Test
+    public void javaCallProcedure() throws Exception {
+        //加载数据库驱动
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        //得到Connection连接
+        Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@192.168.88.6:1521:orcl", "itheima", "itheima");
+        //得到预编译的Statement对象
+        CallableStatement pstm = connection.prepareCall("{call p_yearsal(?, ?)}");
+        //给参数赋值
+        pstm.setObject(1, 7788);
+        pstm.registerOutParameter(2, OracleTypes.NUMBER);
+        //执行数据库查询操作
+        pstm.execute();
+        //输出结果[第二个参数]
+        System.out.println(pstm.getObject(2));
+        //释放资源
+        pstm.close();
+        connection.close();
+    }
+
+
+    /**
+     * java调用存储函数
+     * {?= call <procedure-name>[(<arg1>,<arg2>, ...)]}   调用存储函数使用
+     *  {call <procedure-name>[(<arg1>,<arg2>, ...)]}   调用存储过程使用
+     * @throws Exception
+     */
+    @Test
+    public void javaCallFunction() throws Exception {
+        //加载数据库驱动
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        //得到Connection连接
+        Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@192.168.88.6:1521:orcl", "itheima", "itheima");
+        //得到预编译的Statement对象
+        CallableStatement pstm = connection.prepareCall("{?= call f_yearsal(?)}");
+        //给参数赋值
+        pstm.setObject(2, 7788);
+        pstm.registerOutParameter(1, OracleTypes.NUMBER);
+        //执行数据库查询操作
+        pstm.execute();
+        //输出结果[第一个参数]
+        System.out.println(pstm.getObject(1));
+        //释放资源
+        pstm.close();
+        connection.close();
+    }
+}
+```
