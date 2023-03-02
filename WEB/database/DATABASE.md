@@ -21,14 +21,14 @@
 
 ## DDL 数据定义语言
 
+用来定义数据库对象：数据库，表，列等
 ```shell
 create/alter/drop/rename/truncate
 ```
 
-
-
 ## DML数据操作语言
 
+用来对数据库中表的数据进行增删改
 ```
 insert/delete/update/select
 ```
@@ -36,6 +36,8 @@ insert/delete/update/select
 ```
 DESCRIBE 表名   显示表结构
 ```
+
+## DQL数据查询语言
 
 ### 运算符
 
@@ -72,8 +74,9 @@ limit b offset a (8.0新)
 
 
 
-## DCL数据控制语言 
+## DCL数据控制语言
 
+用来定义数据库的访问权限和安全级别，及创建用户
 ```
 commit/rollback/savepoint/grant/revoke
 ```
