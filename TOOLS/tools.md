@@ -209,6 +209,81 @@ npm update -g 包名
 
 ## yarn
 js包管理工具
+```shell
+安装yarn工具：
+npm install -g yarn
+
+初始化包
+npm init
+yarn init
+
+安装包
+npm install xxx --save
+yarn add xxx
+
+移除包
+npm uninstall xxx
+yarn remove xxx
+
+更新包
+npm update xxx
+yarn upgrade xxx
+
+安装开发依赖的包
+npm install xxx --save-dev
+yarn add xxx --dev
+
+全局安装
+npm install -g xxx
+yarn global add xxx
+
+设置下载镜像的地址
+npm config set registry url
+yarn config set registry url
+
+安装所有依赖
+npm install
+yarn install
+
+执行包
+npm run
+yarn run
+
+```
+## gulp
+
+流式构建工具
+[官网](http://www.gulpjs.com) [中文网](http://www.gulpjs.com.cn)
+
+5个核心方法
+	gulp.task('任务名',function(){}) // 创建任务。
+	gulp.src('./*.css') 指定想要处理的文件
+	gulp.dest() // 指定最终处理后的文件的存放路径
+	gulp.watch() // 自动的监视文件的变化，然后执行相应任务。
+	gulp.run('任务名')，直接执行相应的任务。
+
+```shell
+npm install gulp-cli -g //安装
+npm install gulp --save //项目安装
+```
+还需要在当前项目中新建一个文件: gulpfile.js
+```js
+ var gulp =  require('gulp');
+
+    // 创建任务
+    // 第一个参数: 任务名
+    // 第二个参数: 回调函数,当我们执行任务时就会执行这个函数
+    gulp.task('test', function(){
+      console.log(123)
+})
+```
+执行任务: gulp 任务名
+	示例: gulp test
+
+
+
+
+
 
 
 
