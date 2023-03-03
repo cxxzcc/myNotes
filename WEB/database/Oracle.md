@@ -163,8 +163,20 @@ select e.ename,
 from emp e;
 ```
 
-
-
+### 视图
+```sql
+---创建视图【必须有dba权限】
+create view v_emp as select ename, job from emp;
+---查询视图
+select * from v_emp;
+---修改视图[不推荐]
+update v_emp set job='CLERK' where ename='ALLEN';
+---创建只读视图
+create view v_emp1 as select ename, job from emp with read only;
+```
+视图的作用
+	视图可以屏蔽掉一些敏感字段。
+	保证总部和分部数据及时统一。
 
 
 
