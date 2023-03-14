@@ -177,6 +177,16 @@ create view v_emp1 as select ename, job from emp with read only;
 视图的作用
 	视图可以屏蔽掉一些敏感字段。
 	保证总部和分部数据及时统一。
+### 索引
+
+
+
+
+### 锁和事务
+
+
+
+
 
 
 
