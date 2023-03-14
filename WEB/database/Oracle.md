@@ -221,9 +221,37 @@ alter index ind_1 rebuild [online] [tablespace name];
 
 
 ### 锁和事务
+原子性,一致性,隔离性,持久性(oracle主要是靠 'rudo' 日志)
+
+共享锁与排他锁
+只有有事物才会产生锁，保证数据的完整性和正确性
+
+锁类型：
+* DML锁（data locks，数据锁），用于保护数据的完整性。  TX(行级锁),TM(表级锁)，我们日常所使用的DML操作就会产生事物和锁。
+* DDL锁（dictionary locks，数据字典锁），用于保护数据库对象的结构，如表、索引等的结构定义。
+* SYSTEM锁（internal locks and latches），保护数据库的内部结构
+
+```sql
+登录的用户需要使用sysdba形式：conn system/tiger@orcl as sysdba;
+查看事务：select * from v$transaction;
+
+查看锁：select * from v$lock;
 
 
 
+加锁
+select * from emp1 where deptno = 10 for update;
+select * from emp1 where empno = 7782 for update nowait;  不等待
+select * from emp1 where empno = 7782 for update wait 5;  等几秒
+select * from emp1 where job= 'CLERK' for update skip locked;  跳过被锁记录
+
+如果这个锁占用的时间太长，我们可以通过管理员杀掉session用户。
+首先要找到是哪个sid占用了太长时间，查看v$lock表
+然后根据v$lock表的SID，去v$session里面去找到，进行kill操作。
+ select sid, serial# from v$session where sid = 170;
+ alter system kill session 'sid,serial';
+
+```
 
 
 
