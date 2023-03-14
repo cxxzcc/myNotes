@@ -178,6 +178,44 @@ create view v_emp1 as select ename, job from emp with read only;
 	视图可以屏蔽掉一些敏感字段。
 	保证总部和分部数据及时统一。
 ### 索引
+```sql
+查看索引在建在那表、列：
+   select * from user_indexes;
+   select * from user_ind_columns;
+
+---单列索引
+---创建单列索引
+create index idx_ename on emp(ename);
+---单列索引触发规则，条件必须是索引列中的原始值。
+---单行函数，模糊查询，都会影响索引的触发。
+select * from emp where ename='SCOTT'
+
+---复合索引
+---创建复合索引
+create index idx_enamejob on emp(ename, job);
+---复合索引中第一列为优先检索列
+---如果要触发复合索引，必须包含有优先检索列中的原始值。
+select * from emp where ename='SCOTT' and job='xx';---触发复合索引
+select * from emp where ename='SCOTT' or job='xx';---不触发索引
+select * from emp where ename='SCOTT';---触发单列索引
+
+
+```
+索引碎片问题：由于对基表做DML操作，导致索引表块的自动更改操作，尤其是基表的delete操作会引起index表的index_entries的逻辑删除，注意只有当一个索引块中的全部index_entry都被删除了，才会把这个索引块删除，索引对基表的delete、insert操作都会产生索引碎片问题。
+ 
+在Oracle文档里并没有清晰的给出索引碎片的量化标准,Oracle建议通过Segment Advisor(段顾问）解决表和索引的碎片问题，如果你想自行解决，可以通过查看index_stats视图，当以下三种情形之一发生时，说明积累的碎片应该整理了（仅供参考）。
+1.HEIGHT >=4   
+2 PCT_USED< 50%   
+3 DEL_LF_ROWS/LF_ROWS>0.2
+```sql
+分析索引：
+analyze index ind_1 validate structure;
+select name,HEIGHT,PCT_USED,DEL_LF_ROWS/LF_ROWS from index_stats;
+整理索引
+alter index ind_1 rebuild [online] [tablespace name];
+```
+
+
 
 
 
