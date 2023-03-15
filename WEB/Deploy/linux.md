@@ -285,9 +285,13 @@ usermod -s /bin/bash 用户名
 默认使用 useradd 添加的用户是没有权限使用 sudo 以 root 身份执行命令的 
 可以使用以下命令，将用户添加到 sudo 附加组中 
 usermod -G sudo 用户名
+
+
 ```
 
-
+```powershell
+minikube start --registry-mirror=https://registry.docker-cn.com  --image-mirror-country cn 
+```
 
 
 ### 防火墙
