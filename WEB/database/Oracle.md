@@ -253,6 +253,30 @@ select * from emp1 where job= 'CLERK' for update skip locked;  跳过被锁记�
 
 ```
 
+TX :一种锁
+TM :五种: RS.RX、s.SRX、X
+	mode : 23456
+ROW SHARE
+行共享(RS)，允许其他用户同时更新其他行，允许其他用户同时加共享锁，不允许有独占(排他性质)的锁
+ROW EXCLUSIVE 行排他(RX)， 允许其他用户同时更新其他行，只允许其他用户同时加行共享锁或者行排他锁
+SHARE共享(S)，不允许其他用户同时更新任何行，只允许其他用户同时加共享锁或者行共享锁
+SHARE ROW EXCLUSIV(SRX)共享行排他， 不允许其他用户同时更新其他行，只允许其他用户同时加行共享锁
+EXCLUSIVE (&)排他，其他用户禁止更新任何行，禁止其他用户同时加任何排他锁。
+
+```sql
+sql语句                      加锁模式                           许可其他用户的加锁模式
+select * from table_ name    无                               RS,RX,S,SRX,X
+insert, update, delete (DMI操作)  RX                               RS,RX
+select * from table_name for update  RX                              RS,RX
+lock table table_name in rou share mode  RS                        RS,RX,S,SRX
+lock table table_name in rou exclusive mode RX                       RS,RX
+lock table table_name in share mode          S                      RS,S
+lock table table_name in share rov exclusive mode  SRX                   RS
+lock table table_name in exclusive mode           X                    无
+```
+
+
+
 
 
 
