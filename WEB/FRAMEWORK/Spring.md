@@ -18,7 +18,7 @@ Native Image是一项创新技术，可将Java代码编译成独立的本机可�
 
 
 
-
+win 搜索 x64
 
 
 
