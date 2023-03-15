@@ -289,10 +289,6 @@ usermod -G sudo 用户名
 
 ```
 
-```powershell
-minikube start --registry-mirror=https://registry.docker-cn.com  --image-mirror-country cn 
-```
-
 
 ### 防火墙
 ```shell
