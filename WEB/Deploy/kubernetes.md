@@ -534,6 +534,15 @@ $ kubectl get pod,svc
 
 ### minikube
 
+```
+wsl + docker + windows
+minikube start --kubernetes-version=v1.23.8 --image-mirror-country=cn
+```
+
+
+
+
+
 https://github.com/kubernetes/minikube/releases
 
 下载minikube -windows- amd64.exe改名为minikube.exe
@@ -553,6 +562,8 @@ minikube start --vm-driver=none --registry-mirror=https://registry.docker-cn.com
 
 kubectl get pods --all-namespaces
 ```
+
+
 
 ### test
 
