@@ -9308,6 +9308,23 @@ public class HelloApplication {
     }  
   
 }
+
+
+@Service  
+public class TestRetryServiceImpl implements TestRetryService {  
+   
+    @Override  
+    @Retryable(value = Exception.class,maxAttempts = 3,backoff = @Backoff(delay = 2000,multiplier = 1.5))  
+    public int test(int code) throws Exception{  
+        System.out.println("test被调用,时间："+LocalTime.now());  
+          if (code==0){  
+              throw new Exception("情况不对头！");  
+          }  
+        System.out.println("test被调用,情况对头了！");  
+   
+        return 200;  
+    }  
+}
 ```
 
 
