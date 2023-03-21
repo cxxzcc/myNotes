@@ -9500,7 +9500,6 @@ void isAssignable(Class superType, Class subType, String message)
 ```
 
 2. 对象、数组、集合
-
 ```java
 // 获取对象的类名。参数为 null 时，返回字符串："null" 
 String nullSafeClassName(Object obj)
@@ -9541,7 +9540,7 @@ boolean isEmpty(Object obj)
 Object[] toObjectArray(Object source)
 ```
 
-3. ### StringUtils
+3. StringUtils
 
 ```java
 // 判断字符串是否为 null，或 ""。注意，包含空白符的字符串为非空
@@ -9602,7 +9601,7 @@ String unqualify(String qualifiedName)
 String unqualify(String qualifiedName, char separator)
 ```
 
-4. ### CollectionUtils
+4. CollectionUtils
 
 ```java
 // 判断 List/Set 是否为空
@@ -9637,9 +9636,9 @@ Object findValueOfType(Collection<?> collection, Class<?>[] types)
 Class<?> findCommonElementType(Collection<?> collection)
 ```
 
-5. ###### 文件、资源、IO 流
+5. 文件、资源、IO 流
 
-```
+```java
 FileCopyUtils
 // 从文件中读入到字节数组中
 byte[] copyToByteArray(File in)
@@ -9647,11 +9646,141 @@ byte[] copyToByteArray(File in)
 byte[] copyToByteArray(InputStream in)
 // 从输入流中读入到字符串中
 String copyToString(Reader in)
+
+// 从字节数组到文件
+void copy(byte[] in, File out)
+// 从文件到文件
+int copy(File in, File out)
+// 从字节数组到输出流
+void copy(byte[] in, OutputStream out) 
+// 从输入流到输出流
+int copy(InputStream in, OutputStream out) 
+// 从输入流到输出流
+int copy(Reader in, Writer out)
+// 从字符串到输出流
+void copy(String in, Writer out)
+    
+ResourceUtils
+// 判断字符串是否是一个合法的 URL 字符串。
+static boolean isUrl(String resourceLocation)
+// 获取 URL
+static URL getURL(String resourceLocation) 
+// 获取文件（在 JAR 包内无法正常使用，需要是一个独立的文件）
+static File getFile(String resourceLocation)
+   
+Resource
+// 文件系统资源 D:\...
+FileSystemResource
+// URL 资源，如 file://... http://...
+UrlResource
+// 类路径下的资源，classpth:...
+ClassPathResource
+// Web 容器上下文中的资源（jar 包、war 包）
+ServletContextResource
+// 判断资源是否存在
+boolean exists()
+// 从资源中获得 File 对象
+File getFile()
+// 从资源中获得 URI 对象
+URI getURI()
+// 从资源中获得 URI 对象
+URL getURL()
+// 获得资源的 InputStream
+InputStream getInputStream()
+// 获得资源的描述信息
+String getDescription()
+    
+    
+StreamUtils
+void copy(byte[] in, OutputStream out)
+int copy(InputStream in, OutputStream out)
+void copy(String in, Charset charset, OutputStream out)
+long copyRange(InputStream in, OutputStream out, long start, long end)
+    
+byte[] copyToByteArray(InputStream in)
+String copyToString(InputStream in, Charset charset)
+// 舍弃输入流中的内容
+int drain(InputStream in) 
 ```
 
+6. 反射、AOP
+
+```java
+ReflectionUtils
+获取方法
+// 在类中查找指定方法
+Method findMethod(Class<?> clazz, String name) 
+// 同上，额外提供方法参数类型作查找条件
+Method findMethod(Class<?> clazz, String name, Class<?>... paramTypes) 
+// 获得类中所有方法，包括继承而来的
+Method[] getAllDeclaredMethods(Class<?> leafClass) 
+// 在类中查找指定构造方法
+Constructor<T> accessibleConstructor(Class<T> clazz, Class<?>... parameterTypes) 
+// 是否是 equals() 方法
+boolean isEqualsMethod(Method method) 
+// 是否是 hashCode() 方法 
+boolean isHashCodeMethod(Method method) 
+// 是否是 toString() 方法
+boolean isToStringMethod(Method method) 
+// 是否是从 Object 类继承而来的方法
+boolean isObjectMethod(Method method) 
+// 检查一个方法是否声明抛出指定异常
+boolean declaresException(Method method, Class<?> exceptionType) 
 
 
+执行方法
+// 执行方法
+Object invokeMethod(Method method, Object target)  
+// 同上，提供方法参数
+Object invokeMethod(Method method, Object target, Object... args) 
+// 取消 Java 权限检查。以便后续执行该私有方法
+void makeAccessible(Method method) 
+// 取消 Java 权限检查。以便后续执行私有构造方法
+void makeAccessible(Constructor<?> ctor) 
 
+获取字段
+// 在类中查找指定属性
+Field findField(Class<?> clazz, String name) 
+// 同上，多提供了属性的类型
+Field findField(Class<?> clazz, String name, Class<?> type) 
+// 是否为一个 "public static final" 属性
+boolean isPublicStaticFinal(Field field) 
+
+设置字段
+// 获取 target 对象的 field 属性值
+Object getField(Field field, Object target) 
+// 设置 target 对象的 field 属性值，值为 value
+void setField(Field field, Object target, Object value) 
+// 同类对象属性对等赋值
+void shallowCopyFieldState(Object src, Object dest)
+// 取消 Java 的权限控制检查。以便后续读写该私有属性
+void makeAccessible(Field field) 
+// 对类的每个属性执行 callback
+void doWithFields(Class<?> clazz, ReflectionUtils.FieldCallback fc) 
+// 同上，多了个属性过滤功能。
+void doWithFields(Class<?> clazz, ReflectionUtils.FieldCallback fc, 
+                  ReflectionUtils.FieldFilter ff) 
+// 同上，但不包括继承而来的属性
+void doWithLocalFields(Class<?> clazz, ReflectionUtils.FieldCallback fc) 
+
+    
+    
+AopUtils
+// 判断是不是 Spring 代理对象
+boolean isAopProxy()
+// 判断是不是 jdk 动态代理对象
+isJdkDynamicProxy()
+// 判断是不是 CGLIB 代理对象
+boolean isCglibProxy()
+    
+// 获取被代理的目标 class
+Class<?> getTargetClass()
+    
+    
+AopContext
+Object currentProxy()
+ 
+```
 
 
 
