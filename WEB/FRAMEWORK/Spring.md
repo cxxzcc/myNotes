@@ -9422,10 +9422,16 @@ mode值及对应的含义如下：
 
 ### @Autowired&@Resource
 
-@Autowired spring提供
--   先类型后名字  
-@Resource   java提供
--   名字注入优先，找不到名字找类型
+@Autowired 
+* spring提供
+- 先类型后名字
+- 一个参数  
+- 支持属性构造方法setter方法注入
+@Resource   
+* java提供
+- 先名字后类型
+- 七个参数
+- 支持属性setter方法注入
 
 @Resource倾向于**确定性的单一资源**，@Autowired为**类型去匹配符合此类型所有资源。**
 
@@ -9469,8 +9475,8 @@ public class AdvanceController {
 
 ```
 
-
-
+### spring工具类
+1. 断言
 
 
 
