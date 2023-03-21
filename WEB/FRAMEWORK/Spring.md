@@ -9356,19 +9356,61 @@ public int recover(Exception e, int code){
 
 
 
+### 分片上传
 
+![image-20230321103012816](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20230321103012816.png)
 
+#### 前端实现
 
+```js
+fileMD5 (files) {
+  // 计算文件md5
+  return new  Promise((resolve,reject) => {
+    const fileReader = new FileReader();
+    const piece = Math.ceil(files.size / this.pieceSize);
+    const nextPiece = () => {
+      let start = currentPieces * this.pieceSize;
+      let end = start * this.pieceSize >= files.size ? files.size : start + this.pieceSize;
+      fileReader.readAsArrayBuffer(files.slice(start,end));
+    };
 
+    let currentPieces = 0;
+    fileReader.onload = (event) => {
+      let e = window.event || event;
+      this.spark.append(e.target.result);
+      currentPieces++
+      if (currentPieces < piece) {
+        nextPiece()
+      } else {
+        resolve({fileName: files.name, fileMd5: this.spark.end()})
+      }
+    }
+    // fileReader.onerror = (err => { reject(err) })
+    nextPiece()
+  })
+}
+```
 
+vue-simple-uploader 实现文件分片上传、断点续传及秒传。
 
+也可以采用百度提供的webuploader的插件，进行分片
 
+#### 后端写入文件
 
+```java
+//创建随机存储文件流，文件属性由参数File对象指定
+RandomAccessFile(File file , String mode)
 
+//创建随机存储文件流，文件名由参数name指定
+RandomAccessFile(String name , String mode)
+```
 
+mode值及对应的含义如下：
 
-
-
+- “r”：以只读的方式打开，调用该对象的任何write（写）方法都会导致IOException异常
+- “rw”：以读、写方式打开，支持文件的读取或写入。若文件不存在，则创建之。
+- “rws”：以读、写方式打开，与“rw”不同的是，还要对文件内容的每次更新都同步更新到潜在的存储设备中去。这里的“s”表示synchronous（同步）的意思
+- “rwd”：以读、写方式打开，与“rw”不同的是，还要对文件内容的每次更新都同步更新到潜在的存储设备中去。使用“rwd”模式仅要求将文件的内容更新到存储设备中，而使用“rws”模式除了更新文件的内容，还要更新文件的元数据（metadata），因此至少要求1次低级别的I/O操作
 
 
 
