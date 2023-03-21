@@ -9423,7 +9423,7 @@ mode值及对应的含义如下：
 ### @Autowired&@Resource
 
 @Autowired spring提供
--   类型注入  
+-   先类型后名字  
 @Resource   java提供
 -   名字注入优先，找不到名字找类型
 
