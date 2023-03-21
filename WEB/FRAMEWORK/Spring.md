@@ -9446,9 +9446,26 @@ public class AdvanceController {
     private final AdvanceService advanceService;
 }
 
+public class AdvanceController {  
+    private final AdvanceService advanceService;  
+    public AdvanceController(AdvanceService advanceService) {  
+        this.advanceService = advanceService;  
+    }
+}
+方法2：set注入
+lombok版
+public class AdvanceController {
+    @Setter(onMethod = {@Autowired})  
+    private AdvanceService advanceService;
+}
 
-
-
+public class AdvanceController {  
+    private AdvanceService advanceService;  
+    @Autowired  
+    public void setAdvanceService(AdvanceService advanceService) {  
+        this.advanceService = advanceService;  
+    }
+}
 
 ```
 
