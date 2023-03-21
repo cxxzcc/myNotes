@@ -9288,10 +9288,27 @@ https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-featu
 **atguigu-hello-spring-boot-starter-autoconfigure（自动配置包）**
 
 
+### spring-retry
+是另一个实用程序模块，可以帮助我们以标准方式处理任何特定操作的重试
 
+```xml
+<dependency>  
+  <groupId>org.springframework.retry</groupId>  
+  <artifactId>spring-retry</artifactId>  
+</dependency>
+```
 
-
-
+```java
+@EnableRetry  
+@SpringBootApplication  
+public class HelloApplication {  
+  
+    public static void main(String[] args) {  
+        SpringApplication.run(HelloApplication.class, args);  
+    }  
+  
+}
+```
 
 
 
