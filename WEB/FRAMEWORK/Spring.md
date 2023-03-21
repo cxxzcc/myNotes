@@ -9436,6 +9436,21 @@ mode值及对应的含义如下：
 -   循环依赖问题
 -   依赖注入强依赖Spring容器
 
+推荐
+
+```java
+方法1 ： 使用构造函数注入（推荐）
+lombok版
+@RequiredArgsConstructor  
+public class AdvanceController {  
+    private final AdvanceService advanceService;
+}
+
+
+
+
+
+```
 
 
 
