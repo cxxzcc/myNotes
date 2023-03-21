@@ -841,7 +841,7 @@ AnnotationAwareAspectJAutoProxyCreator.initBeanFactory()
 
 #### 流程：
 
-##### 1. 传入配置类，创建ioc容器
+##### 1.传入配置类，创建ioc容器
 
 ##### 2.注册配置类，调用refresh（）刷新容器；
 
@@ -2014,7 +2014,7 @@ System.out.println(user);
 
 
 
-### **IOC底层原理**
+### IOC底层原理
 
 xml解析、工厂模式、反射
 
