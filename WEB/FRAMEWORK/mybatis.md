@@ -50,7 +50,7 @@ try {
 
 - sql注入发生的时间，sql注入发生的阶段在sql==预编译阶段==，当编译完成的sql不会产生sql注入
 
-### **采用jdbc操作数据时候**
+### 采用jdbc操作数据时候
 
 ```java
 String sql = "update ft_proposal set id = "+id;
