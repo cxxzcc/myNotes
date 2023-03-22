@@ -155,7 +155,28 @@ https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html
 @Builder //使用Builder模式构建对象
 
 @RequiredArgsConstructor  构造函数注入
-@Setter(onMethod = {@Autowired}) 
+@Setter(onMethod = {@Autowired}) setter注入
+
+@RequiredArgsConstructor(staticName = "of") 静态构造方法
+
+
+@Accessors(chain = true)
+@Setter
+@Getter
+@RequiredArgsConstructor(staticName = "of")
+public class Student {
+    @NonNull private String name;
+    private int age;
+}
+Student student = Student.of("zs");
+
+@Builder  
+public class Student {  
+    private String name;  
+    private int age;  
+}
+Student student = Student.builder().name("zs").age(24).build();
+
 ```
 
 
