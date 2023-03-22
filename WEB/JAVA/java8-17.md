@@ -69,8 +69,36 @@ minBy/maxBy
 	Optional<Integer> max = menu.stream().map(Dish::getCalories).reduce(Integer::max);
 sum
 	int sum = menu.stream().collect(summingInt(Dish::getCalories));
-	
+	int sum = menu.stream().map(Dish::getCalories).reduce(0, Integer::sum);
+	int sum = menu.stream().mapToInt(Dish::getCalories).sum();
+avg
+	double average = menu.stream().collect(averagingInt(Dish::getCalories));
+summarizingInt同时求总和、平均值、最大值、最小值
+	IntSummaryStatistics intSummaryStatistics = 
+	menu.stream().collect(summarizingInt(Dish::getCalories));
+	double average = intSummaryStatistics.getAverage();  //获取平均值
+	int min = intSummaryStatistics.getMin();  //获取最小值
+	int max = intSummaryStatistics.getMax();  //获取最大值
+	long sum = intSummaryStatistics.getSum();  //获取总和
 
+joining 拼接流中的元素
+	String result=menu.stream().map(Dish::getName).collect(Collectors.joining(", "));
+
+groupingBy 分组
+	Map<Type, List<Dish>> result=dishList.stream().collect(groupingBy(Dish::getType));
+嵌套使用`groupingBy`进行多级分类
+	Map<Type, List<Dish>> result = menu.stream().collect(groupingBy(Dish::getType,  
+        groupingBy(dish -> {  
+            if (dish.getCalories() <= 400) return CaloricLevel.DIET;  
+                else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;  
+                else return CaloricLevel.FAT;  
+        })));
+ 
+partitioningBy 进行分区  分为两组
+Map<Boolean, List<Dish>> result = menu.stream().collect(partitioningBy(Dish :: isVegetarian))
+Map<Boolean, List<Dish>> result = menu.stream().collect(groupingBy(Dish :: isVegetarian))
+List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);  
+Map<Boolean, List<Integer>> result = integerList.stream().collect(partitioningBy(i -> i < 3));
 
 
 
