@@ -18,13 +18,36 @@ Stream<Integer> stream = integerList.stream();
 4.文件
 Stream<String> lines = Files.lines(Paths.get("data.txt"), Charset.defaultCharset())
 
-5.函数
+5.函数生成 提供了iterate和generate两个静态方法从函数中生成流
 
+Stream<Integer> stream = Stream.iterate(0, n -> n + 2).limit(5);
+接受两个参数，初始化值，函数操作，无限流，通过`limit`方法对流进行了截断，只生成5个偶数
+
+Stream<Double> stream = Stream.generate(Math::random).limit(5);
+一个参数，方法参数类型为`Supplier<T>`，无限流，因此通过`limit`对流进行了截断
 
 ```
 
+使用数值流可以避免计算过程中拆箱装箱，提高性能。`Stream API`提供了`mapToInt`、`mapToDouble`、`mapToLong`三种方式将对象流【即`Stream<T>`】转换成对应的数值流，同时提供了`boxed`方法将数值流转换为对象流
+
+操作
+```java
+1.中间操作
+filter
+distinct
+limit
+skip
+map 将接受的元素映射成另外一个元素
+flatMap 将一个流中的每个值都转换为另一个流
 
 
+
+
+
+
+
+
+```
 
 
 
