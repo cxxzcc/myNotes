@@ -9784,15 +9784,15 @@ Object currentProxy()
 
 ### 替代if/else
 
-
+1. map+函数式接口
 
 ```java
 @Service
 @RequiredArgsConstructor
 public class TestEnum {
 
-    private static GrantTypeSerive grantTypeSerive = new GrantTypeSerive();
-    private static Map<String, Function<String, String>> grantTypeMap = new HashMap<>();
+    private GrantTypeSerive grantTypeSerive = new GrantTypeSerive();
+    private Map<String, Function<String, String>> grantTypeMap = new HashMap<>();
 
     @PostConstruct
     public void dispatcherInit() {
@@ -9801,16 +9801,45 @@ public class TestEnum {
         grantTypeMap.put("qq会员", x -> grantTypeSerive.QQVip(x));
     }
 
-    public static String getResult(String resourceType) {
+    public String getResult(String resourceType) {
         return Optional.ofNullable(grantTypeMap.get(resourceType))
             .orElse(x -> "查询不到该优惠券的发放方式").apply("");
     }
 }
 ```
 
+2. 策略模式 enum实现
+
+```java
+策略模式
+    public enum PizzaDeliveryStrategy {  
+    EXPRESS {        @Override        public void deliver(Pizza pz) {  
+        System.out.println("Pizza will be delivered in express mode");  
+    }  
+
+             @Override        public String handle() {  
+                 return "EXPRESS";  
+             }  
+            },  
+    NORMAL {  
+        @Override        public void deliver(Pizza pz) {  
+            System.out.println("Pizza will be delivered in normal mode");  
+        }  
+
+        @Override        public String handle() {  
+            return "NORMAL";  
+        }  
+    };  
 
 
+    public abstract void deliver(Pizza pz);  
 
+
+    public String handle() {  
+        return "a";  
+    }  
+}
+```
 
 
 
