@@ -114,11 +114,39 @@ ${}：相当于拼接SQL串，对传入的值不做任何解释的原样输出�
 	* getCurrentIndex()：返回已经获取了多少条数据；
 3. 游标查询 一次n条
 	```java
+@Mapper  
+public interface BigDataSearchMapper extends BaseMapper<BigDataSearchEntity> {  
+  
+    // 方式一 多次获取，一次多行  
+    @Select("SELECT bds.* FROM big_data_search bds ${ew.customSqlSegment} ")  
+    @Options(resultSetType = ResultSetType.FORWARD_ONLY, fetchSize = 1000000)  
+    Page<BigDataSearchEntity> pageList(@Param("page") Page<BigDataSearchEntity> page, @Param(Constants.WRAPPER) QueryWrapper<BigDataSearchEntity> queryWrapper);  
+  
+    // 方式二 一次获取，一次一行  
+    @Select("SELECT bds.* FROM big_data_search bds ${ew.customSqlSegment} ")  
+    @Options(resultSetType = ResultSetType.FORWARD_ONLY, fetchSize = 100000)  
+    @ResultType(BigDataSearchEntity.class)  
+    void listData(@Param(Constants.WRAPPER) QueryWrapper<BigDataSearchEntity> queryWrapper, ResultHandler<BigDataSearchEntity> handler);  
+  
+}
 	```
 
+**@Options**
+-   ResultSet.FORWORD_ONLY：结果集的游标只能向下滚动
+-   ResultSet. SCROLL_INSENSITIVE：结果集的游标可以上下移动，当数据库变化时，当前结果集不变
+-   ResultSet.SCROLL_SENSITIVE：返回可滚动的结果集，当数据库变化时，当前结果集同步改变
+-   fetchSize：每次获取量
 
+虽然上面的代码中都有 @Options 但实际操作却有不同：
+* 方式一是多次查询，一次返回多条；  
+* 方式二是一次查询，一次返回一条；
+**原因：**
 
+Oracle 是从服务器一次取出 fetch size 条记录放在客户端，客户端处理完成一个批次后再向服务器取下一个批次，直到所有数据处理完成。
 
+MySQL 是在执行 ResultSet.next() 方法时，会通过数据库连接一条一条的返回。flush buffer 的过程是阻塞式的，如果网络中发生了拥塞，send buffer 被填满，会导致 buffer 一直 flush 不出去，那 MySQL 的处理线程会阻塞，从而避免数据把客户端内存撑爆。
+
+**每次处理完一批结果要记得释放存储每批数据的临时容器**
 
 
 
