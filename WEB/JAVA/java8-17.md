@@ -39,10 +39,37 @@ limit
 skip
 map 将接受的元素映射成另外一个元素
 flatMap 将一个流中的每个值都转换为另一个流
+	Arrays.asList("Hello", "World").stream().map(x -> x.split("")).flatMap(Arrays::stream)
 
+allMatch 匹配所有
+allMatch 匹配所有
+noneMatch 全部不匹配
 
-
-
+2.终端操作
+count 统计出流中元素个数 collect(counting()) 
+findFirst 查找第一个
+findAny 随机查找一个
+reduce  将流中的元素组合起来
+	int sum = integerList.stream().reduce(0, (a, b) -> (a + b));
+	int sum = integerList.stream().reduce(0, Integer::sum);
+	两个参数，初始值，`BinaryOperator<T> accumulator` `reduce`还有一个没有初始化值的重载方法
+min/max
+	OptionalInt min = menu.stream().mapToInt(Dish::getCalories).min();  
+	OptionalInt max = menu.stream().mapToInt(Dish::getCalories).max();
+	Optional<Integer> min = 
+	menu.stream().map(Dish::getCalories).min(Integer::compareTo);
+	Optional<Integer> max = 
+	menu.stream().map(Dish::getCalories).max(Integer::compareTo);
+minBy/maxBy
+	Optional<Integer> min = 
+	menu.stream().map(Dish::getCalories).collect(minBy(Integer::compareTo));
+	Optional<Integer> max = 
+	menu.stream().map(Dish::getCalories).collect(maxBy(Integer::compareTo));
+	Optional<Integer> min = menu.stream().map(Dish::getCalories).reduce(Integer::min);  
+	Optional<Integer> max = menu.stream().map(Dish::getCalories).reduce(Integer::max);
+sum
+	int sum = menu.stream().collect(summingInt(Dish::getCalories));
+	
 
 
 
