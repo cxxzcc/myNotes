@@ -9841,9 +9841,30 @@ public class TestEnum {
 }
 ```
 
+### json序列化
 
+1. 单字段注解
 
+```java
+@Data
+class User{
+    @JsonSerialize(using = ToStringSerializer.class)
+    Long id;
+    String name;
+    @JsonSerialize(using = ToStringSerializer.class)
+    Integer age;
+    Short gender;
+}
+```
 
+2. 全局配置
+
+```yaml
+spring:
+  jackson:
+    generator:
+      write_numbers_as_strings: true #序列化的时候，将数值类型全部转换成字符串返回
+```
 
 
 
