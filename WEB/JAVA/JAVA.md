@@ -70,6 +70,68 @@ hashmap 是0.75
 
 
 
+## 枚举
+
+
+
+```java
+@AllArgsConstructor  
+@Getter
+@JsonFormat(shape = JsonFormat.Shape.OBJECT) //jackson
+public enum status {  
+    a("a", "a") {}, b("b", "b"), c("c", "c"), d("d", "d"), e("e", "e"), f("f", "f");  
+    private String code1;  
+    private String code2;  
+}
+
+/**  
+ * EnumSet 是抽象类，其有两个实现：RegularEnumSet 、JumboEnumSet  
+ */
+private static EnumSet<status> statuses = EnumSet.of(status.a, status.b, status.c);  
+private static EnumMap<status, TestEnum> map = new EnumMap<>(status.class);
+
+
+
+策略模式
+public enum PizzaDeliveryStrategy {  
+    EXPRESS {        @Override        public void deliver(Pizza pz) {  
+            System.out.println("Pizza will be delivered in express mode");  
+        }  
+  
+        @Override        public String handle() {  
+            return "EXPRESS";  
+        }  
+    },  
+    NORMAL {  
+        @Override        public void deliver(Pizza pz) {  
+            System.out.println("Pizza will be delivered in normal mode");  
+        }  
+  
+        @Override        public String handle() {  
+            return "NORMAL";  
+        }  
+    };  
+  
+  
+    public abstract void deliver(Pizza pz);  
+  
+  
+    public String handle() {  
+        return "a";  
+    }  
+}
+
+单例模式
+@NoArgsConstructor  
+@Getter  
+public enum PizzaDeliverySystemConfiguration {  
+    INSTANCE;  
+    private PizzaDeliveryStrategy deliveryStrategy = PizzaDeliveryStrategy.NORMAL;  
+}
+
+
+```
+
 
 
 
