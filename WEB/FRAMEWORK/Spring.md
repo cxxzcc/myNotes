@@ -9866,9 +9866,21 @@ spring:
       write_numbers_as_strings: true #序列化的时候，将数值类型全部转换成字符串返回
 ```
 
+3. 特定类型chu
 
-
-
+```java
+@Bean("jackson2ObjectMapperBuilderCustomizer")
+public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
+    Jackson2ObjectMapperBuilderCustomizer customizer = new Jackson2ObjectMapperBuilderCustomizer() {
+        @Override
+        public void customize(Jackson2ObjectMapperBuilder jacksonObjectMapperBuilder) {
+            jacksonObjectMapperBuilder.serializerByType(Long.class, ToStringSerializer.instance)
+                    .serializerByType(Long.TYPE, ToStringSerializer.instance);
+        }
+    };
+    return customizer;
+}
+```
 
 
 

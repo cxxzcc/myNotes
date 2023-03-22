@@ -1,5 +1,36 @@
 # java8(LTS)
 
+## stream
+新建流
+```java
+1.集合
+List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);  
+Stream<Integer> stream = integerList.stream();
+
+2.数组
+List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);  
+Stream<Integer> stream = integerList.stream();
+
+3.数值
+List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);  
+Stream<Integer> stream = integerList.stream();
+
+4.文件
+Stream<String> lines = Files.lines(Paths.get("data.txt"), Charset.defaultCharset())
+
+5.函数
+
+
+```
+
+
+
+
+
+
+
+
+
 # java9
 
 * 模块化系统
