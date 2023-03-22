@@ -153,6 +153,9 @@ https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html
 @NoArgsConstructor //类上 无参构造方法
 @AllArgsConstructor //类上  全参构造方法
 @Builder //使用Builder模式构建对象
+
+@RequiredArgsConstructor  构造函数注入
+@Setter(onMethod = {@Autowired}) 
 ```
 
 
