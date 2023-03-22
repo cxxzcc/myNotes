@@ -9782,9 +9782,31 @@ Object currentProxy()
  
 ```
 
+### 替代if/else
 
 
 
+```java
+@Service
+@RequiredArgsConstructor
+public class TestEnum {
+
+    private static GrantTypeSerive grantTypeSerive = new GrantTypeSerive();
+    private static Map<String, Function<String, String>> grantTypeMap = new HashMap<>();
+
+    @PostConstruct
+    public void dispatcherInit() {
+        grantTypeMap.put("红包", x -> grantTypeSerive.redPaper(x));
+        grantTypeMap.put("购物券", x -> grantTypeSerive.shopping(x));
+        grantTypeMap.put("qq会员", x -> grantTypeSerive.QQVip(x));
+    }
+
+    public static String getResult(String resourceType) {
+        return Optional.ofNullable(grantTypeMap.get(resourceType))
+            .orElse(x -> "查询不到该优惠券的发放方式").apply("");
+    }
+}
+```
 
 
 
