@@ -9476,8 +9476,10 @@ public class AdvanceController {
 ```
 
 ### spring工具类
-1. 断言
- JVM 参数`-enableassertions`开启
+#### 断言
+
+JVM 参数`-enableassertions`开启
+
 ```java
 // 要求参数 object 必须为非空（Not Null），否则抛出异常，不予放行  
 // 参数 message 参数用于定制异常信息。  
@@ -9499,7 +9501,8 @@ void isInstanceOf(Class type, Object obj, String message)
 void isAssignable(Class superType, Class subType, String message)
 ```
 
-2. 对象、数组、集合
+#### 对象、数组、集合
+
 ```java
 // 获取对象的类名。参数为 null 时，返回字符串："null" 
 String nullSafeClassName(Object obj)
@@ -9540,7 +9543,7 @@ boolean isEmpty(Object obj)
 Object[] toObjectArray(Object source)
 ```
 
-3. StringUtils
+#### StringUtils
 
 ```java
 // 判断字符串是否为 null，或 ""。注意，包含空白符的字符串为非空
@@ -9601,7 +9604,7 @@ String unqualify(String qualifiedName)
 String unqualify(String qualifiedName, char separator)
 ```
 
-4. CollectionUtils
+#### CollectionUtils
 
 ```java
 // 判断 List/Set 是否为空
@@ -9636,7 +9639,7 @@ Object findValueOfType(Collection<?> collection, Class<?>[] types)
 Class<?> findCommonElementType(Collection<?> collection)
 ```
 
-5. 文件、资源、IO 流
+#### 文件、资源、IO 流
 
 ```java
 FileCopyUtils
@@ -9703,7 +9706,7 @@ String copyToString(InputStream in, Charset charset)
 int drain(InputStream in) 
 ```
 
-6. 反射、AOP
+#### 反射、AOP
 
 ```java
 ReflectionUtils
@@ -9781,6 +9784,8 @@ AopContext
 Object currentProxy()
  
 ```
+
+#### 
 
 ### 替代if/else
 
@@ -9866,7 +9871,7 @@ spring:
       write_numbers_as_strings: true #序列化的时候，将数值类型全部转换成字符串返回
 ```
 
-3. 特定类型chu
+3. 特定类型处理
 
 ```java
 @Bean("jackson2ObjectMapperBuilderCustomizer")
