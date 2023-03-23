@@ -350,5 +350,35 @@ gulp.run, 直接执行指定的任务
 
 
 
+# log tools
+
+* Filebeat是用于转发和集中日志数据的轻量级传送程序
+	监视指定的日志文件或位置，收集日志事件，并将它们转发到Elasticsearch或Logstash进行索引。
+	轻量易用开源
+* Graylog是一个开源的日志聚合、分析、审计、展现和预警工具
+* Elasticsearch, Logstash and Kibana (ELK stack or Elastic Stack)
+	ELK堆栈包含了日志管理解决方案所需的大多数工具:
+	* Log shippers：如Logstash和Filebeat
+	* Elasticsearch是一个可扩展的搜索引擎
+	* Kibana作为搜索日志或构建可视化的UI
+* Fluentd 是 DevOps 的最爱，特别是对于 Kubernetes 部署，因为它具有丰富的插件库。与 Logstash 一样，它可以将数据结构化为 JSON，并涉及日志数据处理的所有方面：收集、解析、缓冲和输出跨各种来源和目的地的数据。
+* Logstash 是一个日志收集和处理引擎
+* Loki 及其生态系统是 ELK 堆栈的替代方案
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
