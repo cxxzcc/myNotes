@@ -213,7 +213,7 @@ flushall  #通杀全部库
 
 String是Redis最基本的类型，你可以理解成与Memcached一模一样的类型，一个key对应一个value。
 
-String类型是二进制安全的。意味着Redis的string可以包含任何数据。比如jpg图片或者序列化的对象。
+String类型是**二进制安全的**。意味着Redis的string可以包含任何数据。比如jpg图片或者序列化的对象。
 
 String类型是Redis最基本的数据类型，一个Redis中字符串value最多可以是512M
 
@@ -382,7 +382,7 @@ Hash类型对应的数据结构是两种：ziplist（压缩列表），hashtable
 
 Redis有序集合zset与普通集合set非常相似，是一个没有重复元素的字符串集合。
 
-不同之处是有序集合的每个成员都关联了一个**评分（score**）,这个评分（score）被用来按照从最低分到最高分的方式排序集合中的成员。<font color='red'>集合的成员是唯一的，但是评分可以是重复了 </font>
+不同之处是有序集合的每个成员都关联了一个double类型的**评分（score**）,这个评分（score）被用来按照从最低分到最高分的方式排序集合中的成员。<font color='red'>集合的成员是唯一的，但是评分可以是重复了 </font>
 
 因为元素是有序的, 所以你也可以很快的根据评分（score）或者次序（position）来获取一个范围的元素。
 
