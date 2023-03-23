@@ -382,8 +382,9 @@ Redis hash是一个string类型的field和value的映射表，hash特别适合�
 hset <key><field><value> #给<key>集合中的  <field>键赋值<value>
 hget <key1><field>       #从<key1>集合<field>取出 value 
 hmset <key1><field1><value1><field2><value2>... #批量设置hash的值
-hmget <key><fil><>
-
+hmget <key><field><field>
+hgetall <key>
+hdel        
 hexists<key1><field>	 #查看哈希表 key 中，给定域 field 是否存在。 
 hkeys <key>				 #列出该hash集合的所有field
 hvals <key> 			 #列出该hash集合的所有value
