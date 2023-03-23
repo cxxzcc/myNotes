@@ -354,12 +354,13 @@ smembers <key>#取出该集合的所有值。
 sismember <key><value>#判断集合<key>是否为含有该<value>值，有1，没有0
 scard<key>#返回该集合的元素个数。
 srem <key><value1><value2> .... #删除集合中的某个元素。
-spop <key>#随机从该集合中吐出一个值。
+spop <key><n>#随机从该集合中吐出一个值。会删
 srandmember <key><n>#随机从该集合中取出n个值。不会从集合中删除 。
 smove <source><destination>value#把集合中一个值从一个集合移动到另一个集合
 sinter <key1><key2>#返回两个集合的交集元素。
 sunion <key1><key2>#返回两个集合的并集元素。
 sdiff <key1><key2>#返回两个集合的差集元素(key1中的，不包含key2中的)
+SINTERCARD numkeys key [key ...] [LIMIT limit] 返回交集基数
 ```
 
 #### 数据结构
