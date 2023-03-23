@@ -9785,7 +9785,21 @@ Object currentProxy()
  
 ```
 
-#### 
+#### 执行耗时统计 stopWatch
+
+```java
+void start(“任务名称”)：开始一个任务名称的计时
+void stop()：停止当前任务的计时
+boolean isRunning()：是否正在计时某任务
+long getTotalTimeMillis()：所有任务的总体执行时间(毫秒单位)
+double getTotalTimeSeconds()：所有任务的总时间（以秒为单位）
+long getLastTaskTimeMillis()：上一个任务的耗时(毫秒单位)
+int getTaskCount()：定时任务的数量
+String prettyPrint()：优美地打印所有任务的详细耗时情况
+StopWatch.TaskInfo[] getTaskInfo()：包含任务名称和任务耗时的实体类数组
+```
+
+
 
 ### 替代if/else
 
