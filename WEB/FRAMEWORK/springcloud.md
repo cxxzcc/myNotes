@@ -853,7 +853,7 @@ RequestContextHolder.setRequestAttributes(requestAttributes);
 
 
 
-## 1.6 Hystrix**断路器**
+## 1.6 Hystrix断路器
 
 处理分布式系统的延迟和容错的开源库
 
