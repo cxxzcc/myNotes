@@ -241,7 +241,9 @@ SET key value [NX | XX] [GET] [EX seconds | PX milliseconds |
 get   <key> #查询对应键值
 append  <key><value> #将给定的<value> 追加到原值的末尾
 strlen  <key> #获得值的长度
+
 setnx  <key><value> #只有在 key 不存在时    设置 key 的值
+setex  <key><过期时间><value> #设置键值的同时，设置过期时间，单位秒。
 
 incr  <key>
 #将 key 中储存的数字值增1  原子操作
@@ -265,8 +267,7 @@ getrange  <key><起始位置><结束位置>
 setrange  <key><起始位置><value>
 #用 <value>  覆写<key>所储存的字符串值，从<起始位置>开始(索引从0开始)。
 
-setex  <key><过期时间><value>
-#设置键值的同时，设置过期时间，单位秒。
+
 getset <key><value>
 #以新换旧，设置了新值同时获得旧值。
 
@@ -306,8 +307,7 @@ lpop/rpop  <key>#从左边/右边吐出一个值。值在键在，值光键亡�
 
 rpoplpush  <key1><key2>#从<key1>列表右边吐出一个值，插到<key2>列表左边。
 
-lrange <key><start><stop>
-#按照索引下标获得元素(从左到右)
+lrange <key><start><stop>#按照索引下标获得元素(从左到右)
 lrange mylist 0 -1   #0左边第一个，-1右边第一个，（0-1表示获取所有）
 lindex <key><index>#按照索引下标获得元素(从左到右)
 llen <key>#获得列表长度 
