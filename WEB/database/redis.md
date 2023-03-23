@@ -433,6 +433,7 @@ zrem <k><v> 删除
 zincrby <key><increment><value>      #为元素的score加上增量
 zrem  <key><value>#删除该集合下，指定值的元素 
 zcount <key><min><max>#统计该集合，分数区间内的元素个数 
+ZMPOP numkeys key [key ...] <MIN | MAX> [COUNT count] 出n个 scope-value对
 zrank <key><value>#返回该值在集合中的排名，从0开始。
 案例：如何利用zset实现一个文章访问量的排行榜？
 ```
