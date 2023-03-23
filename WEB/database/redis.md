@@ -384,11 +384,13 @@ hget <key1><field>       #从<key1>集合<field>取出 value
 hmset <key1><field1><value1><field2><value2>... #批量设置hash的值
 hmget <key><field><field>
 hgetall <key>
-hdel        
+hdel    <key><field> 删除
+hlen <key> 获取数量
+
 hexists<key1><field>	 #查看哈希表 key 中，给定域 field 是否存在。 
 hkeys <key>				 #列出该hash集合的所有field
 hvals <key> 			 #列出该hash集合的所有value
-hincrby <key><field><increment> #为哈希表 key 中的域 field 的值加上增量 1   -1
+hincrby/hincrbyfloat <key><field><increment> #为哈希表 key 中的域 field 的值加上增量increment/小数
 hsetnx <key><field><value>  #将哈希表 key 中的域 field 的值设置为 value ，当且仅当域 field 不存在
 ```
 
