@@ -189,6 +189,7 @@ redis-cli
 （与Memcache三点不同: 支持多数据类型，支持持久化，单线程+多路IO复用）
 
 ## 十大数据类型
+https://redis.io/commands/ 
 
 http://www.redis.cn/commands.html
 
@@ -207,6 +208,7 @@ select  #命令切换数据库
 dbsize  #查看当前数据库的key的数量
 flushdb  #清空当前库
 flushall  #通杀全部库
+move [key] [db] #y
 ```
 
 ### String
