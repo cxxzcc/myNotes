@@ -194,7 +194,7 @@ redis-cli
 
 （与Memcache三点不同: 支持多数据类型，支持持久化，单线程+多路IO复用）
 
-## 常用五大数据类型
+## 十大数据类型
 
 http://www.redis.cn/commands.html
 
@@ -578,9 +578,9 @@ Redis 客户端可以订阅任意数量的频道。
 
 注：发布的消息没有持久化，如果在订阅的客户端收不到hello，只能收到订阅后发布的消息
 
-## 6 新数据类型
 
-### 6.1 Bitmaps
+
+### Bitmaps
 
 现代计算机用二进制（位） 作为信息的基础单位， 1个字节等于8位
 
@@ -588,7 +588,7 @@ Redis 客户端可以订阅任意数量的频道。
 
 Redis提供了Bitmaps这个“数据类型”可以实现对位的操作：
 
-1.  Bitmaps本身不是一种数据类型， 实际上它就是字符串（key-value） ， 但是它可以对字符串的位进行操作。
+1. Bitmaps本身不是一种数据类型， 实际上它就是字符串（key-value） ， 但是它可以对字符串的位进行操作。
 2. Bitmaps单独提供了一套命令， 所以在Redis中使用Bitmaps和使用字符串的方法不太相同。 可以把Bitmaps想象成一个以位为单位的数组， 数组的每个单元只能存储0和1， 数组的下标在Bitmaps中叫做偏移量。
 
 #### 6.2 命令
@@ -632,7 +632,7 @@ bitop  and(or/not/xor) <destkey> [key…]
 
 但Bitmaps并不是万金油， 假如该网站每天的独立访问用户很少， 例如只有10万（大量的僵尸用户） ， 那么两者的对比如下表所示， 很显然， 这时候使用Bitmaps就不太合适了， 因为基本上大部分位都是0。
 
-### 6.2 HyperLogLog
+### HyperLogLog
 
 在工作当中，我们经常会遇到与统计相关的功能需求，比如统计网站PV（PageView页面访问量）,可以使用Redis的incr、incrby轻松实现。
 
@@ -660,7 +660,7 @@ Redis HyperLogLog 是用来做基数统计的算法，HyperLogLog 的优点是�
 
 比如数据集 {1, 3, 5, 7, 5, 7, 8}， 那么这个数据集的基数集为 {1, 3, 5 ,7, 8}, 基数(不重复元素)为5。 基数估计就是在误差可接受的范围内，快速计算基数。
 
-#### 6.2.1 命令
+#### 命令
 
 ```bash
 pfadd <key>< element> [element ...]   #添加指定元素到 HyperLogLog 中
@@ -673,13 +673,12 @@ pfmerge<destkey><sourcekey> [sourcekey ...]
 #将一个或多个HLL合并后的结果存储在另一个HLL中，比如每月活跃用户可以使用每天的活跃用户来合并计算可得
 ```
 
-### 6.3 Geospatial
-
-**1.1.**  Geospatial
+### GEO
+Geospatial
 
 Redis 3.2 中增加了对GEO类型的支持。GEO，Geographic，地理信息的缩写。该类型，就是元素的2维坐标，在地图上就是经纬度。redis基于该类型，提供了经纬度设置，查询，范围查询，距离查询，经纬度Hash等常见操作
 
-#### 6.3.1 命令
+#### 命令
 
 ```bash
 geoadd<key>< longitude><latitude><member> [longitude latitude member...]   
