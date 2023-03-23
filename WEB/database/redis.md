@@ -208,7 +208,9 @@ select  #命令切换数据库
 dbsize  #查看当前数据库的key的数量
 flushdb  #清空当前库
 flushall  #通杀全部库
-move [key] [db] #y
+move [key] [db] #移动到指定库
+
+help @类型  帮助文档
 ```
 
 ### String
@@ -222,11 +224,17 @@ String类型是Redis最基本的数据类型，一个Redis中字符串value最�
 #### 常用命令
 
 ```bash
-set   <key><value>  #添加键值对
+SET key value [NX | XX] [GET] [EX seconds | PX milliseconds |
+  EXAT unix-time-seconds | PXAT unix-time-milliseconds | KEEPTTL]
 #*NX：当数据库中key不存在时，可以将key-value添加数据库
 #*XX：当数据库中key存在时，可以将key-value添加数据库，与NX参数互斥
+
+
+
 #*EX：key的超时秒数
 #*PX：key的超时毫秒数，与EX互斥
+# EXAT 设置以秒为单位的UNIX时间戳所对应的时间为过期时间
+# PXAT 设置以毫秒为单位的UNIX时间戳所对应的时间为过期时间
 
 
 get   <key> #查询对应键值
