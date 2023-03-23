@@ -1,10 +1,10 @@
 # redis
 
-## 1 NoSQL数据库简介
+## NoSQL数据库简介
 
-### 1.1 NoSQL数据库
+### NoSQL数据库
 
-#### 1.1.1  NoSQL数据库概述
+#### NoSQL数据库概述
 
 NoSQL(NoSQL = **Not Only SQL** )，意即“不仅仅是SQL”，泛指**非关系型的数据库**。 
 
@@ -16,7 +16,7 @@ NoSQL 不依赖业务逻辑方式存储，而以简单的key-value模式存储�
 
 * 超于SQL的性能。
 
-#### 1.1.2  NoSQL适用场景
+#### NoSQL适用场景
 
 * 对数据高并发的读写
 
@@ -24,7 +24,7 @@ NoSQL 不依赖业务逻辑方式存储，而以简单的key-value模式存储�
 
 * 对数据高可扩展性的
 
-#### 1.1.3 NoSQL不适用场景
+#### NoSQL不适用场景
 
 * 需要事务支持
 
@@ -32,21 +32,21 @@ NoSQL 不依赖业务逻辑方式存储，而以简单的key-value模式存储�
 
 * （用不着sql的和用了sql也不行的情况，请考虑用NoSql）
 
-#### 1.1.4  Memcache
+#### Memcache
 
 1. 很早出现的NoSql数据库
 2. 数据都在内存中，一般不持久化
 3. 支持简单的key-value模式，支持类型单一
 4. 一般是作为缓存数据库辅助持久化的数据库 
 
-#### 1.1.5  Redis
+#### Redis
 
 1. 几乎覆盖了Memcached的绝大部分功能
 2. 数据都在内存中，支持持久化，主要用作备份恢复
 3. 除了支持简单的key-value模式，还支持多种数据结构的存储，比如  list、set、hash、zset等。 
 4. 一般是作为缓存数据库辅助持久化的数据库 
 
-#### 1.1.6  MongoDB
+#### MongoDB
 
 1. 高性能、开源、模式自由(schema free)的**文档型数据库**
 2. 数据都在内存中， 如果内存不足，把不常用的数据保存到硬盘 
@@ -54,31 +54,31 @@ NoSQL 不依赖业务逻辑方式存储，而以简单的key-value模式存储�
 4. 支持二进制数据及大型对象
 5. 可以根据数据的特点**替代RDBMS** ，成为独立的数据库。或者配合RDBMS，存储特定的数据。
 
-### 1.2  行式存储数据库（大数据时代）
+### 行式存储数据库（大数据时代）
 
-#### 1.2.1  行式数据库
+#### 行式数据库
 
 按行存储数据
 
-#### 1.2.2  列式数据库
+#### 列式数据库
 
 案列存储数据
 
-##### 1.2.2.1 Hbase
+##### Hbase
 
 HBase是**Hadoop**项目中的数据库。它用于需要对大量的数据进行随机、实时的读写操作的场景中。
 
 HBase的目标就是处理数据量**非常庞大**的表，可以用**普通的计算机**处理超过**10亿行数据**，还可处理有数百万**列**元素的数据表。
 
-##### 1.2.2.2 Cassandra
+##### Cassandra
 
 Apache Cassandra是一款免费的开源NoSQL数据库，其设计目的在于管理由大量商用服务器构建起来的庞大集群上的**海量数据集**(**数据量通常达到**PB**级别**)。在众多显著特性当中，Cassandra最为卓越的长处是对写入及读取操作进行规模调整，而且其不强调主集群的设计思路能够以相对直观的方式简化各集群的创建与扩展流程。
 
-### 1.3  图关系型数据库
+### 图关系型数据库
 
 主要应用：社会关系，公共交通网络，地图及网络拓谱(n*(n-1)/2)
 
-## 2 Redis概述安装
+## Redis概述安装
 
 *  Redis是一个开源的key-value存储系统。
 * 和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set --有序集合)和hash（哈希类型）。
@@ -88,7 +88,7 @@ Apache Cassandra是一款免费的开源NoSQL数据库，其设计目的在于�
 * 区别的是Redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件。
 * 并且在此基础上实现了master-slave(主从)同步。
 
-### 1.1应用场景
+### 应用场景
 
 配合关系型数据库做高速缓存
 
@@ -105,7 +105,7 @@ Apache Cassandra是一款免费的开源NoSQL数据库，其设计目的在于�
 * 构建队列----利用list集合
 * 发布订阅消息系统----pub/sub模式
 
-### 1.2  Redis安装
+### Redis安装
 
 http://redis.io
 
@@ -160,7 +160,7 @@ http://redis.cn/
 
 
 
-#### 1.2.1 用客户端访问
+#### 用客户端访问
 
 redis-cli
 
@@ -177,7 +177,7 @@ redis-cli
 * 多实例关闭，指定端口关闭：redis-cli -p 6379 shutdown
 * kill -9 pid
 
-### 1.3  Redis介绍相关知识
+### Redis介绍相关知识
 
 * 默认16个数据库，类似数组下标从0开始，初始默认使用0号库
 * 使用命令 select  < dbid > 来切换数据库。如: select 8 
@@ -194,11 +194,11 @@ redis-cli
 
 （与Memcache三点不同: 支持多数据类型，支持持久化，单线程+多路IO复用）
 
-## 3 常用五大数据类型
+## 常用五大数据类型
 
 http://www.redis.cn/commands.html
 
-### 3.1 Redis键(key)
+### Redis键(key)
 
 ```bash
 keys * #查看当前库所有key  (匹配：keys *1)
@@ -215,7 +215,7 @@ flushdb  #清空当前库
 flushall  #通杀全部库
 ```
 
-### 3.2 Redis字符串(String)
+### String
 
 String是Redis最基本的类型，你可以理解成与Memcached一模一样的类型，一个key对应一个value。
 
@@ -223,7 +223,7 @@ String类型是二进制安全的。意味着Redis的string可以包含任何数
 
 String类型是Redis最基本的数据类型，一个Redis中字符串value最多可以是512M
 
-#### 3.2.1. 常用命令
+#### 常用命令
 
 ```bash
 set   <key><value>  #添加键值对
@@ -277,7 +277,7 @@ getset <key><value>
 
 Redis单命令的原子性主要得益于Redis的单线程。
 
-#### 3.2.2 数据结构
+#### 数据结构
 
 String的数据结构为简单动态字符串(Simple Dynamic String,缩写SDS)。是可以修改的字符串，内部结构实现上类似于Java的ArrayList，采用预分配冗余空间的方式来减少内存的频繁分配.
 
@@ -285,7 +285,7 @@ String的数据结构为简单动态字符串(Simple Dynamic String,缩写SDS)�
 
 如图中所示，内部为当前字符串实际分配的空间capacity一般要高于实际字符串长度len。当字符串长度小于1M时，扩容都是加倍现有的空间，如果超过1M，扩容时一次只会多扩1M的空间。需要注意的是字符串最大长度为512M
 
-### 3.3 List
+### List
 
 单键多值
 
@@ -293,7 +293,7 @@ Redis 列表是简单的字符串列表，按照插入顺序排序。你可以�
 
 它的底层实际是个**双向链表**，对两端的操作性能很高，通过索引下标的操作中间的节点性能会较差。
 
-#### 3.3.1 常用命令
+#### 常用命令
 
 ```bash
 lpush/rpush  <key><value1><value2><value3> .... #从左边/右边插入一个或多个值。
@@ -312,7 +312,7 @@ lrem <key><n><value>#从左边删除n个value(从左到右)
 lset<key><index><value>#将列表key下标为index的值替换成value
 ```
 
-#### 3.3.2 数据结构
+#### 数据结构
 
 List的数据结构为快速链表quickList。
 
@@ -326,7 +326,7 @@ List的数据结构为快速链表quickList。
 
 Redis将链表和ziplist结合起来组成了quicklist。也就是将多个ziplist使用双向指针串起来使用。这样既满足了快速的插入删除性能，又不会出现太大的空间冗余
 
-### 3.4 Set
+### Set
 
 Redis set对外提供的功能与list类似是一个列表的功能，特殊之处在于set是可以**自动排重**的，
 
@@ -336,7 +336,7 @@ Redis的Set是string类型的无序集合。它底层其实是一个value为null
 
 一个算法，随着数据的增加，执行时间的长短，如果是O(1)，数据增加，查找数据的时间不变
 
-#### 3.4.1 常用命令
+#### 常用命令
 
 ```bash
 sadd <key><value1><value2> ..... 
@@ -353,13 +353,13 @@ sunion <key1><key2>#返回两个集合的并集元素。
 sdiff <key1><key2>#返回两个集合的差集元素(key1中的，不包含key2中的)
 ```
 
-#### 3.4.2数据结构
+#### 数据结构
 
 Set数据结构是dict字典，字典是用哈希表实现的。
 
 Java中HashSet的内部实现使用的是HashMap，只不过所有的value都指向同一个对象。Redis的set结构也是一样，它的内部也使用hash结构，所有的value都指向同一个内部值。
 
-### 3.5 Hash
+### Hash
 
 Redis hash 是一个键值对集合。
 
@@ -367,7 +367,7 @@ Redis hash是一个string类型的field和value的映射表，hash特别适合�
 
 类似Java里面的Map<String,Object>
 
-#### 3.5.1 常用命令
+#### 常用命令
 
 ```bash
 hset <key><field><value> #给<key>集合中的  <field>键赋值<value>
@@ -380,11 +380,11 @@ hincrby <key><field><increment> #为哈希表 key 中的域 field 的值加上�
 hsetnx <key><field><value>  #将哈希表 key 中的域 field 的值设置为 value ，当且仅当域 field 不存在
 ```
 
-#### 3.5.2 数据结构
+#### 数据结构
 
 Hash类型对应的数据结构是两种：ziplist（压缩列表），hashtable（哈希表）。当field-value长度较短且个数较少时，使用ziplist，否则使用hashtable。
 
-### 3.6 Zset
+### Zset
 
 Redis有序集合zset与普通集合set非常相似，是一个没有重复元素的字符串集合。
 
@@ -394,7 +394,7 @@ Redis有序集合zset与普通集合set非常相似，是一个没有重复元�
 
 访问有序集合的中间元素也是非常快的,因此你能够使用有序集合作为一个没有重复成员的智能列表。
 
-#### 3.6.1 常用命令
+#### 常用命令
 
 ```bash
 zadd  <key><score1><value1><score2><value2>…
@@ -413,7 +413,7 @@ zrank <key><value>#返回该值在集合中的排名，从0开始。
 案例：如何利用zset实现一个文章访问量的排行榜？
 ```
 
-#### 3.6.2 数据结构
+#### 数据结构
 
 SortedSet(zset)是Redis提供的一个非常特别的数据结构，一方面它等价于Java的数据结构Map<String, Double>，可以给每一个元素value赋予一个权重score，另一方面它又类似于TreeSet，内部的元素会按照权重score进行排序，可以得到每个元素的名次，还可以通过score的范围来获取元素的列表。
 
