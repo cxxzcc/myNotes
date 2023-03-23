@@ -361,6 +361,8 @@ sinter <key1><key2>#返回两个集合的交集元素。
 sunion <key1><key2>#返回两个集合的并集元素。
 sdiff <key1><key2>#返回两个集合的差集元素(key1中的，不包含key2中的)
 SINTERCARD numkeys key [key ...] [LIMIT limit] 返回交集基数
+
+案例:朋友圈 好友推荐
 ```
 
 #### 数据结构
@@ -393,6 +395,8 @@ hkeys <key>				 #列出该hash集合的所有field
 hvals <key> 			 #列出该hash集合的所有value
 hincrby/hincrbyfloat <key><field><increment> #为哈希表 key 中的域 field 的值加上增量increment/小数
 hsetnx <key><field><value>  #将哈希表 key 中的域 field 的值设置为 value ，当且仅当域 field 不存在
+
+案例:购物车
 ```
 
 #### 数据结构
@@ -417,10 +421,15 @@ zadd  <key><score1><value1><score2><value2>…
 zrange <key><start><stop>  [WITHSCORES]   
 #返回有序集 key 中，下标在<start><stop>之间的元素
 #带WITHSCORES，可以让分数一起和值返回到结果集。
-zrangebyscore key minmax [withscores] [limit offset count]
-#返回有序集 key 中，所有 score 值介于 min 和 max 之间(包括等于 min 或 max )的成员。有序集成员按 score 值递增(从小到大)次序排列。 
+zrevrange <key><start><stop>  [WITHSCORES] 同上反转  
+zrangebyscore key ( min max ) [withscores] [limit offset count]
+#返回有序集 key 中，所有 score 值介于 min 和 max 之间(包括等于 min 或 max )的成员。有序集成员按 score 值递增(从小到大)次序排列。 ()代表不包含 
 zrevrangebyscore key maxmin [withscores] [limit offset count]               
 同上，改为从大到小排列。 
+
+zscore <key><value> 取分数
+zcard <key> 取数量
+zrem <k><v> 删除
 zincrby <key><increment><value>      #为元素的score加上增量
 zrem  <key><value>#删除该集合下，指定值的元素 
 zcount <key><min><max>#统计该集合，分数区间内的元素个数 
