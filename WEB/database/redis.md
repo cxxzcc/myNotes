@@ -229,13 +229,14 @@ SET key value [NX | XX] [GET] [EX seconds | PX milliseconds |
 #*NX：当数据库中key不存在时，可以将key-value添加数据库
 #*XX：当数据库中key存在时，可以将key-value添加数据库，与NX参数互斥
 
-
+#GET 返回原本value
 
 #*EX：key的超时秒数
 #*PX：key的超时毫秒数，与EX互斥
-# EXAT 设置以秒为单位的UNIX时间戳所对应的时间为过期时间
+# EXAT 设置以秒为单位的UNIX时间戳所对应的时间为过期时间  System.out.println(System.currentTimeMillis() / 1000L);
 # PXAT 设置以毫秒为单位的UNIX时间戳所对应的时间为过期时间
 
+#KEEPTTL 保留之前的过期时间
 
 get   <key> #查询对应键值
 append  <key><value> #将给定的<value> 追加到原值的末尾
