@@ -1190,7 +1190,7 @@ public ServletRegistrationBean getServlet() {
 
 2：Title：该参数对应了头部标题Hystrix Stream之后的内容，默认会使用具体监控实例的URL，可以通过配置该信息来展示更合适的标
 
-![image-20210421111554289](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210421111554289.png)
+![image-20210421111554289](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210421111554289.png)	
 
 ![image-20210421111515110](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210421111515110.png)
 
