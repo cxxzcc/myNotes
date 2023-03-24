@@ -128,7 +128,11 @@ Map<Boolean, List<Integer>> result = integerList.stream().collect(partitioni
 - Lambda 表达式来创建该接口的对象。（若 Lambda 表达式抛出一个受检异常(即：非运行时异常)，那么该异常需要在目标接口的抽象方法上进行声明）。
 - @FunctionalInterface
 
-
+四种基本函数式接口
+* Consumer<T>消费 对类型为T的对象应用操作void accept(T t)
+* Supplier<T>供给  返回类型为T的对象T get()
+* Function<T, R>函数 对类型为T的对象应用操作，并返回R类型结果R apply(T t)
+* Predicate<T>判断  返回boolean值 boolean test(T t)
 
 
 
