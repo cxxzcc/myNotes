@@ -176,11 +176,8 @@ http://redis.cn/
 **后台启动（推荐）**
 
 1. 拷贝一份redis.conf到其他目录  cp /opt/redis-3.2.5/redis.conf /myredis
-
 2. 后台启动设置**daemonize no**改成yes
-
    修改redis.conf(128行)文件将里面的daemonize no 改成 yes，让服务在后台启动
-
 3. Redis启动   redis-server  /myredis/redis.conf
 
 
@@ -196,9 +193,7 @@ redis-cli
 关闭
 
 * 单实例关闭：redis-cli shutdown
-
 * 也可以进入终端后再关闭 shutdown
-
 * 多实例关闭，指定端口关闭：redis-cli -p 6379 shutdown
 * kill -9 pid
 
