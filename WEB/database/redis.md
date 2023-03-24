@@ -593,6 +593,7 @@ geoadd<key>< longitude><latitude><member> [longitude latitude member...]
 #添加地理位置（经度，纬度，名称）
 
 geopos  <key><member> [member...]  #获得指定地区的坐标值
+geohash <key><member> [member...]  #返回坐标geohash算法生成的base32编码值
 
 geodist<key><member1><member2>  [m|km|ft|mi ]  #获取两个位置之间的直线距离
 #m 表示单位为米[默认值]。
@@ -601,11 +602,20 @@ geodist<key><member1><member2>  [m|km|ft|mi ]  #获取两个位置之间的直�
 #ft 表示单位为英尺。
 #如果用户没有显式地指定单位参数， 那么 GEODIST 默认使用米作为单位
 
-georadius<key>< longitude><latitude>radius  m|km|ft|mi   
+georadius<key>< longitude><latitude>radius  m|km|ft|mi WITHDIST WITHCOORD WITHCOORD  COUNT 10 desc 
 #以给定的经纬度为中心，找出某一半径内的元素    经度 纬度 距离 单位
+WITHDIST:在返回位置元素的同时，将位置元素与中心之间的距离也并返回。 距离的单位和用户给定的范围单位保持一致。
+WITHCOORD:将位置元素的经度和维度也一并返回。
+WITHHASH:以52位有符号整数的形式，返回位 置元素经过原始geohash编码的有序集合分值。这个选项主要用于底层应用或者调试，实际中的作用并不大
+COUNT限定返回的记录数。
+
+
+
+中文乱码 bash
+redis-cli --raw
 ```
 
-```bahs
+```bash
 geoadd china:city 121.47 31.23 shanghai
 geoadd china:city 106.50 29.53 chongqing 114.05 22.52 shenzhen 116.38 39.90 beijing
 ```
