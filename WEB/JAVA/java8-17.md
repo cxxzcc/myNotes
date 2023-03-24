@@ -176,8 +176,10 @@ IntBinaryOperator int applyAsInt(int left, int right)接两int值，返一int
 LongBinaryOperator long applyAsLong(long left, long right)接两long，返一long
 
 4.Predicate
-
-
+BiPredicate<T,U> boolean test(T t, U u)接收两个对象
+DoublePredicate boolean test(double value) 接收一个double值
+IntPredicate boolean test(int value) 接收一个int值
+LongPredicate boolean test(long value) 接收一个long值
 ```
 
 
