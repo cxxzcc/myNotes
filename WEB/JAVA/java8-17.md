@@ -1912,3 +1912,57 @@ http://openjdk.java.net/projects/jdk/15/
 
 
 
+
+
+## 语法
+
+1. try with resource
+	```java
+	A a = new A();
+	B b = new B();
+	try(a;b){
+	    可能产生的异常代码
+	}catch(异常类名 变量名){
+	    异常处理的逻辑
+	}
+	```
+2. var
+	```java
+	//1.局部变量的实例化
+	var list = new ArrayList<String>();
+	var set = new LinkedHashSet<Integer>();
+	//2.增强for循环中的索引
+	for (var v : list) {
+	    System.out.println(v);
+	}
+	//3.传统for循环中
+	for (var i = 0; i < 100; i++) {
+	    System.out.println(i);
+	}
+	//4. 返回值类型含复杂泛型结构
+	var iterator = set.iterator();
+	//Iterator<Map.Entry<Integer, Student>> iterator = set.iterator();
+	```
+3. instanceof
+	```java
+	if(obj instanceof String str){
+	    .. str.contains(..)..
+	}else{
+	    ...
+	}
+	
+	public boolean equals(Object o){
+	        return o instanceof Monitor other && model.equals(other.model) && price == other.price;
+	    }
+	
+	
+	
+	```
+
+
+
+
+
+
+
+
