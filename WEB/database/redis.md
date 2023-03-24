@@ -484,6 +484,8 @@ bitcount<key>[start end] #统计字符串从start字节到end字节比特值为1
 
 bitop  and(or/not/xor) <destkey> [key…]
 #bitop是一个复合操作， 它可以做多个Bitmaps的and（交集）、or（并集）、not（非）、xor（异或）操作并将结果保存在destkey中。
+
+案例:统计签到/登录/点击
 ```
 
 **实例
@@ -572,6 +574,8 @@ pfcount<key> [key ...]
 
 pfmerge<destkey><sourcekey> [sourcekey ...]  
 #将一个或多个HLL合并后的结果存储在另一个HLL中，比如每月活跃用户可以使用每天的活跃用户来合并计算可得
+
+案例:统计基数 独立访客/搜索关键词
 ```
 
 ### GEO
