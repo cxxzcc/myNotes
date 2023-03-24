@@ -1999,13 +1999,25 @@ http://openjdk.java.net/projects/jdk/15/
 	}
 	
 	```
-
 5. 文本块
 	```java
 	"""
 	line
 	"""
+	\ 取消换行操作
+    \s 表示一个空格
 	```
+6. Record
+	record是一种全新的类型，它本质上是一个 `final` 类，同时所有的属性都是 `final` 修饰，它会自动编译出 `public get` 、`hashcode` 、`equals`、`toString`、构造器等结构，减少了代码编写量。
+	可以在record声明的类中定义静态字段、静态方法、构造器或实例方法。
+	不能在record声明的类中定义实例字段；类不能声明为abstract；不能声明显式的父类等。
+	```java
+	record Point(int x, int y) { }
+	
+	```
+	record的设计目标是提供一种将数据建模为数据的好方法。它也不是 JavaBeans 的直接替代品，因为record的方法不符合 JavaBeans 的 get 标准。另外 JavaBeans 通常是可变的，而记录是不可变的。尽管它们的用途有点像，但记录并不会以某种方式取代 JavaBean。
+
+
 
 
 
