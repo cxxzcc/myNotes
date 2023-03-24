@@ -152,137 +152,30 @@ LongSupplier long getAsLong() 返回一个long值
 3. function
 UnaryOperator<T> T apply(T t) 接收一个T类型对象，返回一个T类型对象结果
 DoubleFunction<R> R apply(double value) 接收一个double值，返回一个R类型对象
-IntFunction<R> R apply(int value)
-
-接收一个int值，返回一个R类型对象
-
-LongFunction<R>
-
-R apply(long value)
-
-接收一个long值，返回一个R类型对象
-
-ToDoubleFunction<T>
-
-double applyAsDouble(T value)
-
-接收一个T类型对象，返回一个double
-
-ToIntFunction<T>
-
-int applyAsInt(T value)
-
-接收一个T类型对象，返回一个int
-
-ToLongFunction<T>
-
-long applyAsLong(T value)
-
-接收一个T类型对象，返回一个long
-
-DoubleToIntFunction
-
-int applyAsInt(double value)
-
-接收一个double值，返回一个int结果
-
-DoubleToLongFunction
-
-long applyAsLong(double value)
-
-接收一个double值，返回一个long结果
-
-IntToDoubleFunction
-
-double applyAsDouble(int value)
-
-接收一个int值，返回一个double结果
-
-IntToLongFunction
-
-long applyAsLong(int value)
-
-接收一个int值，返回一个long结果
-
-LongToDoubleFunction
-
-double applyAsDouble(long value)
-
-接收一个long值，返回一个double结果
-
-LongToIntFunction
-
-int applyAsInt(long value)
-
-接收一个long值，返回一个int结果
-
-DoubleUnaryOperator
-
-double applyAsDouble(double operand)
-
-接收一个double值，返回一个double
-
-IntUnaryOperator
-
-int applyAsInt(int operand)
-
-接收一个int值，返回一个int结果
-
-LongUnaryOperator
-
-long applyAsLong(long operand)
-
-接收一个long值，返回一个long结果
-
-BiFunction<T,U,R>
-
-R apply(T t, U u)
-
-接收一个T类型和一个U类型对象，返回一个R类型对象结果
-
-BinaryOperator<T>
-
-T apply(T t, T u)
-
-接收两个T类型对象，返回一个T类型对象结果
-
-ToDoubleBiFunction<T,U>
-
-double applyAsDouble(T t, U u)
-
-接收一个T类型和一个U类型对象，返回一个double
-
-ToIntBiFunction<T,U>
-
-int applyAsInt(T t, U u)
-
-接收一个T类型和一个U类型对象，返回一个int
-
-ToLongBiFunction<T,U>
-
-long applyAsLong(T t, U u)
-
-接收一个T类型和一个U类型对象，返回一个long
-
-DoubleBinaryOperator
-
-double applyAsDouble(double left, double right)
-
-接收两个double值，返回一个double结果
-
-IntBinaryOperator
-
-int applyAsInt(int left, int right)
-
-接收两个int值，返回一个int结果
-
-LongBinaryOperator
-
-long applyAsLong(long left, long right)
-
-接收两个long值，返回一个long结果
-
-
+IntFunction<R> R apply(int value) 接收一个int值，返回一个R类型对象
+LongFunction<R> R apply(long value) 接收一个long值，返回一个R类型对象
+ToDoubleFunction<T> double applyAsDouble(T value) 接收一个T类型对象，返回double
+ToIntFunction<T> int applyAsInt(T value) 接收一个T类型对象，返回一个int
+ToLongFunction<T> long applyAsLong(T value) 接收一个T类型对象，返回一个long
+DoubleToIntFunction int applyAsInt(double value) 接一个double值，返一个int结果
+DoubleToLongFunction long applyAsLong(double value) 接一个double值，返一个long
+IntToDoubleFunction double applyAsDouble(int value) 接一个int值，返一个double
+IntToLongFunction long applyAsLong(int value) 接一个int值，返回一个long结果
+LongToDoubleFunction double applyAsDouble(long value) 接一个long返一个double
+LongToIntFunction int applyAsInt(long value) 接一个long返一个int
+DoubleUnaryOperator double applyAsDouble(double operand)接一double返一double
+IntUnaryOperator int applyAsInt(int operand) 接一int，返一int
+LongUnaryOperator long applyAsLong(long operand) 接一long返一个long结果
+BiFunction<T,U,R> R apply(T t, U u) 接一T类型一U类型对象，返一个R类型对象
+BinaryOperator<T> T apply(T t, T u) 接两T类型对象，返回一个T类型对象结果
+ToDoubleBiFunction<T,U> double applyAsDouble(T t, U u)接一T一U返一double
+ToIntBiFunction<T,U> int applyAsInt(T t, U u) 接一T一U，返一int
+ToLongBiFunction<T,U>long applyAsLong(T t, U u)接一T一U，返回一个long
+DoubleBinaryOperator double applyAsDouble(double left, double right)接两double返一double
+IntBinaryOperator int applyAsInt(int left, int right)接两int值，返一int
+LongBinaryOperator long applyAsLong(long left, long right)接两long，返一long
+
+4.Predicate
 
 
 ```
