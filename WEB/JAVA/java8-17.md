@@ -123,6 +123,12 @@ Map<Boolean, List<Integer>> result = integerList.stream().collect(partitioni
 
 ```
 
+## 函数式接口
+- 只包含一个抽象方法（Single Abstract Method，简称SAM）的接口，可以包含其他非抽象方法。
+- Lambda 表达式来创建该接口的对象。（若 Lambda 表达式抛出一个受检异常(即：非运行时异常)，那么该异常需要在目标接口的抽象方法上进行声明）。
+- @FunctionalInterface
+
+
 
 
 
