@@ -1,3 +1,22 @@
+[https://openjdk.java.net/projects/jdk9/](https://openjdk.java.net/projects/jdk9/)
+[https://openjdk.java.net/projects/jdk/10/](https://openjdk.java.net/projects/jdk/10/)
+[https://openjdk.java.net/projects/jdk/11/](https://openjdk.java.net/projects/jdk/11/)
+[https://openjdk.java.net/projects/jdk/12/](https://openjdk.java.net/projects/jdk/12/)
+[https://openjdk.java.net/projects/jdk/13/](https://openjdk.java.net/projects/jdk/13/)
+[https://openjdk.java.net/projects/jdk/14/](https://openjdk.java.net/projects/jdk/14/)
+[https://openjdk.java.net/projects/jdk/15/](https://openjdk.java.net/projects/jdk/15/)
+[https://openjdk.java.net/projects/jdk/16/](https://openjdk.java.net/projects/jdk/16/)
+[https://openjdk.java.net/projects/jdk/17/](https://openjdk.java.net/projects/jdk/17/)
+
+新特性关注点
+
+- 角度一：语法层面
+   lambda表达式，switch，自动装箱和拆箱、enum、接口中的静态方法、默认方法、私有方法
+- 角度二：API层面
+   Stream API、新的日期时间的API、Optional、String、集合框架
+- 角度三：底层优化  Java   C/C++
+  JVM的优化、元空间、GC、GC的组合、GC的参数、js的执行引擎、集合底层的实现
+
 # java8(LTS)
 
 ## stream
@@ -110,6 +129,9 @@ Map<Boolean, List<Integer>> result = integerList.stream().collect(partitioni
 
 
 # java9
+
+
+
 
 * 模块化系统
 *  jShell 命令
@@ -1569,16 +1591,7 @@ JDK 14: instanceof模式识别、Records、弃用Parallel Scavenge+Serial GC组�
 
 
 
-新特性关注点
 
-- 角度一：语法层面
-   lambda表达式，switch，自动装箱和拆箱、enum、接口中的静态方法、默认方法、私有方法
-
-- 角度二：API层面
-   Stream API、新的日期时间的API、Optional、String、集合框架
-
-- 角度三：底层优化  Java   C/C++
-  JVM的优化、元空间、GC、GC的组合、GC的参数、js的执行引擎、集合底层的实现
 
 
 
@@ -1588,7 +1601,7 @@ http://openjdk.java.net/projects/jdk/15/
 
 14项主要的增强/更改，包括一个孵化器模块，三个预览功能，两个不推荐使用的功能以及两个删除功能。
 
-## 15.1 主要新特性
+## 主要新特性
 
 1. **Sealed Classes(Preview)密封类**
 
@@ -1739,7 +1752,7 @@ http://openjdk.java.net/projects/jdk/15/
 
    
 
-## 15.2 次要新特性
+## 次要新特性
 
 1. EdDSA 数字签名算法
 
@@ -1815,7 +1828,7 @@ http://openjdk.java.net/projects/jdk/15/
 
 
 
-## 15.3 order
+## order
 
 - **升级了Unicode，支持Unicode 13.0**
 - **给CharSequence新增了isEmpty方法**
