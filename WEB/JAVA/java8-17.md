@@ -129,10 +129,166 @@ Map<Boolean, List<Integer>> result = integerList.stream().collect(partitioni
 - @FunctionalInterface
 
 四种基本函数式接口
-* Consumer<T>消费 对类型为T的对象应用操作void accept(T t)
-* Supplier<T>供给  返回类型为T的对象T get()
+* Consumer< T>消费 对类型为T的对象应用操作void accept(T t)
+* Supplier< T>供给  返回类型为T的对象T get()
 * Function<T, R>函数 对类型为T的对象应用操作，并返回R类型结果R apply(T t)
-* Predicate<T>判断  返回boolean值 boolean test(T t)
+* Predicate< T>判断  返回boolean值 boolean test(T t)
+```java
+1.consumer
+BiConsumer<T,U>   void accept(T t, U u)  接收两个
+DoubleConsumer    void accept(double value) 接收一个
+IntConsumer       void accept(int value)  接收一个
+LongConsumer      void accept(long value)  接收一个
+ObjDoubleConsumer<T> void accept(T t, double value) 接收一个对象和一个double值
+ObjIntConsumer<T> void accept(T t, int value) 接收一个对象和一个int值
+ObjLongConsumer<T> void accept(T t, long value) 接收一个对象和一个long值
+
+2.supplier
+BooleanSupplier boolean getAsBoolean() 返回一个boolean值
+DoubleSupplier double getAsDouble() 返回一个double值
+IntSupplier int getAsInt() 返回一个int值
+LongSupplier long getAsLong() 返回一个long值
+
+3. function
+UnaryOperator<T> T apply(T t) 接收一个T类型对象，返回一个T类型对象结果
+DoubleFunction<R> R apply(double value) 接收一个double值，返回一个R类型对象
+IntFunction<R> R apply(int value)
+
+接收一个int值，返回一个R类型对象
+
+LongFunction<R>
+
+R apply(long value)
+
+接收一个long值，返回一个R类型对象
+
+ToDoubleFunction<T>
+
+double applyAsDouble(T value)
+
+接收一个T类型对象，返回一个double
+
+ToIntFunction<T>
+
+int applyAsInt(T value)
+
+接收一个T类型对象，返回一个int
+
+ToLongFunction<T>
+
+long applyAsLong(T value)
+
+接收一个T类型对象，返回一个long
+
+DoubleToIntFunction
+
+int applyAsInt(double value)
+
+接收一个double值，返回一个int结果
+
+DoubleToLongFunction
+
+long applyAsLong(double value)
+
+接收一个double值，返回一个long结果
+
+IntToDoubleFunction
+
+double applyAsDouble(int value)
+
+接收一个int值，返回一个double结果
+
+IntToLongFunction
+
+long applyAsLong(int value)
+
+接收一个int值，返回一个long结果
+
+LongToDoubleFunction
+
+double applyAsDouble(long value)
+
+接收一个long值，返回一个double结果
+
+LongToIntFunction
+
+int applyAsInt(long value)
+
+接收一个long值，返回一个int结果
+
+DoubleUnaryOperator
+
+double applyAsDouble(double operand)
+
+接收一个double值，返回一个double
+
+IntUnaryOperator
+
+int applyAsInt(int operand)
+
+接收一个int值，返回一个int结果
+
+LongUnaryOperator
+
+long applyAsLong(long operand)
+
+接收一个long值，返回一个long结果
+
+BiFunction<T,U,R>
+
+R apply(T t, U u)
+
+接收一个T类型和一个U类型对象，返回一个R类型对象结果
+
+BinaryOperator<T>
+
+T apply(T t, T u)
+
+接收两个T类型对象，返回一个T类型对象结果
+
+ToDoubleBiFunction<T,U>
+
+double applyAsDouble(T t, U u)
+
+接收一个T类型和一个U类型对象，返回一个double
+
+ToIntBiFunction<T,U>
+
+int applyAsInt(T t, U u)
+
+接收一个T类型和一个U类型对象，返回一个int
+
+ToLongBiFunction<T,U>
+
+long applyAsLong(T t, U u)
+
+接收一个T类型和一个U类型对象，返回一个long
+
+DoubleBinaryOperator
+
+double applyAsDouble(double left, double right)
+
+接收两个double值，返回一个double结果
+
+IntBinaryOperator
+
+int applyAsInt(int left, int right)
+
+接收两个int值，返回一个int结果
+
+LongBinaryOperator
+
+long applyAsLong(long left, long right)
+
+接收两个long值，返回一个long结果
+
+
+
+
+```
+
+
+
 
 
 
