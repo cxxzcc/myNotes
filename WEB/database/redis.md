@@ -99,6 +99,37 @@ Apache Cassandra是一款免费的开源NoSQL数据库，其设计目的在于�
 * 构建队列----利用list集合
 * 发布订阅消息系统----pub/sub模式
 
+### redis7
+* 多AOF文件支持
+	aof 文件由一个变成了多个，主要分为两种类型：基本文件(base files)、增量文件(incr files)，请注意这些文件名称是复数形式说明每一类文件不仅仅只有一个。在此之外还引入了一个清单文件(manifest) 用于跟踪文件以及文件的创建和应用顺序（恢复）
+* config命令增强
+	对于Config Set 和Get命令，支持在一次调用过程中传递多个配置参数。例如，现在我们可以在执行一次Config Set命令中更改多个参数： config set maxmemory 10000001 maxmemory-clients 50% port 6399
+* 限制客户端内存使用
+	Client-eviction
+	一旦 Redis 连接较多，再加上每个连接的内存占用都比较大的时候， Redis总连接内存占用可能会达到maxmemory的上限，可以增加允许限制所有客户端的总内存使用量配置项，redis.config 中对应的配置项
+	// 两种配置形式：指定内存大小、基于 maxmemory 的百分比。
+	maxmemory-clients 1g
+	maxmemory-clients 10%
+* listpack紧凑列表调整
+	listpack 是用来替代 ziplist 的新数据结构，在 7.0 版本已经没有 ziplist 的配置了（6.0版本仅部分数据类型作为过渡阶段在使用）listpack 已经替换了 ziplist 类似 hash-max-ziplist-entries 的配置
+* 访问安全性增强ACLV2
+	在redis.conf配置文件中，protected-mode默认为yes，只有当你希望你的客户端在没有授权的情况下可以连接到Redis server的时候可以将protected-mode设置为no
+* Redis Functions
+	Redis函数，一种新的通过服务端脚本扩展Redis的方式，函数与数据本身一起存储。
+	简言之，redis自己要去抢夺Lua脚本的饭碗
+* RDB保存时间调整
+	将持久化文件RDB的保存规则发生了改变，尤其是时间记录频度变化
+* 命令新增和变动
+	Zset (有序集合)增加 ZMPOP、BZMPOP、ZINTERCARD 等命令
+	Set (集合)增加 SINTERCARD 命令
+	LIST (列表)增加 LMPOP、BLMPOP ，从提供的键名列表中的第一个非空列表键中弹出一个或多个元素。
+* 性能资源利用率、安全、等改进
+	自身底层部分优化改动，Redis核心在许多方面进行了重构和改进
+	主动碎片整理V2：增强版主动碎片整理，配合Jemalloc版本更新，更快更智能，延时更低
+	HyperLogLog改进：在Redis5.0中，HyperLogLog算法得到改进，优化了计数统计时的内存使用效率，7更加优秀
+	更好的内存统计报告
+
+
 ### Redis安装
 
 http://redis.io
