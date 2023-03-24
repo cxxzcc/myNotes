@@ -1955,14 +1955,57 @@ http://openjdk.java.net/projects/jdk/15/
 	        return o instanceof Monitor other && model.equals(other.model) && price == other.price;
 	    }
 	
+	```
+4. switch
+	```java
+	->替代break;
+	switch可返回一个值
+	有返回值用yield，无返回值用break
+	public class SwitchTest2 {
+    public static void main(String[] args) {
+        Fruit fruit = Fruit.GRAPE;
+        int numberOfLetters = switch(fruit){
+            case PEAR -> 4;
+            case APPLE,MANGO,GRAPE -> 5;
+            case ORANGE,PAPAYA -> 6;
+            default -> throw new IllegalStateException("No Such Fruit:" + fruit);
+        };
+        System.out.println(numberOfLetters);
+	    }
+	}
 	
+	public void testSwitch3() {
+    String x = "3";
+    int i = switch (x) {
+        case "1":
+            yield 1;
+        case "2":
+            yield 2;
+        default:
+            yield 3;
+    };
+    System.out.println(i);
+	}
+	
+	 匹配模式
+	 static String formatterPatternSwitch(Object o) {
+	    return switch (o) {
+	        case Integer i -> String.format("int %d", i);
+	        case Long l    -> String.format("long %d", l);
+	        case Double d  -> String.format("double %f", d);
+	        case String s  -> String.format("String %s", s);
+	        default        -> o.toString();
+	    };
+	}
 	
 	```
 
-
-
-
-
+5. 文本块
+	```java
+	"""
+	line
+	"""
+	```
 
 
 
