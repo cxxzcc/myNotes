@@ -535,8 +535,23 @@ Stream提供了消息的持久化和主备复制功能，可以让任何客户�
 
 
 一个消息链表，将所有加入的消息都串起来，每个消息都有一个唯一的ID和对应的内容
+* Message Content 消息内容
+* Consumer group 消费组，通过XGROUP CREATE命令创建，一组多消费者
+* Last_delivered_id 游标，每个消费组会有个游标last_delivered_id,任意--个消费者读取了消息都会使游标last_delivered_id 往前移动。
+* Consumer 消费者
+* Pending_ids 消费者的状态变量，记录已读未ack的消息Id，如果客户端没有ack,这个变量里面的消息ID会越来越多，某个消息被ack它就开始减少。这个pending_ids变量在Redis官方被称之为PEL(Pending Entries List)， 记录了当前已经被客户端读取的消息，但是还没有ack (Acknowledgecharacter:确认字符)，它用来确保客户端至少消费了消息一次，而不会在网络传输的中途丢失了没处理
 
 
+#### 命令
+
+```shell
+
+
+
+
+
+
+```
 
 
 
