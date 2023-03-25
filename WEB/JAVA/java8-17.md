@@ -2016,8 +2016,16 @@ http://openjdk.java.net/projects/jdk/15/
 	
 	```
 	record的设计目标是提供一种将数据建模为数据的好方法。它也不是 JavaBeans 的直接替代品，因为record的方法不符合 JavaBeans 的 get 标准。另外 JavaBeans 通常是可变的，而记录是不可变的。尽管它们的用途有点像，但记录并不会以某种方式取代 JavaBean。
-
-
+7. 密封类
+	被 sealed 修饰的类可以指定子类
+	permits 列出可以直接扩展（即extends）它的类
+	具有传递性，子类必须使用指定的关键字进行修饰，且只能是 final、sealed、non-sealed 三者之一。
+	```java
+	public abstract sealed class Shape permits Circle, Rectangle, Square {...}
+	public final class Circle extends Shape {...} 
+	public sealed class Rectangle extends Shape permits TransparentRectangle, FilledRectangle {...}
+	public non-sealed class Square extends Shape {...} //non-sealed表示允许任何类继承
+	```
 
 
 
