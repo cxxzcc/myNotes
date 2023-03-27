@@ -878,7 +878,31 @@ Redis 发布订阅 (pub/sub) 是一种消息通信模式：发送者 (pub) 发�
 
 Redis 客户端可以订阅任意数量的频道。
 
+发布/订阅其实是一个轻量的队列，只不过数据不会被持久化，一般用 来处理实时性较高的异步消息
+
+
 #### 发布订阅命令行实现
+
+* PSUBSCRIBE pattern 
+	订阅-个或多个符合给定模式的频道。
+	
+* PUBSUB subcommand [argument [argument ]]
+	查看订阅与发布系统状态。
+* PUBLISH channel message
+	将信息发送到指定的频道。
+* PUNSUBSCRIBE [pattern [pattern .]]
+	退订所有给定模式的频道。
+* SUBSCRIBE channel [channel ..]
+	订阅给定的一个或多个频道的信息。
+接收消息有三个参数
+	* 消息的种类
+	* 始发频道的名称
+	* 实际的消息内容
+* UNSUBSCRIBE [channel [channel .]]
+	指退订给定的频道。
+
+
+
 
 1.  打开一个客户端订阅channel1
 
@@ -1187,9 +1211,10 @@ http://doc.redisfans.com/transaction/exec.html
 
 Pipeline是为了解决RTT往返回时，仅仅是将命令打包一次性发送,对整个Redis的执行不造成其它任何影响
 
+cat cmd.txt | redis-cli -a 111111 --pipe
 
-
-
+pipeline 非原子性 支持不同命令 不会阻塞 客户端服务端共同完成
+命令不宜过多 推荐10k
 
 
 
