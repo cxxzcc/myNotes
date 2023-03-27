@@ -923,7 +923,7 @@ Redis 客户端可以订阅任意数量的频道。
 * SpringBoot 2.X版本，Redis默认的连接池采用 Lettuce,当Redis集群节点发生变化后，Letture默认是不会刷新节点拓扑
 1. 排除lettuce采用jedis (不推荐)
 2. 重写连接工厂实例(极度不推荐)
-3. 刷新节点集群拓扑动态感应
+3. 刷新节点集群拓扑动态感应 改yml
 
 
 
@@ -970,6 +970,12 @@ spring.redis.lettuce.pool.max-active=8
 spring.redis.lettuce.pool.max-wait=-1ms
 spring.redis.lettuce.pool.max-idle=8
 spring.redis.lettuce.pool.min-idle=0
+spring.redis.cluster.nodes=192.168.111.175:6381,192.168.111.175:6382,192.168.111.172:6383,192.168.111.172:6384,192.168.111.174:6385,192.168.111.174:6386
+
+#支持集群拓扑动态感应刷新,自适应拓扑刷新是否使用所有可用的更新，默认false关闭
+spring.redis.lettuce.cluster.refresh.adaptive=true
+#定时刷新
+spring.redis.lettuce.cluster.refresh.period=2000
 spring.redis.cluster.nodes=192.168.111.175:6381,192.168.111.175:6382,192.168.111.172:6383,192.168.111.172:6384,192.168.111.174:6385,192.168.111.174:6386
 ```
 
@@ -2177,7 +2183,33 @@ public class JedisClusterTest {
 
 由于集群方案出现较晚，很多公司已经采用了其他的集群方案，而代理或者客户端分片的方案想要迁移至redis cluster，需要整体迁移而不是逐步过渡，复杂度较大。
 
-## 应用问题
+## 高阶
+
+### 单线程/多线程
+redis6之后支持多线程
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### 缓存穿透
 
