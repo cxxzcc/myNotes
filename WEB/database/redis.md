@@ -1568,9 +1568,7 @@ rdb的恢复
 **AOF默认不开启**
 
 可以在redis.conf中配置文件名称，默认为 appendonly.aof
-
 AOF文件的保存路径，同RDB的路径一致
-
 AOF和RDB同时开启，系统默认取AOF的数据（数据不会存在丢失）
 
 
@@ -1582,6 +1580,12 @@ AOF和RDB同时开启，系统默认取AOF的数据（数据不会存在丢失�
 * 正常恢复
   * 修改默认的appendonly no，改为yes
   * 将有数据的aof文件复制一份保存到对应目录(查看目录：config get dir)
+    * redis6 与rdb文件同目录  一个文件 appendonly.aof
+    * redis7 appenddirname "appendonlydir" 在rdb文件夹下新建目录 三个文件
+      * base基本文件
+      * incr增量文件
+      * manifest清单文件
+
   * 恢复：重启redis然后重新加载
 
 * 异常恢复
