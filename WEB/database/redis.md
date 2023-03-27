@@ -542,6 +542,8 @@ bitop  and(or/not/xor) <destkey> [key…]
 
 ### bitfield
 
+二进制位组成的数组，并对这个数组中任意偏移进行访问。
+
 一次操作多个比特位域(指的是连续的多个比特位)，它会执行一系列操作并返回一个响应数组，这个数组中的元素对应参数列表中的相应操作的执行结果。
 通过bitfield命令可以一次性对多个比特位域进行操作。
 
@@ -601,14 +603,14 @@ XREADGROUP GROUP group consumer [COUNT count] [BLOCK milliseconds]
 同组一条消息只能一个消费者消费, 不同组可消费同一条消息
 用count 来让同组消费者负载均衡读消息
 
+Streams 会自动使用内部队列（也称为 PENDING List）留存消费组里每个消费者读取的消息保底措施，直到消费者使用 XACK 命令通知
+xpending key groupname 查每个消费者已读未确认 
+xack key group id ack确认
 
-
-
-
-
+XINFO STREAM key [FULL [COUNT count]] 打印Stream\Consumer\Group的详细信息
 
 ```
-
+生产慎用
 
 
 
