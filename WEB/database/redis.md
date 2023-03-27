@@ -577,6 +577,7 @@ $  $表示只消费新的消息，当前流中最大的id,可用于将要到来�
 >  用于XREADGROUP命令，表示迄今还没有发送给组中使用者的信息，会更新消费者组的最后ID
 *  用于XADD命令中，让系统自动生成id 
 
+1.生产
 xadd  加消息/如无stream会新建  消息内容类似hash结构
 返回消息id 毫秒值+同一时间第几条消息 流中id单调递增
 
@@ -591,6 +592,14 @@ XREAD [COUNT 数量] [BLOCK milliseconds] STREAMS key  id
 BLOCK是否阻塞 默认不阻塞 0表示永远阻塞
 $取最大ID作为最后一个ID，当前Stream中不存在大于当前最大ID的消息，因此此时返回null
 0-0/00/000 从最小取,不指定count全取
+
+2.消费
+xgroup create key groupname $(队尾消费)/0(队头消费) 创建消费者组
+
+
+
+
+
 
 
 ```
