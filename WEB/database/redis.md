@@ -872,7 +872,7 @@ config set requirerepass "123456"
 * 设置样本数量，LRU算法和最小TTL算法都并非是精确的算法，而是估算值，所以你可以设置样本的大小，redis默认会检查这么多个key并选择其中LRU的那个。
 * 一般设置3到7的数字，数值越小样本越不准确，但性能消耗越小
 
-## Redis的发布和订阅
+## 发布订阅
 
 Redis 发布订阅 (pub/sub) 是一种消息通信模式：发送者 (pub) 发送消息，订阅者 (sub) 接收消息。
 
@@ -1729,21 +1729,19 @@ appendonly no 禁用aof
 	禁用aof持久化模式下，我们仍然可以使用命令bgrewriteaof生成aof文件
 
 
+## 高可用
 
-
-## 主从复制
+### 主从复制
 
 主机数据更新后根据配置和策略， 自动同步到备机的master/slaver机制，**Master以写为主，Slave以读为主**
 
-
-
 **作用**
-
-* 读写分离，性能扩展
-
+* 读写分离
+* 水平扩容
+* 数据备份
 * 容灾快速恢复
 
-### 步骤
+#### 步骤
 
 1. 拷贝多个redis.conf文件include(写绝对路径)
 
@@ -1783,15 +1781,10 @@ appendonly no 禁用aof
    ```
 
 2. 开启daemonize yes
-
 3. Pid文件名字pidfile
-
 4. 指定端口port
-
 5. Log文件名字
-
 6. dump.rdb名字dbfilename
-
 7. Appendonly 关掉或者换名字
 
 
@@ -1826,16 +1819,12 @@ slave1、slave2是从头开始复制
 
 用 slaveof no one  将从机变为主机
 
-### 原理
+#### 原理
 
 * Slave启动成功连接到master后会发送一个sync命令
-
 * Master接到命令启动后台的存盘进程，同时收集所有接收到的用于修改数据集命令， 在后台进程执行完毕之后，master将传送整个数据文件到slave,以完成一次完全同步
-
 * 全量复制：而slave服务在接收到数据库文件数据后，将其存盘并加载到内存中。
-
 * 增量复制：Master继续将新的所有收集到的修改命令依次传给slave,完成同步
-
 * 但是只要是重新连接master,一次完全同步（全量复制)将被自动执行
 
 ### 哨兵模式sentinel
