@@ -935,7 +935,7 @@ Redis 客户端可以订阅任意数量的频道。
 </dependency>
 ```
 
-```properties
+```yml
 #Redis服务器地址
 spring.redis.host=192.168.140.136
 #Redis服务器连接端口
@@ -952,6 +952,17 @@ spring.redis.lettuce.pool.max-wait=-1
 spring.redis.lettuce.pool.max-idle=5
 #连接池中的最小空闲连接
 spring.redis.lettuce.pool.min-idle=0
+
+
+# ========================redis集群=====================
+spring.redis.password=111111
+# 获取失败 最大重定向次数
+spring.redis.cluster.max-redirects=3
+spring.redis.lettuce.pool.max-active=8
+spring.redis.lettuce.pool.max-wait=-1ms
+spring.redis.lettuce.pool.max-idle=8
+spring.redis.lettuce.pool.min-idle=0
+spring.redis.cluster.nodes=192.168.111.175:6381,192.168.111.175:6382,192.168.111.172:6383,192.168.111.172:6384,192.168.111.174:6385,192.168.111.174:6386
 ```
 
 ```java
