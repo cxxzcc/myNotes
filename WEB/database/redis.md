@@ -2215,6 +2215,9 @@ redis4之前单线程为什么快
 * flushdb async
 * flushall async
 
+
+
+
 #### 多线程
 Redis6/7
 
@@ -2223,6 +2226,37 @@ Redis6/7
 
 多线程处理网络请求，单线程执行命令
 
+##### Unix网络编程五种IO模型
+
+###### BIO 
+Blocking I0 -阻塞I0
+
+###### NIO 
+NoneBlocking I0 -非阻塞IO
+
+###### IO multiplexing IO多路复用
+
+linux一切皆文件
+文件描述符、简称FD，句柄. File descriptor
+
+是一个用于表述指向文件的引用的抽象化概念。文件描述符在形式上是一个非负整数。实际上，它是一个索引值，指向内核为每一个进程所维护的该进程打开文件的记录表。当程序打开一个现有文件或者创建一个新文件时，内核向进程返回一个文件描述符。在程序设计中，文件描述符这一概念往往只适用于UNIX、Linux这样的操作系统
+
+IO多路复用
+
+
+
+
+
+
+
+
+
+
+
+
+###### signal driven IO 信号驱动I0
+
+###### asynchronous IO -异步IO
 
 
 
