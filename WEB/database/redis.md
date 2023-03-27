@@ -544,8 +544,33 @@ bitop  and(or/not/xor) <destkey> [key…]
 
 二进制位组成的数组，并对这个数组中任意偏移进行访问。
 
-一次操作多个比特位域(指的是连续的多个比特位)，它会执行一系列操作并返回一个响应数组，这个数组中的元素对应参数列表中的相应操作的执行结果。
-通过bitfield命令可以一次性对多个比特位域进行操作。
+将一个Redis字符串看作是一个由二进制位组成的数组
+并能对变长位宽和任意没有字节对齐的指定整型位域进行寻址和修改
+
+
+* 位域修改
+* 溢出控制
+#### 命令
+
+```redis
+BITFIELD key [GET encoding offset | [OVERFLOW <WRAP | SAT | FAIL>]
+  <SET encoding offset value | INCRBY encoding offset increment>
+  [GET encoding offset | [OVERFLOW <WRAP | SAT | FAIL>]
+  <SET encoding offset value | INCRBY encoding offset increment>
+  ...]]
+
+GET <type> <offset> -返回指定的位域
+SET <type> <offset> <value> -设置指定位域的值并返回它的原值
+INCRBY <type> <offset> <increment> -自增或自减(如果increment为负数) 指定位域的值并返回它的新值
+还有一个命令通过设置溢出行为来改变调用INCRBY指令的后序操作:
+OVERFLOW [WRAP |SAT |FAIL]
+当需要一个整型时，有符号整型需在位数前加i，无符号在位数前加u。例如，u8是一个8位的无符号整型，i16是一个16位的有符号整型。
+
+
+
+
+```
+
 
 ### stream
 
