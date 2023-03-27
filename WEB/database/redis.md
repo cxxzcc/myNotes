@@ -919,6 +919,14 @@ Redis 客户端可以订阅任意数量的频道。
 ## spring boot
 ### RedisTemplate
 
+集群动态感知问题
+* SpringBoot 2.X版本，Redis默认的连接池采用 Lettuce,当Redis集群节点发生变化后，Letture默认是不会刷新节点拓扑
+1. 排除lettuce采用jedis (不推荐)
+2. 重写连接工厂实例(极度不推荐)
+3. 刷新节点集群拓扑动态感应
+
+
+
 
 ```xml
 <!-- redis -->
