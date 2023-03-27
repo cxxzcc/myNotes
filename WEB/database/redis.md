@@ -595,6 +595,11 @@ $取最大ID作为最后一个ID，当前Stream中不存在大于当前最大ID�
 
 2.消费
 xgroup create key groupname $(队尾消费)/0(队头消费) 创建消费者组
+XREADGROUP GROUP group consumer [COUNT count] [BLOCK milliseconds]
+  [NOACK] STREAMS key [key ...] id [id ...]
+> 从第一条未被消费的消息开始
+同组一条消息只能一个消费者消费, 不同组可消费同一条消息
+用count 来让同组消费者负载均衡读消息
 
 
 
