@@ -1440,7 +1440,8 @@ https://redis.io/docs/manual/persistence/
 
 http://www.redis.io
 
-在指定的时间间隔内将内存中的数据集快照写入磁盘， 也就是行话讲的Snapshot快照，它恢复时是将快照文件直接读到内存里
+在指定的时间间隔内将内存中的数据集快照写入磁盘, Snapshot快照
+恢复时是将快照文件直接读到内存里
 
 
 
@@ -1469,9 +1470,13 @@ dir "/myredis/"
 **配置文件中默认的快照配置**
 
 ```
-save 3600 1
-save 300 100
+save 900 1  时间/变化次数
+save 300 10
 save 60 10000
+
+redis7
+save 3600 1 300 100 60 10000
+
 ```
 
 **save VS bgsave**
