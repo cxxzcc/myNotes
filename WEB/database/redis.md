@@ -917,6 +917,8 @@ Redis 客户端可以订阅任意数量的频道。
 
 
 ## spring boot
+### RedisTemplate
+
 
 ```xml
 <!-- redis -->
@@ -1017,6 +1019,96 @@ public class RedisTestController {
         //从redis获取值
         String name = (String)redisTemplate.opsForValue().get("name");
         return name;
+    }
+}
+```
+### Lettuce
+
+Jedis和Lettuce的区别
+jedis和Lettuce都是Redis的客户端，它们都可以连接Redis服务器，SpringBoot2.0之后默认使用Lettuce。因为当使用Jedis客户端连接Redis服务器的时候， 每个线程都要拿自己创建的Jedis实例去连接Redis客户端，当有很多个线程的时候,不仅开销大需要反复的创建关闭一个Jedis连接，而且也是线程不安全的, -个线程通过Jedis实例更改Redis服务器中的数据之后会影响另一个线程;
+但是如果使用Lettuce这个客户端连接Redis服务器的时候，就不会出现上面的情况Lettuce底层使用的是Netty,当有多
+个线程都需要连接Redis服务器的时候，可以保证只创建一个Lettuce连接，使所有的线程共享这一个Lettuce连接, 这样可以减少创建关闭一个Lettuce连接时候的开销;而且这种方式也是线程安全的，不会出现-个线程通过ettuce更改Redis服务器中的数据之后而影响另-个线程的情况;
+
+```xml
+<!--lettuce-->
+        <dependency>
+            <groupId>io.lettuce</groupId>
+            <artifactId>lettuce-core</artifactId>
+            <version>6.2.1.RELEASE</version>
+        </dependency>
+```
+```java
+@Slf4j
+public class LettuceDemo
+{
+    public static void main(String[] args)
+    {
+        //使用构建器 RedisURI.builder
+        RedisURI uri = RedisURI.builder()
+                .redis("192.168.111.181")
+                .withPort(6379)
+                .withAuthentication("default","111111")
+                .build();
+        //创建连接客户端
+        RedisClient client = RedisClient.create(uri);
+        StatefulRedisConnection conn = client.connect();
+        //操作命令api
+        RedisCommands<String,String> commands = conn.sync();
+
+        //keys
+        List<String> list = commands.keys("*");
+        for(String s : list) {
+            log.info("key:{}",s);
+        }
+        //String
+    commands.set("k1","1111");
+    String s1 = commands.get("k1");
+    System.out.println("String s ==="+s1);
+
+        //list
+    commands.lpush("myList2", "v1","v2","v3");
+    List<String> list2 = commands.lrange("myList2", 0, -1);
+    for(String s : list2) {
+     System.out.println("list ssss==="+s);
+    }
+    //set
+    commands.sadd("mySet2", "v1","v2","v3");
+    Set<String> set = commands.smembers("mySet2");
+    for(String s : set) {
+     System.out.println("set ssss==="+s);
+    }
+    //hash
+    Map<String,String> map = new HashMap<>();
+        map.put("k1","138xxxxxxxx");
+        map.put("k2","atguigu");
+        map.put("k3","zzyybs@126.com");//课后有问题请给我发邮件
+
+    commands.hmset("myHash2", map);
+    Map<String,String> retMap = commands.hgetall("myHash2");
+    for(String k : retMap.keySet()) {
+     System.out.println("hash  k="+k+" , v=="+retMap.get(k));
+    }
+
+    //zset
+    commands.zadd("myZset2", 100.0,"s1",110.0,"s2",90.0,"s3");
+    List<String> list3 = commands.zrange("myZset2",0,10);
+    for(String s : list3) {
+     System.out.println("zset ssss==="+s);
+    }
+
+    //sort
+    SortArgs sortArgs = new SortArgs();
+    sortArgs.alpha();
+    sortArgs.desc();
+
+    List<String> list4 = commands.sort("myList2",sortArgs);
+    for(String s : list4) {
+     System.out.println("sort ssss==="+s);
+    }
+
+        //关闭
+        conn.close();
+        client.shutdown();
     }
 }
 ```
