@@ -1507,11 +1507,17 @@ save ：save时只管保存，其它不管，全部阻塞。手动保存。不�
 	对于存储到磁盘中的快照，可以设置是否进行压缩存储。如果是的话，redis会采用LZF算法进行压缩。
 	如果你不想消耗CPU来进行压缩的话，可以设置为关闭此功能。推荐yes.
 
+* **rdbchecksum** **检查完整性**
+	在存储快照后，还可以让redis使用CRC64算法来进行数据校验，
+	但是这样做会增加大约10%的性能消耗，如果希望获取到最大的性能提升，可以关闭此功能
+	推荐yes.
 
-**rdbchecksum** **检查完整性**
-在存储快照后，还可以让redis使用CRC64算法来进行数据校验，
-但是这样做会增加大约10%的性能消耗，如果希望获取到最大的性能提升，可以关闭此功能
-推荐yes.
+* rdb-del-sync-files
+	在没有持久性的情况下删除复制中使用的RDB文件启用。默认no,禁用
+
+
+
+
 
 redis-check-dump 修复rdb文件
 
@@ -1550,13 +1556,11 @@ rdb的恢复
 
 
 **AOF持久化流程**
+![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230327112643.png)
 
 1. 客户端的请求写命令会被append追加到AOF缓冲区内；
-
 2. AOF缓冲区根据AOF持久化策略[always,everysec,no]将操作sync同步到磁盘的AOF文件中；
-
 3. AOF文件大小超过重写策略或手动重写时，会对AOF文件rewrite重写，压缩AOF文件容量；
-
 4. Redis服务重启时，会重新load加载AOF文件中的写操作达到数据恢复的目的
 
 
@@ -1566,8 +1570,6 @@ rdb的恢复
 可以在redis.conf中配置文件名称，默认为 appendonly.aof
 
 AOF文件的保存路径，同RDB的路径一致
-
-
 
 AOF和RDB同时开启，系统默认取AOF的数据（数据不会存在丢失）
 
@@ -1592,17 +1594,12 @@ AOF和RDB同时开启，系统默认取AOF的数据（数据不会存在丢失�
 
 #### AOF同步频率设置
 
-appendfsync always
-
-始终同步，每次Redis的写入都会立刻记入日志；性能较差但数据完整性比较好
-
-appendfsync everysec
-
-每秒同步，每秒记入日志一次，如果宕机，本秒的数据可能丢失。
-
-appendfsync no
-
-redis不主动进行同步，把同步时机交给操作系统。
+* appendfsync always
+	始终同步，每次Redis的写入都会立刻记入日志；性能较差但数据完整性比较好
+* appendfsync everysec
+	每秒同步，每秒记入日志一次，如果宕机，本秒的数据可能丢失。
+* appendfsync no
+	redis不主动进行同步，把同步时机交给操作系统。
 
 
 
