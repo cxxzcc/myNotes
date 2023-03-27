@@ -580,8 +580,17 @@ $  $表示只消费新的消息，当前流中最大的id,可用于将要到来�
 xadd  加消息/如无stream会新建  消息内容类似hash结构
 返回消息id 毫秒值+同一时间第几条消息 流中id单调递增
 
-xrange start end count(取几条)  -(最小值)+(最大)
+xrange start end count(取几条)  -(最小值)+(最大) 查流
+xrevrange + - count     倒序查流
 
+xdel streamName id 删除流中消息
+xlen streamName  查流数量
+xtrim name maxlen(允许最大长度)/minid(允许最小id)
+
+XREAD [COUNT 数量] [BLOCK milliseconds] STREAMS key  id
+BLOCK是否阻塞 默认不阻塞 0表示永远阻塞
+$取最大ID作为最后一个ID，当前Stream中不存在大于当前最大ID的消息，因此此时返回null
+0-0/00/000 从最小取,不指定count全取
 
 
 ```
