@@ -2808,8 +2808,19 @@ spring boot
 * 前十条评论
 * 签到
 * 访问量
-* 系统上线后，独立访客UV、PV、DAU是多少
+* 系统上线后，UV、PV、DAU是多少
 * 每天的新增用户数和第2天的留存用户数
+
+
+* UV Unique Visitor,独立访客，一般理解为客户端IP 需要去重
+* PV Page View,页面浏览量 不去重
+* DAU Daily Active User 日活
+* MAU Monthly Active User 月活
+
+
+
+
+
 
 
 统计类型
@@ -2817,7 +2828,7 @@ spring boot
 	交并差
 * 排序统计 zset
 * 二值统计 bitmap
-* 基数统计 haper
+* 基数统计 hyperloglog
 
 
 
