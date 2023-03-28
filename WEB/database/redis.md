@@ -2550,7 +2550,22 @@ lazyfree-lazy-user-del yes
 		以此为基础来进行估算。然后写数据的休眠时间则在读数据业务逻辑的耗时基础上加百毫秒即可。
 	2. 新启动一个后台监控程序，比如后面要讲解的WatchDog监控程序，会加时
 
+	同步吞吐量问题
+	* 二次删除,异步进行
 * 先更新数据库，再删除缓存
+	可能读到旧值
+	![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230328134423.png)
+	最终一致性
+
+
+
+
+
+
+
+
+
+
 
 
 
