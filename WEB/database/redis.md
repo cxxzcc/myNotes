@@ -2274,6 +2274,26 @@ IO多路复用
 ###### asynchronous IO -异步IO
 
 
+### BigKey
+
+面试题
+* 海量数据里查询某一固定前缀的key
+* 生产上如何限制keys * /flushdb/flushall等危险命令以防止误删误用?
+* MEMORY USAGE命令你用过吗?
+* BigKey问题，多大算big? 你如何发现?如何删除?如何处理?
+* BigKey你做过调优吗?惰性释放lazyfree了解过吗?
+* Morekey问题，生产上redis数据库有1000W记录，你如何遍历? key *可以吗?
+
+
+
+
+
+
+
+
+
+
+
 
 
 
