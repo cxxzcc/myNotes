@@ -2558,8 +2558,15 @@ lazyfree-lazy-user-del yes
 	最终一致性
 
 
+#### canal
+https://github.com/alibaba/canal/wiki
+监控mysql binlog 提供增量数据订阅和消费
 
-
+* 数据库镜像
+* 数据库实时备份
+* 索引构建和实时维护(拆分异构索引、倒排索引等)
+* 业务cache刷新
+* 带业务逻辑的增量数据处理
 
 
 
