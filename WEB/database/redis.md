@@ -2575,9 +2575,13 @@ https://github.com/alibaba/canal/wiki
 	![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230328140022.png)
 
 
+demo
 
-
-
+mysql
+* select version()
+* show master status 主机binlog
+* show variables like 'log_bin' # OFF
+* 
 
 
 
