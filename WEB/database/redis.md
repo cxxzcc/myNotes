@@ -2568,7 +2568,11 @@ https://github.com/alibaba/canal/wiki
 * 业务cache刷新
 * 带业务逻辑的增量数据处理
 
-
+原理
+* mysql主从复制
+	![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230328140043.png)
+* canal
+	![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230328140022.png)
 
 
 
