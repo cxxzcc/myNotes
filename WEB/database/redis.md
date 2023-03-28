@@ -2487,8 +2487,12 @@ lazyfree-lazy-user-del yes
 
 读写缓存
 * 同步直写策略
+	写库同时写redis
+* 异步缓写策略
+	延时同步redis 比如仓库、物流系统
+	异常情况，重试，借助kafka或者RabbitMQ等消息中间件，实现重试重写
 
-异步缓写策略
+
 
 
 
