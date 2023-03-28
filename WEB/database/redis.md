@@ -2364,8 +2364,12 @@ MEMORY USAGE [SAMPLES count]
 返回key分配的内存总字节数。
 嵌套数据类型，可用选项SAMPLES，其中count 表示抽样的元素个数，默认值为5。当需要抽样所有元素时,使用SAMPLES 0
 ```
+删除命令
 
-
+* string
+	del,如果过于庞大unlink
+* hash
+	使用hscan每次获取少量field-value,再使用hdel删除每个field
 
 
 
