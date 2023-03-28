@@ -2337,16 +2337,39 @@ SCAN的遍历顺序
 * string类型控制在10KB以内，hash、 list、 set、 zset元素 个数不要超过5000。
 * 非字符串的bigkey,不要使用del删除，使用hscan、 sscan、 zscan方 式渐进式删除，同时要注意防止bigkey过期时间自动删除问题(例如一个200万的zset设置1小时过期，会触发del操作，造成阻塞,而且该操作不会出现在慢查询中(latency可查)),
 
-
-* string是value，最大512MB但是≥10KB就是bigkey
+bigkey
+* string是value，最大512MB 但是≥10KB就是bigkey
 * list、hash、 set和zset, 个数超过5000就是bigkey
 
 
+危害
+* 内存不均，集群迁移困难
+* 超时删除，大key删除作梗
+* 网络流量阻塞
 
-内存不均，集群迁移困难
+如何产生
+* 社交类
+* 汇总统计
 
-超时删除，大key删除作梗
-网络流量阻塞
+排查命令
+```shell
+给出每种数据结构Top 1 bigkey，同时给出每种数据类型的键值个数+平均大小
+
+redis-cli -h 127.0.0.1 -p 6379 -a 111111 --bigkeys
+redis-cli -h 127.0.0.1 -p 7001 –-bigkeys -i 0.1
+-i 0.1 每隔 100 条 scan 指令就会休眠 0.1s，ops 就不会剧烈抬升，但是扫描的时间会变长
+
+
+MEMORY USAGE [SAMPLES count]
+返回key分配的内存总字节数。
+嵌套数据类型，可用选项SAMPLES，其中count 表示抽样的元素个数，默认值为5。当需要抽样所有元素时,使用SAMPLES 0
+```
+
+
+
+
+
+
 
 
 
