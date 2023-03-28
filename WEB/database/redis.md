@@ -2371,10 +2371,15 @@ MEMORY USAGE [SAMPLES count]
 * hash
 	使用hscan每次获取少量field-value,再使用hdel删除每个field
 
+* list
+	使用ltrim渐进式逐步删除，直到全部删除完成
+
+* set
+	使用sscan每次获取部分元素，再使用srem命令删除每个元素
 
 
-
-
+* zset
+	使用zscan每次获取部分元素，再使用ZREMRANGEBYRANK命令删除每个元素
 
 
 
