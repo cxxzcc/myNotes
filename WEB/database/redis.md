@@ -2285,11 +2285,24 @@ IO多路复用
 * Morekey问题，生产上redis数据库有1000W记录，你如何遍历? key *可以吗?
 
 
+制作测试数据
+```shell
+for((i=1;i<=100*10000;i++)); do echo "set k$i v$i" >> /tmp/redisTest.txt ;done;
+
+cat /tmp/redisTest.txt | /opt/redis-7.0.0/src/redis-cli -h 127.0.0.1 -p 6379 -a 111111 --pipe
+
+dbsize
+
+```
 
 
-
-
-
+keys * /flushdb/flushall 生产禁用
+修改配置文件 SECURITY 下 
+```conf
+rename-command keys
+rename-command flushdb
+rename-command FLUSHALL
+```
 
 
 
