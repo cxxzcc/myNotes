@@ -2460,7 +2460,14 @@ MEMORY USAGE [SAMPLES count]
 	}
 	```
 
+非阻塞删除命令
 
+redis.conf LAZY FREEING
+
+lazyfree-lazy-server-del yes
+replica-lazy-flush yes
+
+lazyfree-lazy-user-del yes
 
 
 
