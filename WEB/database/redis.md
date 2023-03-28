@@ -2493,9 +2493,56 @@ lazyfree-lazy-user-del yes
 	异常情况，重试，借助kafka或者RabbitMQ等消息中间件，实现重试重写
 
 
+==双检加锁策略==
+```java
+ /**
+     * 加强补充，避免突然key失效了，打爆mysql，做一下预防，尽量不出现击穿的情况。
+     */
+    public User findUserById2(Integer id)
+    {
+        User user = null;
+        String key = CACHE_KEY_USER+id;
+
+        //1 先从redis里面查询，如果有直接返回结果，如果没有再去查询mysql，
+        // 第1次查询redis，加锁前
+        user = (User) redisTemplate.opsForValue().get(key);
+        if(user == null) {
+            //2 大厂用，对于高QPS的优化，进来就先加锁，保证一个请求操作，让外面的redis等待一下，避免击穿mysql
+            synchronized (UserService.class){
+                //第2次查询redis，加锁后
+                user = (User) redisTemplate.opsForValue().get(key);
+                //3 二次查redis还是null，可以去查mysql了(mysql默认有数据)
+                if (user == null) {
+                    //4 查询mysql拿数据(mysql默认有数据)
+                    user = userMapper.selectByPrimaryKey(id);
+                    if (user == null) {
+                        return null;
+                    }else{
+                //5 mysql里面有数据的，需要回写redis，完成数据一致性的同步工作
+  redisTemplate.opsForValue().setIfAbsent(key,user,7L,TimeUnit.DAYS);
+                    }
+                }
+            }
+        }
+        return user;
+    }
+```
+
+
+给缓存设置过期时间，定期清理缓存并回写，是保证最终一致性的解决方案。
+**写操作以数据库为准**
+
+更新策略
+* 先更新数据库，再更新缓存
+
+* 先更新缓存，再更新数据库
 
 
 
+* 先删除缓存,再更新数据库
+
+
+* 先更新数据库，再删除缓存
 
 
 
