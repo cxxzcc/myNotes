@@ -2607,7 +2607,25 @@ canal
 	canal.instance.master.address=192.168.111.1:3306 改masterIP
 	canal.instance.dbUsername=canal 
 	canal.instance.dbPassword=canal
-* bin
+* bin下执行./startup.sh 启动
+* 查看日志启动成功 
+	logs/canal/canal.log
+	logs/example/example.log
+
+spring boot
+* pom
+	```xml
+	<!--canal-->
+    <dependency>
+        <groupId>com.alibaba.otter</groupId>
+        <artifactId>canal.client</artifactId>
+        <version>1.1.0</version>
+	</dependency>
+	```
+
+
+
+
 
 
 
