@@ -2963,7 +2963,16 @@ key对应的数据在数据源并不存在，每次针对此key的请求从缓�
 4. **进行实时监控：**当发现Redis的命中率开始急速降低，需要排查访问对象和访问的数据，和运维人员配合，可以设置黑名单限制服务
 
 
+guava实现
+```xml
+	<!--guava Google 开源的 Guava 中自带的布隆过滤器-->
+    <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>23.0</version>
+    </dependency>
 
+```
 
 
 
