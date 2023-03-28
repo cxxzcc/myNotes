@@ -2365,22 +2365,100 @@ MEMORY USAGE [SAMPLES count]
 嵌套数据类型，可用选项SAMPLES，其中count 表示抽样的元素个数，默认值为5。当需要抽样所有元素时,使用SAMPLES 0
 ```
 删除命令
-
 * string
 	del,如果过于庞大unlink
 * hash
 	使用hscan每次获取少量field-value,再使用hdel删除每个field
-
+	```java
+	public void delBigHash(String host, int port, String password, String bigHashKey) {  
+    Jedis jedis = new Jedis(host, port);  
+    if (password != null && !"".equals(password)) {  
+        jedis.auth(password);  
+        ScanParams scanParams = new ScanParams().count(100);  
+        String cursor = "0";  
+        do {  
+            ScanResult<Entry<String, String>> scanResult = jedis.hscan(bigHashKey, cursor, scanParams);  
+            List<Entry<String, String>> entryList = scanResult.getResult();  
+            if (entryList != null && !entryList.isEmpty()) {  
+                for (Entry<String, String> entry : entryList) {  
+                    jedis.hdel(bigHashKey, entry.getKey());  
+                }  
+            }  
+            cursor = scanResult.getCursor();  
+        } while (!"0".equals(cursor));  
+        //删除bigkey  
+        jedis.del(bigHashKey);  
+    }  
+	}
+	```
 * list
 	使用ltrim渐进式逐步删除，直到全部删除完成
-
+	```java
+	public void delBigList(String host, int port, String password, String bigListKey) {  
+    Jedis jedis = new Jedis(host, port);  
+    if (password != null && !"".equals(password)) {  
+        jedis.auth(password);  
+    }  
+    long llen = jedis.llen(bigListKey);  
+    int counter = 0;  
+    int left = 100;  
+    while (counter < left) {  
+        //每次从左侧载掉100个  
+        jedis.ltrim(bigListKey, left, llen);  
+        counter += left;  
+    }  
+    //最終删除key  
+    jedis.del(bigListKey);  
+	}
+	```
 * set
 	使用sscan每次获取部分元素，再使用srem命令删除每个元素
-
-
+	```java
+	public void delBigSet(String host, int port, String password, String bigSetKey) {  
+    Jedis jedis = new Jedis(host, port);  
+    if (password != null && !"".equals(password)) {  
+        jedis.auth(password);  
+        ScanParams scanParams = new ScanParams().count(100);  
+        String cursor = "0";  
+        do {  
+            ScanResult<String> scanResult = jedis.sscan(bigSetKey, cursor, scanParams);  
+            List<String> memberList = scanResult.getResult();  
+            if (memberList != null && !memberList.isEmpty()) {  
+                for (String member : memberList) {  
+                    jedis.srem(bigSetKey, member);  
+                }  
+            }  
+            cursor = scanResult.getCursor();  
+        } while (!"0".equals(cursor));  
+        //删除bigkey  
+        jedis.del(bigSetKey);  
+    }  
+	}
+	```
 * zset
 	使用zscan每次获取部分元素，再使用ZREMRANGEBYRANK命令删除每个元素
-
+	```java
+	public void delBigZset(String host, int port, String password, String bigZsetKey) {  
+    Jedis jedis = new Jedis(host, port);  
+    if (password != null && !"".equals(password)) {  
+        jedis.auth(password);  
+        ScanParams scanParams = new ScanParams().count(100);  
+        String cursor = "0";  
+        do {  
+            ScanResult<Tuple> scanResult = jedis.zscan(bigZsetKey, cursor, scanParams);  
+            List<Tuple> tupleList = scanResult.getResult();  
+            if (tupleList != null & !tupleList.isEmpty()) {  
+                for (Tuple tuple : tupleList) {  
+                    jedis.zrem(bigZsetKey, tuple.getElement());  
+                }  
+                cursor = scanResult.getCursor();  
+            }  
+        } while (!"0".equals(cursor));  
+        //删除bigkey  
+        jedis.del(bigZsetKey);  
+    }   
+	}
+	```
 
 
 
