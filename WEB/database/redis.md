@@ -2933,6 +2933,53 @@ Bloom Filter
 为了解决布隆过滤器不能删除元素的问题, 布谷鸟过滤器
 https://www.cs.cmu.edu/~binfan/papers/conext14_cuckoofilter.pdf#:~:text=Cuckoo%20%EF%AC%81lters%20support%20adding%20and%20removing%20items%20dynamically,have%20lower%20space%20overhead%20than%20space-optimized%20Bloom%20%EF%AC%81lters.
 
+#### centos7下布隆过滤器2种安装方式
+1. 采用docker安装RedisBloom，推荐
+	Redis4之后有了插件功能（Module），可外部扩展，用 RedisBloom 作为 Redis 布隆过滤器插件
+	```docker
+	docker run -p 6378:6378 --name=bloomfilter -d redislabs/rebloom
+	docker exec -it bloomfilter /bin/bash
+	redis-cli
+	```
+	* 命令
+	* **bf.add key 值**
+	* **bf.exists key 值** 布隆过滤器判断某一个key是否存在
+	* **bf.madd** 一次性添加多个元素  
+	* **bf.mexists** 一次性查询多个元素是否存在  
+	* **bf.reserve key error_rate的值 initial_size的值** 设置误判率和存放元素的size
+2. 编译安装
+	```shell
+	# 下载 编译 安装Rebloom插件
+	wget https://github.com/RedisLabsModules/rebloom/archive/v2.2.2.tar.gz
+	# 解压 
+	tar -zxvf v2.2.2.tar.gz
+	cd RedisBloom-2.2.2
+	# 若是第一次使用 需要安装gcc++环境
+	make
+	# redis服启动添加对应参数 这样写还是挺麻烦的
+	# rebloom_module="/usr/local/rebloom/rebloom.so"
+	# daemon --user ${REDIS_USER-redis} "$exec $REDIS_CONFIG --loadmodule # $rebloom_module --daemonize yes --pidfile $pidfile"
+	# 记录当前位置
+	pwd
+	# 进入reids目录 配置在redis.conf中 更加方便
+	vim redis.conf
+	# :/loadmodule redisbloom.so是刚才具体的pwd位置 cv一下
+	loadmodule /xxx/redis/redis-5.0.8/RedisBloom-2.2.2/redisbloom.so
+	# 保存退出
+	wq
+	# 重新启动redis-server 我是在redis中 操作的 若不在请写出具体位置 不然会报错
+	redis-server redis.conf
+	# 连接容器中的 redis 服务 若是无密码 redis-cli即可
+	redis-cli -a 密码
+	# 进入可以使用BF.ADD命令算成功
+	```
+
+
+
+
+
+
+
 ### 预热/雪崩/穿透/击穿
 
 #### 缓存预热
@@ -2963,7 +3010,7 @@ key对应的数据在数据源并不存在，每次针对此key的请求从缓�
 4. **进行实时监控：**当发现Redis的命中率开始急速降低，需要排查访问对象和访问的数据，和运维人员配合，可以设置黑名单限制服务
 
 
-guava实现
+guava实现 单机使用
 ```xml
 	<!--guava Google 开源的 Guava 中自带的布隆过滤器-->
     <dependency>
@@ -3001,14 +3048,109 @@ public class GuavaBloomFilterService{
     }
 }
 ```
+Redis布隆过滤器
+
+```xml
+<!-- redisson -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>3.13.4</version>
+        </dependency>
+
+```
+
+```java
+public class RedissonBloomFilterDemo {
+    public static final int _1W = 10000;
+
+    //布隆过滤器里预计要插入多少数据
+    public static int size = 100 * _1W;
+    //误判率,它越小误判的个数也就越少
+    public static double fpp = 0.03;
+
+    static RedissonClient redissonClient = null;//jedis
+    static RBloomFilter rBloomFilter = null;//redis版内置的布隆过滤器
+
+    @Resource
+    RedisTemplate redisTemplate;
 
 
+    static {
+        Config config = new Config();
+        config.useSingleServer().setAddress("redis://xxx:6379").setDatabase(0);
+        //构造redisson
+        redissonClient = Redisson.create(config);
+        //通过redisson构造rBloomFilter
+        rBloomFilter = redissonClient.getBloomFilter("phoneListBloomFilter",new StringCodec());
+
+        rBloomFilter.tryInit(size,fpp);
+
+        // 1测试  布隆过滤器有+redis有
+        rBloomFilter.add("10086");
+        redissonClient.getBucket("10086",new StringCodec()).set("chinamobile10086");
+
+        // 2测试  布隆过滤器有+redis无
+        //rBloomFilter.add("10087");
+
+        //3 测试 ，布隆过滤器无+redis无
+
+    }
+
+    private static String getPhoneListById(String IDNumber) {
+        String result = null;
+
+        if (IDNumber == null) {
+            return null;
+        }
+        //1 先去布隆过滤器里面查询
+        if (rBloomFilter.contains(IDNumber)) {
+            //2 布隆过滤器里有，再去redis里面查询
+            RBucket<String> rBucket = redissonClient.getBucket(IDNumber, new StringCodec());
+            result = rBucket.get();
+            if(result != null) {
+                return "i come from redis: "+result;
+            }else{
+                result = getPhoneListByMySQL(IDNumber);
+                if (result == null) {
+                    return null;
+                }
+                // 重新将数据更新回redis
+                redissonClient.getBucket(IDNumber, new StringCodec()).set(result);
+            }
+            return "i come from mysql: "+result;
+        }
+        return result;
+    }
+
+    private static String getPhoneListByMySQL(String IDNumber)
+    {
+        return "chinamobile"+IDNumber;
+    }
+
+
+
+    public static void main(String[] args) {
+        String phoneListById = getPhoneListById("10086");
+        //String phoneListById = getPhoneListById("10087"); //请测试执行2次
+        //String phoneListById = getPhoneListById("10088");
+        System.out.println("------查询出来的结果： "+phoneListById);
+
+        //暂停几秒钟线程
+        try { TimeUnit.SECONDS.sleep(1); } catch (InterruptedException e) { e.printStackTrace(); }
+        redissonClient.shutdown();
+    }
+
+
+}
+
+```
 
 
 
 #### 缓存击穿
 
-key对应的数据存在，但在redis中过期，此时若有大量并发请求过来，这些请求发现缓存过期一般都会从后端DB加载数据并回设到缓存，这个时候大并发的请求可能会瞬间把后端DB压垮。
+热点key失效
 
 **解决方案**
 
