@@ -2284,7 +2284,7 @@ IO多路复用
 * BigKey你做过调优吗?惰性释放lazyfree了解过吗?
 * Morekey问题，生产上redis数据库有1000W记录，你如何遍历? key *可以吗?
 
-
+#### MoreKey
 制作测试数据
 ```shell
 for((i=1;i<=100*10000;i++)); do echo "set k$i v$i" >> /tmp/redisTest.txt ;done;
@@ -2304,7 +2304,7 @@ rename-command flushdb
 rename-command FLUSHALL
 ```
 
-#### scan命令
+##### scan命令
 
 ```redis
 SCAN cursor(游标) [MATCH pattern 匹配模式] [COUNT count] [TYPE type]
@@ -2329,6 +2329,28 @@ SCAN 返回一个包含两个元素的数组， 
 SCAN的遍历顺序
 
 非常特别，它不是从第一维数组的第零位一直遍历到末尾，而是采用了高位进位加法来遍历。之所以使用这样特殊的方式进行遍历，是考虑到字典的扩容和缩容时避免槽位的遍历重复和遗漏。
+
+
+#### BigKey
+
+阿里redis规范
+* string类型控制在10KB以内，hash、 list、 set、 zset元素 个数不要超过5000。
+* 非字符串的bigkey,不要使用del删除，使用hscan、 sscan、 zscan方 式渐进式删除，同时要注意防止bigkey过期时间自动删除问题(例如一个200万的zset设置1小时过期，会触发del操作，造成阻塞,而且该操作不会出现在慢查询中(latency可查)),
+
+
+* string是value，最大512MB但是≥10KB就是bigkey
+* list、hash、 set和zset, 个数超过5000就是bigkey
+
+
+
+内存不均，集群迁移困难
+
+超时删除，大key删除作梗
+网络流量阻塞
+
+
+
+
 
 
 
