@@ -588,7 +588,7 @@ null结果缓存，并加入短暂过期时间 【可能导致redis里面全是n
 2、设置过期时间(加随机值) :解决缓存雪崩
 3、加锁:解决缓存击穿
 
-## 1.2 分布式锁
+## 分布式锁
 
 ### 1.2.1 分布式锁原理与应用
 
@@ -722,8 +722,7 @@ if (lock) {
 }
 ```
 
-### [[Redisson]]
-
+### Redisson
 
 
 https://github.com/redisson/redisson/wiki/%E7%9B%AE%E5%BD%95

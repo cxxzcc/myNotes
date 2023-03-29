@@ -3193,7 +3193,7 @@ key可能会在某些时间点被超高并发地访问，是一种非常“热�
 6. 服务降级
 7. 上云
 
-## 分布式锁
+### 分布式锁
 
 随着业务发展的需要，原单体单机部署的系统被演化成分布式集群系统后，由于分布式系统多线程、多进程并且分布在不同机器上，这将使原单机部署情况下的并发控制锁策略失效，单纯的Java API并不能提供分布式锁的能力。为了解决这个问题就需要一种跨JVM的互斥机制来控制共享资源的访问，这就是分布式锁要解决的问题！
 
@@ -3210,7 +3210,7 @@ key可能会在某些时间点被超高并发地访问，是一种非常“热�
 
 这里，我们就基于redis实现分布式锁。
 
-### redis实现
+#### redis实现
 
 面试题
 * Redis除了拿来做缓存，你还见过基于Redis的什么用法?
@@ -3559,7 +3559,7 @@ eval "redis.call('set',KEYS[1],ARGV[1]) return redis.call('get',KEYS[1])" 1 k2 v
 eval "if redis.call('get',KEYS[1])==ARGV[1] then return redis.call('del',KEYS[1]) else return 0 end" 1 zzyyRedisLock 1111-2222-3333
 ```
 
-### RedLock
+#### RedLock
 
 ![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230329142939.png)
 
@@ -3573,8 +3573,19 @@ eval "if redis.call('get',KEYS[1])==ARGV[1] then return redis.call('del',KEYS[1]
 5. 如未能获得锁（无法在至少 N/2 + 1 个 Redis 实例获取锁、或获取锁的时间超过了有效时间），客户端应在所有的实例解锁
 
 
+[[glsc#缓存与分布式锁#分布式锁#Redisson]]
 
-#redisson
+### 缓存过期淘汰策略
+面试题
+* 生产上你们的redis内存设置多少? 
+* 如何配置、修改redis的内存大小
+* 如果内存满了你怎么办
+* redis清理内存的方式?定期删除和惰性删除了解过吗
+* redis缓存淘汰策略有哪些?分别是什么?你用那个?
+* redis的LRU了解过吗?请手写LRU
+* Iru和lfu算法的区别是什么
+
+
 
 
 
