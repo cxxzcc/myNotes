@@ -1901,6 +1901,9 @@ appendonly no 禁用aof
 
 ## 高可用
 
+
+redis集群a'p
+
 ### 主从复制
 
 主机数据更新后根据配置和策略， 自动同步到备机的master/slaver机制，**Master以写为主，Slave以读为主**
