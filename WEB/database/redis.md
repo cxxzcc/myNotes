@@ -3597,11 +3597,12 @@ redis内存
 redis内存满了 OOM
 
 删除策略
-* 立即
-* 惰性
-* 
+* 立即 费CPU 时间换空间
+* 惰性 费内存 空间换时间 lazyfree-lazy-eviction=yes
+* 定期 定期随机检查key 
 
-
+淘汰策略
+* MEMORY MANAGEMENT
 
 
 
