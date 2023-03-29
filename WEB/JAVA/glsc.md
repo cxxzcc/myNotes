@@ -839,41 +839,33 @@ lock.getFairLock()//公平锁 有序取锁
 
 进入到 `Redisson` Lock 源码
 
-1、进入 `Lock` 的实现 发现 他调用的也是 `lock` 方法参数  时间为 -1
+1. 进入 `Lock` 的实现 发现 他调用的也是 `lock` 方法参数  时间为 -1
+	![image-20210427204138000](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210427204138000.png)
+2. 再次进入 `lock` 方法
+	发现他调用了 tryAcquire
+	![image-20210427204156621](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210427204156621.png)
+3. 进入 tryAcquire
+	![image-20210427204212298](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210427204212298.png)
+4. 里头调用了 tryAcquireAsync
+	这里判断 laseTime != -1 就与刚刚的第一步传入的值有关系
+	![image-20210427204243709](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210427204243709.png)
+5. 进入到 `tryLockInnerAsync` 方法
+	![image-20210427204300643](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210427204300643.png)
+	锁不存在-加锁 锁存在+1 存在非本线程返回ttl
+6. `internalLockLeaseTime` 这个变量是锁的默认时间
+	这个变量在构造的时候就赋初始值
+	![image-20210427204317552](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210427204317552.png)
 
-![image-20210427204138000](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210427204138000.png)
+7. 最后查看 `lockWatchdogTimeout` 变量
+	也就是30秒的时间
+	![image-20210427204330633](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210427204330633.png)
+8. watchdog
+	![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230329150641.png)
+	![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230329151015.png)
+	![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230329151058.png)
+	![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230329151109.png)
 
-2、再次进入 `lock` 方法
 
-发现他调用了 tryAcquire
-
-![image-20210427204156621](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210427204156621.png)
-
-3、进入 tryAcquire
-
-![image-20210427204212298](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210427204212298.png)
-
-4、里头调用了 tryAcquireAsync
-
-这里判断 laseTime != -1 就与刚刚的第一步传入的值有关系
-
-![image-20210427204243709](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210427204243709.png)
-
-5、进入到 `tryLockInnerAsync` 方法
-
-![image-20210427204300643](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210427204300643.png)
-
-6、`internalLockLeaseTime` 这个变量是锁的默认时间
-
-这个变量在构造的时候就赋初始值
-
-![image-20210427204317552](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210427204317552.png)
-
-7、最后查看 `lockWatchdogTimeout` 变量
-
-也就是30秒的时间
-
-![image-20210427204330633](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210427204330633.png)
 
 #### 1.2.2.3 Reidsson - 读写锁
 
