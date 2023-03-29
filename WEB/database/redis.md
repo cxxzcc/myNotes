@@ -1902,7 +1902,7 @@ appendonly no 禁用aof
 ## 高可用
 
 
-redis集群a'p
+redis集群是 AP
 
 ### 主从复制
 
@@ -3289,7 +3289,7 @@ public class InventoryService
 
  
 
-为了确保分布式锁可用，我们至少要确保锁的实现同时**满足以下四个条件**：
+为了确保分布式锁可用，我们至少要确保锁的实现同时**满足以下条件**：
 
 * 互斥性。在任意时刻，只有一个客户端能持有锁。
 * 防死锁。即使有一个客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁。
@@ -3500,8 +3500,37 @@ public class InventoryService
 }
 ```
 
+续期
+```lua
+if redis.call('HEXISTS',KEYS[1],ARGV[1]) == 1 then
+  return redis.call('expire',KEYS[1],ARGV[2])
+else
+  return 0
+end
+```
+```java
+private void renewExpire()
+    {
+        String script =
+                "if redis.call('HEXISTS',KEYS[1],ARGV[1]) == 1 then " +
+                        "return redis.call('expire',KEYS[1],ARGV[2]) " +
+                        "else " +
+                        "return 0 " +
+                        "end";
 
+        new Timer().schedule(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                if (stringRedisTemplate.execute(new DefaultRedisScript<>(script, Boolean.class), Arrays.asList(lockName),uuidValue,String.valueOf(expireTime))) {
+                    renewExpire();
+                }
+            }
+        },(this.expireTime * 1000)/3);
+    }
 
+```
 
 
 LUA
