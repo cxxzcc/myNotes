@@ -992,10 +992,155 @@ public String go() {
 
 #### 多机版
 
-redlock 
-五台master实现
+* redlock实现 已弃用 
+	五台master实现
+* MultiLock 多重锁
 
 
+```java
+@ConfigurationProperties(prefix = "spring.redis", ignoreUnknownFields = false)
+@Data
+public class RedisProperties {
+    private int database;
+    /**
+     * 等待节点回复命令的时间。该时间从命令发送成功时开始计时
+     */
+    private int timeout;
+    private String password;
+    private String mode;
+    /**
+     * 池配置
+     */
+    private RedisPoolProperties pool;
+    /**
+     * 单机信息配置
+     */
+    private RedisSingleProperties single;
+}
+
+@Data
+public class RedisSingleProperties {
+    private  String address1;
+    private  String address2;
+    private  String address3;
+}
+@Data
+public class RedisPoolProperties {
+    private int maxIdle;
+    private int minIdle;
+    private int maxActive;
+    private int maxWait;
+    private int connTimeout;
+    private int soTimeout;
+    /*
+     * 池大小
+     */
+    private  int size;
+}
+
+@Configuration
+@EnableConfigurationProperties(RedisProperties.class)
+public class CacheConfiguration {
+
+    @Autowired
+    RedisProperties redisProperties;
+
+    @Bean
+    RedissonClient redissonClient1() {
+        Config config = new Config();
+        String node = redisProperties.getSingle().getAddress1();
+        node = node.startsWith("redis://") ? node : "redis://" + node;
+        SingleServerConfig serverConfig = config.useSingleServer()
+                .setAddress(node)
+                .setTimeout(redisProperties.getPool().getConnTimeout())
+                .setConnectionPoolSize(redisProperties.getPool().getSize())
+                .setConnectionMinimumIdleSize(redisProperties.getPool().getMinIdle());
+        if (StringUtils.isNotBlank(redisProperties.getPassword())) {
+            serverConfig.setPassword(redisProperties.getPassword());
+        }
+        return Redisson.create(config);
+    }
+
+    @Bean
+    RedissonClient redissonClient2() {
+        Config config = new Config();
+        String node = redisProperties.getSingle().getAddress2();
+        node = node.startsWith("redis://") ? node : "redis://" + node;
+        SingleServerConfig serverConfig = config.useSingleServer()
+                .setAddress(node)
+                .setTimeout(redisProperties.getPool().getConnTimeout())
+                .setConnectionPoolSize(redisProperties.getPool().getSize())
+                .setConnectionMinimumIdleSize(redisProperties.getPool().getMinIdle());
+        if (StringUtils.isNotBlank(redisProperties.getPassword())) {
+            serverConfig.setPassword(redisProperties.getPassword());
+        }
+        return Redisson.create(config);
+    }
+
+    @Bean
+    RedissonClient redissonClient3() {
+        Config config = new Config();
+        String node = redisProperties.getSingle().getAddress3();
+        node = node.startsWith("redis://") ? node : "redis://" + node;
+        SingleServerConfig serverConfig = config.useSingleServer()
+                .setAddress(node)
+                .setTimeout(redisProperties.getPool().getConnTimeout())
+                .setConnectionPoolSize(redisProperties.getPool().getSize())
+                .setConnectionMinimumIdleSize(redisProperties.getPool().getMinIdle());
+        if (StringUtils.isNotBlank(redisProperties.getPassword())) {
+            serverConfig.setPassword(redisProperties.getPassword());
+        }
+        return Redisson.create(config);
+    }
+}
+
+@RestController
+@Slf4j
+public class RedLockController {
+
+    public static final String CACHE_KEY_REDLOCK = "ATGUIGU_REDLOCK";
+
+    @Autowired
+    RedissonClient redissonClient1;
+
+    @Autowired
+    RedissonClient redissonClient2;
+
+    @Autowired
+    RedissonClient redissonClient3;
+
+    boolean isLockBoolean;
+
+    @GetMapping(value = "/multiLock")
+    public String getMultiLock() throws InterruptedException
+    {
+        String uuid =  IdUtil.simpleUUID();
+        String uuidValue = uuid+":"+Thread.currentThread().getId();
+
+        RLock lock1 = redissonClient1.getLock(CACHE_KEY_REDLOCK);
+        RLock lock2 = redissonClient2.getLock(CACHE_KEY_REDLOCK);
+        RLock lock3 = redissonClient3.getLock(CACHE_KEY_REDLOCK);
+
+        RedissonMultiLock redLock = new RedissonMultiLock(lock1, lock2, lock3);
+        redLock.lock();
+        try
+        {
+            System.out.println(uuidValue+"\t"+"---come in biz multiLock");
+            try { TimeUnit.SECONDS.sleep(30); } catch (InterruptedException e) { e.printStackTrace(); }
+            System.out.println(uuidValue+"\t"+"---task is over multiLock");
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("multiLock exception ",e);
+        } finally {
+            redLock.unlock();
+            log.info("释放分布式锁成功key:{}", CACHE_KEY_REDLOCK);
+        }
+
+        return "multiLock task is over  "+uuidValue;
+    }
+
+}
+```
 
 
 
