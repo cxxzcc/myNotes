@@ -3601,13 +3601,23 @@ redis内存满了 OOM
 * 惰性 费内存 空间换时间 lazyfree-lazy-eviction=yes
 * 定期 定期随机检查key 
 
-淘汰策略
-* MEMORY MANAGEMENT
+淘汰策略 MEMORY MANAGEMENT
+1. noeviction: 满了也不删，内存增加返回error
+2. allkeys-lru: LRU算法删除，删最近最不常用的key
+3. volatile-lru: 对所有设置了过期时间的key使用LRU算法进行删除
+4. allkeys-random: 随机删除
+5. volatile-random: 对所有设置了过期时间的key随机删除
+6. volatile-ttl:删除马上要过期的key
+7. allkeys-lfu:对所有key使用LFU算法进行删除
+8. volatile-lfu:对所有设置了过期时间的key使用LFU算法进行删除
 
 
 
 
 
+
+> LRU 淘汰最长时间未被使用的页面  Least Recently Used
+> LFU 淘汰一定时期内被访问次数最少的页 Least Frequently Used
 
 
 
