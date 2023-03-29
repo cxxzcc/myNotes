@@ -3591,7 +3591,17 @@ redis内存
 * 生产上一般设为最大物理内存的3/4
 * 修改最大内存
 	* 配置 maxmemory 104857600
-	* 命令 config get maxmemory
+	* 命令 config get maxmemory   config set memory 104857600
+* 查看内存使用 info memory
+
+redis内存满了 OOM
+
+
+
+
+
+
+
 
 
 
