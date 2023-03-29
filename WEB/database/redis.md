@@ -3207,7 +3207,7 @@ key可能会在某些时间点被超高并发地访问，是一种非常“热�
 
 这里，我们就基于redis实现分布式锁。
 
-### 使用redis实现分布式锁
+### redis实现
 
 面试题
 * Redis除了拿来做缓存，你还见过基于Redis的什么用法?
@@ -3221,15 +3221,12 @@ key可能会在某些时间点被超高并发地访问，是一种非常“热�
 
 
 
-redis:命令
+redis:命令 非可重入版
 
 \# set sku:1:info “OK” NX PX 10000
 * EX second ：设置键的过期时间为 second 秒。 SET key value EX second 效果等同于 SETEX key second value 
-
 * PX millisecond ：设置键的过期时间为 millisecond 毫秒。 SET key value PX millisecond 效果等同于 PSETEX key millisecond value 。
-
 * NX ：只在键不存在时，才对键进行设置操作。 SET key value NX 效果等同于 SETNX key value 。
-
 * XX ：只在键已经存在时，才对键进行设置操作。
 
 1. 多个客户端同时获取锁（setnx）
@@ -3297,6 +3294,13 @@ public class InventoryService
 * 加锁和解锁必须具有原子性。
 * ==可重入 setnx不能满足可重入 使用hash hset==
 * 高可用
+
+```java
+
+```
+
+
+
 
 
 LUA

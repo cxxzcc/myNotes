@@ -8906,7 +8906,7 @@ http://localhost:8080/actuator/endpointName/detailPath
 
 #### 可视化 
 
-hertzbeat https://github.com/dromara/hertzbeat  
+
 https://github.com/codecentric/spring-boot-admin
 
 server
@@ -9902,10 +9902,14 @@ public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomiz
 }
 ```
 
+### 三方工具
+
+基于配置中心实现的轻量级动态线程池监控管理工具
+https://github.com/dromara/dynamic-tp
 
 
-
-
+hertzbeat 监控
+https://github.com/dromara/hertzbeat  
 
 
 
