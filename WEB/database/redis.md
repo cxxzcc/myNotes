@@ -3209,22 +3209,32 @@ key可能会在某些时间点被超高并发地访问，是一种非常“热�
 
 ### 使用redis实现分布式锁
 
+面试题
+* Redis除了拿来做缓存，你还见过基于Redis的什么用法?
+* Redis做分布式锁的时候有需要注意的问题?
+* 你们公司自己实现的分布式锁是否用的setnx命令实现?
+	这个是最合适的吗?你如何考虑分布式锁的可重入问题?
+* 如果是Redis是单点部署的，会带来什么问题? 如何解决
+* Redis集群模式下，比如主从模式，CAP方面有没有什么问题呢?
+* 那你简单的介绍一下Redlock吧?你简历上写redisson,你谈谈
+* Redis分布式锁如何续期?看门狗知道吗?
+
+
+
 redis:命令
 
 \# set sku:1:info “OK” NX PX 10000
 
-EX second ：设置键的过期时间为 second 秒。 SET key value EX second 效果等同于 SETEX key second value 
+* EX second ：设置键的过期时间为 second 秒。 SET key value EX second 效果等同于 SETEX key second value 
 
-PX millisecond ：设置键的过期时间为 millisecond 毫秒。 SET key value PX millisecond 效果等同于 PSETEX key millisecond value 。
+* PX millisecond ：设置键的过期时间为 millisecond 毫秒。 SET key value PX millisecond 效果等同于 PSETEX key millisecond value 。
 
-NX ：只在键不存在时，才对键进行设置操作。 SET key value NX 效果等同于 SETNX key value 。
+* NX ：只在键不存在时，才对键进行设置操作。 SET key value NX 效果等同于 SETNX key value 。
 
-XX ：只在键已经存在时，才对键进行设置操作。
+* XX ：只在键已经存在时，才对键进行设置操作。
 
 1. 多个客户端同时获取锁（setnx）
-
 2. 获取成功，执行业务逻辑{从db获取数据，放入缓存}，执行完成释放锁（del）
-
 3. 其他客户端等待重试
 
 ```java
@@ -3292,6 +3302,7 @@ public void testLockLua() {
 * 高可用
 
 
+LUA
 
 
 
