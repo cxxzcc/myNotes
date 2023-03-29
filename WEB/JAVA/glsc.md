@@ -722,13 +722,13 @@ if (lock) {
 }
 ```
 
-### 1.2.2 分布式锁 - Redisson
+### 分布式锁 - Redisson
 
 
 
 https://github.com/redisson/redisson/wiki/%E7%9B%AE%E5%BD%95
 
-#### 1.2.2.1、简介&整合
+#### 简介&整合
 
 官网文档上详细说明了 不推荐使用 setnx来实现分布式锁，应该参考 the Redlock algorithm 的实现
 
@@ -788,7 +788,7 @@ public class MyRedissonConfig {
 }
 ```
 
-#### 1.2.2.2 测试&Redisson-Lock看门狗原理-Redisson如何解决死锁
+#### Redisson看门狗-解决死锁
 
 ```java
 @Autowired
@@ -855,7 +855,6 @@ lock.getFairLock()//公平锁 有序取锁
 6. `internalLockLeaseTime` 这个变量是锁的默认时间
 	这个变量在构造的时候就赋初始值
 	![image-20210427204317552](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210427204317552.png)
-
 7. 最后查看 `lockWatchdogTimeout` 变量
 	也就是30秒的时间
 	![image-20210427204330633](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210427204330633.png)
@@ -864,10 +863,11 @@ lock.getFairLock()//公平锁 有序取锁
 	![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230329151015.png)
 	![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230329151058.png)
 	![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230329151109.png)
+9. unlock
+	![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230329151158.png)
 
 
-
-#### 1.2.2.3 Reidsson - 读写锁
+#### Reidsson-读写锁
 
 ```java
 /**
@@ -926,7 +926,7 @@ public String readValue() {
 
 ![image-20210429093410321](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20210429093410321.png)
 
-#### 1.2.2.4 Redisson - 闭锁测试
+#### Redisson-闭锁测试
 
 ```java
 /**
@@ -958,7 +958,7 @@ await()等待闭锁完成
 
 countDown() 把计数器减掉后 await就会放行
 
-#### 1.2.2.5 Redisson - 信号量测试
+#### Redisson-信号量测试
 
 限流，所有服务上来了去获取一个信号量，一个一个放行
 
@@ -990,9 +990,21 @@ public String go() {
 
 类似 JUC 中的 Semaphore 
 
+#### 多机版
+
+redlock 
+五台master实现
+
+
+
+
+
+
+
 ### 1.2.3 缓存数据一致性
 
 就是缓存中的数据如何与数据库保持一致
+
 
 #### **1.2.3.1 缓存数据一致性 - 双写模式**
 
