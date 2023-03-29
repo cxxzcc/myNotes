@@ -3585,11 +3585,13 @@ eval "if redis.call('get',KEYS[1])==ARGV[1] then return redis.call('del',KEYS[1]
 * redis的LRU了解过吗?请手写LRU
 * Iru和lfu算法的区别是什么
 
-
-
-
-
-
+redis内存
+* 配置文件maxmemory参数，bytes字节类型，注意转换。
+* 默认最大内存 64位 0不限制 32位3GB
+* 生产上一般设为最大物理内存的3/4
+* 修改最大内存
+	* 配置 maxmemory 104857600
+	* 命令 config get maxmemory
 
 
 
