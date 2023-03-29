@@ -3308,8 +3308,11 @@ Redis调用Lua脚本通过eval命令保证代码执行的原子性,直接返回�
 ```reids
 EVAL script(脚本) numkeys(参数数量) [key [key ...]] [arg [arg ...]]
 
+eval "return 'hello'" 0
+eval "redis.call('set','k1','v1') return redis.call('get','k1')" 0
+eval "redis.call('set',KEYS[1],ARGV[1]) return redis.call('get',KEYS[1])" 1 k2 v2
 
-
+eval "if redis.call('get',KEYS[1])==ARGV[1] then return redis.call('del',KEYS[1]) else return 0 end" 1 zzyyRedisLock 1111-2222-3333
 ```
 
 
