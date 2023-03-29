@@ -3295,6 +3295,32 @@ public class InventoryService
 * ==可重入 setnx不能满足可重入 使用hash hset==
 * 高可用
 
+
+可重入版
+```lua
+--lock
+if redis.call('exists',KEYS[1]) == 0 or redis.call('hexists',KEYS[1],ARGV[1]) == 1 then 
+  redis.call('hincrby',KEYS[1],ARGV[1],1) 
+  redis.call('expire',KEYS[1],ARGV[2]) 
+  return 1 
+else
+  return 0
+end
+
+EVAL "if redis.call('exists',KEYS[1]) == 0 or redis.call('hexists',KEYS[1],ARGV[1]) == 1 then redis.call('hincrby',KEYS[1],ARGV[1],1) redis.call('expire',KEYS[1],ARGV[2]) return 1 else return 0 end" 1 zzyyRedisLock 0c90d37cb6ec42268861b3d739f8b3a8:1 30
+
+--unlock
+if redis.call('HEXISTS',KEYS[1],ARGV[1]) == 0 then
+ return nil
+elseif redis.call('HINCRBY',KEYS[1],ARGV[1],-1) == 0 then
+ return redis.call('del',KEYS[1])
+else
+ return 0
+end
+
+eval "if redis.call('HEXISTS',KEYS[1],ARGV[1]) == 0 then return nil elseif redis.call('HINCRBY',KEYS[1],ARGV[1],-1) == 0 then return redis.call('del',KEYS[1]) else return 0 end" 1 zzyyRedisLock 2f586ae740a94736894ab9d51880ed9d:1
+```
+
 ```java
 
 ```
