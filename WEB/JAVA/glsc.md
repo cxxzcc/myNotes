@@ -823,7 +823,10 @@ public String hello(){
     } finally {
         // 解锁 将设解锁代码没有运行，reidsson会不会出现死锁
         System.out.println("释放锁...." + Thread.currentThread().getId());
-        lock.unlock();
+        //需判断是否是当前线程持有锁
+        if(redissonLock.isLocked() && redissonLock.isHeldByCurrentThread()){
+            lock.unlock();
+        }
     }
     return "hello";
 }
