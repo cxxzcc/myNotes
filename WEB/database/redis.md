@@ -3322,7 +3322,179 @@ eval "if redis.call('HEXISTS',KEYS[1],ARGV[1]) == 0 then return nil elseif redis
 ```
 
 ```java
+@Component
+public class DistributedLockFactory
+{
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+    private String lockName;
+    private String uuidValue;
 
+    public DistributedLockFactory()
+    {
+        this.uuidValue = IdUtil.simpleUUID();//UUID
+    }
+
+    public Lock getDistributedLock(String lockType)
+    {
+        if(lockType == null) return null;
+
+        if(lockType.equalsIgnoreCase("REDIS")){
+            lockName = "zzyyRedisLock";
+            return new RedisDistributedLock(stringRedisTemplate,lockName,uuidValue);
+        } else if(lockType.equalsIgnoreCase("ZOOKEEPER")){
+            //TODO zookeeper版本的分布式锁实现
+            return new ZookeeperDistributedLock();
+        } else if(lockType.equalsIgnoreCase("MYSQL")){
+            //TODO mysql版本的分布式锁实现
+            return null;
+        }
+        return null;
+    }
+}
+
+
+//@Component 引入DistributedLockFactory工厂模式，从工厂获得而不再从spring拿到
+public class RedisDistributedLock implements Lock
+{
+    private StringRedisTemplate stringRedisTemplate;
+
+    private String lockName;//KEYS[1]
+    private String uuidValue;//ARGV[1]
+    private long   expireTime;//ARGV[2]
+	private String uuidValue;
+	
+   public RedisDistributedLock(StringRedisTemplate stringRedisTemplate, String lockName,String uuidValue)
+    {
+        this.stringRedisTemplate = stringRedisTemplate;
+        this.lockName = lockName;
+        this.uuidValue = uuidValue+":"+Thread.currentThread().getId();
+        this.expireTime = 30L;
+    }
+    @Override
+    public void lock(){
+        tryLock();
+    }
+    @Override
+    public boolean tryLock(){
+        try {tryLock(-1L,TimeUnit.SECONDS);} catch (InterruptedException e) {e.printStackTrace();}
+        return false;
+    }
+
+    /**
+     * 干活的，实现加锁功能，实现这一个干活的就OK，全盘通用
+     * @param time
+     * @param unit
+     * @return
+     * @throws InterruptedException
+     */
+    @Override
+    public boolean tryLock(long time, TimeUnit unit) throws InterruptedException{
+        if(time != -1L){
+            this.expireTime = unit.toSeconds(time);
+        }
+        String script =
+                "if redis.call('exists',KEYS[1]) == 0 or redis.call('hexists',KEYS[1],ARGV[1]) == 1 then " +
+                        "redis.call('hincrby',KEYS[1],ARGV[1],1) " +
+                        "redis.call('expire',KEYS[1],ARGV[2]) " +
+                        "return 1 " +
+                "else " +
+                        "return 0 " +
+                "end";
+        System.out.println("script: "+script);
+        System.out.println("lockName: "+lockName);
+        System.out.println("uuidValue: "+uuidValue);
+        System.out.println("expireTime: "+expireTime);
+        while (!stringRedisTemplate.execute(new DefaultRedisScript<>(script,Boolean.class), Arrays.asList(lockName),uuidValue,String.valueOf(expireTime))) {
+            TimeUnit.MILLISECONDS.sleep(50);
+        }
+        return true;
+    }
+
+    /**
+     *干活的，实现解锁功能
+     */
+    @Override
+    public void unlock()
+    {
+        String script =
+                "if redis.call('HEXISTS',KEYS[1],ARGV[1]) == 0 then " +
+                "   return nil " +
+                "elseif redis.call('HINCRBY',KEYS[1],ARGV[1],-1) == 0 then " +
+                "   return redis.call('del',KEYS[1]) " +
+                "else " +
+                "   return 0 " +
+                "end";
+        // nil = false 1 = true 0 = false
+        System.out.println("lockName: "+lockName);
+        System.out.println("uuidValue: "+uuidValue);
+        System.out.println("expireTime: "+expireTime);
+        Long flag = stringRedisTemplate.execute(new DefaultRedisScript<>(script, Long.class), Arrays.asList(lockName),uuidValue,String.valueOf(expireTime));
+        if(flag == null)
+        {
+            throw new RuntimeException("This lock doesn't EXIST");
+        }
+
+    }
+
+    //===下面的redis分布式锁暂时用不到=======================================
+    //===下面的redis分布式锁暂时用不到=======================================
+    //===下面的redis分布式锁暂时用不到=======================================
+    @Override
+    public void lockInterruptibly() throws InterruptedException
+    {
+
+    }
+
+    @Override
+    public Condition newCondition()
+    {
+        return null;
+    }
+}
+
+@Service
+@Slf4j
+public class InventoryService
+{
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+    @Value("${server.port}")
+    private String port;
+    @Autowired
+    private DistributedLockFactory distributedLockFactory;
+    
+    public String sale()
+    {
+
+        String retMessage = "";
+
+        Lock redisLock = distributedLockFactory.getDistributedLock("redis");
+        redisLock.lock();
+        try
+        {
+            //1 查询库存信息
+            String result = stringRedisTemplate.opsForValue().get("inventory001");
+            //2 判断库存是否足够
+            Integer inventoryNumber = result == null ? 0 : Integer.parseInt(result);
+            //3 扣减库存
+            if(inventoryNumber > 0)
+            {
+                inventoryNumber = inventoryNumber - 1;
+                stringRedisTemplate.opsForValue().set("inventory001",String.valueOf(inventoryNumber));
+                retMessage = "成功卖出一个商品，库存剩余: "+inventoryNumber+"\t服务端口:" +port;
+                System.out.println(retMessage);
+                return retMessage;
+            }
+            retMessage = "商品卖完了，o(╥﹏╥)o"+"\t服务端口:" +port;
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            redisLock.unlock();
+        }
+        return retMessage;
+    }
+}
 ```
 
 
