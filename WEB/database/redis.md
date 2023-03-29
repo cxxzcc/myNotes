@@ -3230,8 +3230,10 @@ key可能会在某些时间点被超高并发地访问，是一种非常“热�
 	* 可重入 使用hash
 	* 操作原子 lua
 	* 自动续期
+	* 避免死锁 过期时间
 * unlock
-	
+	* 谁加锁谁解锁
+	* 原子操作
 
 
 
@@ -3556,6 +3558,22 @@ eval "redis.call('set',KEYS[1],ARGV[1]) return redis.call('get',KEYS[1])" 1 k2 v
 
 eval "if redis.call('get',KEYS[1])==ARGV[1] then return redis.call('del',KEYS[1]) else return 0 end" 1 zzyyRedisLock 1111-2222-3333
 ```
+
+### RedLock
+
+![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230329142939.png)
+
+**基于多个实例的**分布式锁
+
+
+
+
+
+
+
+
+
+
 
 
 
