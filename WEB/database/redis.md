@@ -40,7 +40,7 @@ NoSQL 不依赖业务逻辑方式存储，而以简单的key-value模式存储�
 3. 除了支持简单的key-value模式，还支持多种数据结构的存储，比如  list、set、hash、zset等。 
 4. 一般是作为缓存数据库辅助持久化的数据库 
 
-#### MongoDB
+#### [[MongoDB]]
 
 1. 高性能、开源、模式自由(schema free)的**文档型数据库**
 2. 数据都在内存中， 如果内存不足，把不常用的数据保存到硬盘 
@@ -3574,7 +3574,7 @@ eval "if redis.call('get',KEYS[1])==ARGV[1] then return redis.call('del',KEYS[1]
 
 
 
-
+#redisson
 
 
 
