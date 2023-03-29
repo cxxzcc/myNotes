@@ -912,15 +912,10 @@ config set requirerepass "123456"
 #### maxmemory-policy
 
 * volatile-lru：使用LRU算法移除key，只对设置了过期时间的键；（最近最少使用）
-
 * allkeys-lru：在所有集合key中，使用LRU算法移除key
-
 * volatile-random：在过期集合中移除随机的key，只对设置了过期时间的键
-
 * allkeys-random：在所有集合key中，移除随机的key
-
 * volatile-ttl：移除那些TTL值最小的key，即那些最近要过期的key
-
 * noeviction：不进行移除。针对写操作，只是返回错误信息
 
 #### maxmemory-samples
@@ -3601,8 +3596,13 @@ redis内存满了 OOM
 * 惰性 费内存 空间换时间 lazyfree-lazy-eviction=yes
 * 定期 定期随机检查key 
 
+
+
+> LRU 淘汰最长时间未被使用的页面  Least Recently Used
+> LFU 淘汰一定时期内被访问次数最少的页 Least Frequently Used
+
 淘汰策略 MEMORY MANAGEMENT
-1. noeviction: 满了也不删，内存增加返回error
+1. noeviction: 满了也不删，内存增加返回error 默认
 2. allkeys-lru: LRU算法删除，删最近最不常用的key
 3. volatile-lru: 对所有设置了过期时间的key使用LRU算法进行删除
 4. allkeys-random: 随机删除
@@ -3611,15 +3611,24 @@ redis内存满了 OOM
 7. allkeys-lfu:对所有key使用LFU算法进行删除
 8. volatile-lfu:对所有设置了过期时间的key使用LFU算法进行删除
 
+两个纬度
+* 过期键中筛选
+* 所有键中筛选
+四个算法
+* LRU
+* LFU
+* random
+* ttl
 
 
 
 
 
-> LRU 淘汰最长时间未被使用的页面  Least Recently Used
-> LFU 淘汰一定时期内被访问次数最少的页 Least Frequently Used
-
-
+生产推荐
+* 推荐使用allkeys-lru
+* 如果所有的key的访问概率都是差不多的，用allkeys-random
+* 如果对数据有足够的了解，能够为key 指定hint (通过expire/ttI指定) ，那么可以选择volatile-ttl进行置换
+* 开启惰性删除
 
 
 
