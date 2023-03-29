@@ -8906,6 +8906,7 @@ http://localhost:8080/actuator/endpointName/detailPath
 
 #### 可视化 
 
+hertzbeat https://github.com/dromara/hertzbeat  
 https://github.com/codecentric/spring-boot-admin
 
 server

@@ -3224,7 +3224,6 @@ key可能会在某些时间点被超高并发地访问，是一种非常“热�
 redis:命令
 
 \# set sku:1:info “OK” NX PX 10000
-
 * EX second ：设置键的过期时间为 second 秒。 SET key value EX second 效果等同于 SETEX key second value 
 
 * PX millisecond ：设置键的过期时间为 millisecond 毫秒。 SET key value PX millisecond 效果等同于 PSETEX key millisecond value 。
@@ -3296,7 +3295,7 @@ public class InventoryService
 * 防死锁。即使有一个客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁。
 * 解铃还须系铃人。加锁和解锁必须是同一个客户端，客户端自己不能把别人加的锁给解了。
 * 加锁和解锁必须具有原子性。
-* 可重入 setnx不能满足可重入 使用hash hset
+* ==可重入 setnx不能满足可重入 使用hash hset==
 * 高可用
 
 
