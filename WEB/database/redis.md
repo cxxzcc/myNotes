@@ -3303,6 +3303,7 @@ public void testLockLua() {
 
 
 LUA
+Redis调用Lua脚本通过eval命令保证代码执行的原子性,直接返回结果值
 
 
 
