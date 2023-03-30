@@ -2265,6 +2265,42 @@ slot槽位映射算法
 分配原则尽量保证每个主数据库运行在不同的IP地址，每个从库和主库不在一个IP地址上。
 
 
+#### 扩容
+1. 新增两个node
+	```conf
+	bind 0.0.0.0
+	daemonize yes
+	protected-mode no
+	port 6387
+	logfile "/myredis/cluster/cluster6387.log"
+	pidfile /myredis/cluster6387.pid
+	dir /myredis/cluster
+	dbfilename dump6387.rdb
+	appendonly yes
+	appendfilename "appendonly6387.aof"
+	requirepass 111111
+	masterauth 111111
+	
+	cluster-enabled yes
+	cluster-config-file nodes-6387.conf
+	cluster-node-timeout 5000
+	```
+2. 启动
+	redis-server redisCluster6387.conf
+3. 加入cluster
+	redis-cli -a 密码 --cluster add-node 新IP:6387 cluster中masterIP:6381
+4. 检查 未分配slot
+	redis-cli -a 密码 --cluster check 真实ip地址:6381
+5. 重新分配slot
+	redis-cli -a 密码 --cluster **reshard** IP:port
+
+
+
+
+
+
+
+
 
 **slots**
 
