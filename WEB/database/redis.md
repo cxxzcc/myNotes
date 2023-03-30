@@ -2217,44 +2217,47 @@ slot槽位映射算法
    * Appendonly 关掉或者换名字
 
 3. 制作6个实例，6379,6380,6381,6389,6390,6391
-4. cluster配置修改
-
-   cluster-enabled yes  打开集群模式
-   cluster-config-file nodes-6379.conf 设定节点配置文件名
-   cluster-node-timeout 15000  设定节点失联时间，超过该时间（毫秒），集群自动进行主从切换。
-
-   ```bash
-   include /home/bigdata/redis.conf
-   port 6379
-   pidfile "/var/run/redis_6379.pid"
-   dbfilename "dump6379.rdb"
-   dir "/home/bigdata/redis_cluster"
-   logfile "/home/bigdata/redis_cluster/redis_err_6379.log"
-   cluster-enabled yes
-   cluster-config-file nodes-6379.conf
-   cluster-node-timeout 15000
-   ```
-
-5. 修改好redis6379.conf文件，拷贝多个redis.conf文件
-
-6. 使用查找替换修改另外5个文件例如：:%s/6379/6380
-
-7. 启动6个redis服务redis-server redis6379.conf
+4. cluster配置修改 
+	cluster-enabled yes  打开集群模式
+	cluster-config-file nodes-6379.conf 设定节点配置文件名
+	cluster-node-timeout 15000  设定节点失联时间，超过该时间（毫秒），集群自动进行主从切换。
+	redisCluster6385.conf
+	```bash
+	bind 0.0.0.0
+	daemonize yes
+	protected-mode no
+	port 6385
+	logfile "/myredis/cluster/cluster6385.log"
+	pidfile /myredis/cluster6385.pid
+	dir /myredis/cluster
+	dbfilename dump6385.rdb
+	appendonly yes
+	appendfilename "appendonly6385.aof"
+	requirepass 111111
+	masterauth 111111
+	 
+	cluster-enabled yes
+	cluster-config-file nodes-6385.conf
+	cluster-node-timeout 5000
+	```
+5. 启动6个redis服务 redis-server redisCluster6385.conf
 
 8. 将六个节点合成一个集群
-
    组合之前，请确保所有redis实例启动后，nodes-xxxx.conf文件都生成正常。
-
    cd /opt/redis-6.2.1/src
-
    ```bash
    redis-cli --cluster create --cluster-replicas 1 192.168.11.101:6379 192.168.11.101:6380 192.168.11.101:6381 192.168.11.101:6389 192.168.11.101:6390 192.168.11.101:6391
-   #此处不要用127.0.0.1， 请用真实IP地址
+   #用真实IP地址
    #--replicas 1 采用最简单的方式配置集群，一台主机，一台从机，正好三组。
    ```
 
 9. 集群方式登录 redis-cli -c -p 6379
 10. cluster nodes 命令查看集群信息
+	cluster info
+	info replication
+
+
+
 
 
 
