@@ -2177,7 +2177,7 @@ slot槽位映射算法
 2. 一致性hash
 	目的是node数量变化,减少影响的映射关系
 	* 一致性hash环
-		⚠️upload failed, check dev console
+		![image-20230330151938409](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20230330151938409.png)
 	* 节点映射
 	节点映射到环上的某一个位置
 	* 计算hash(key)落到hash环上 顺时针走 存入遇到的第一个node
@@ -2207,9 +2207,7 @@ slot槽位映射算法
 #### 步骤
 
 1. 删除持久化数据 
-
    将rdb,aof文件都删除掉。
-
 2. 配置
    * 开启daemonize yes
    * Pid文件名字
@@ -2219,13 +2217,10 @@ slot槽位映射算法
    * Appendonly 关掉或者换名字
 
 3. 制作6个实例，6379,6380,6381,6389,6390,6391
-
-4. **redis cluster配置修改**
+4. cluster配置修改
 
    cluster-enabled yes  打开集群模式
-
    cluster-config-file nodes-6379.conf 设定节点配置文件名
-
    cluster-node-timeout 15000  设定节点失联时间，超过该时间（毫秒），集群自动进行主从切换。
 
    ```bash
