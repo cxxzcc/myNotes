@@ -2335,7 +2335,7 @@ mset k1{a} v1 k2{a} v2 k3{a} v3
 mget k1{a} k2{a} k3{a}
 
 cluster keyslot <key>               #计算插槽值
-cluster countkeysinslot <slot>      #返回 count
+cluster countkeysinslot <slot>      #返回slot是否占用 1占用 0未
 cluster getkeysinslot <slot><count> #返回 count 个 slot 槽中的键
 ```
 crc16算法 
