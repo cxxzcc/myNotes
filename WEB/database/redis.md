@@ -1942,7 +1942,7 @@ redis集群是 AP
    #查看三台主机运行情况
    info replication  #打印主从复制的相关信息
 
-   replicaof <ip><port> 一般写入配置文件
+   replicaof <ip><port> 配置文件
    slaveof  <ip><port>   #成为某个实例的从服务器 断开需重配
    slaveof no one 成为master
    #在6380和6381上执行: 
@@ -1962,13 +1962,17 @@ redis集群是 AP
 7. Log文件名字 logfile
 8. 密码 requirepass
 9. dump.rdb名字 dbfilename
-10. Appendonly 关掉或者换名字
+10. 主机密码 masterauth 
+11. Appendonly 关掉或者换名字 / aof文件, appendfilename
 
 
 
 **一主二从**
 
-slave1、slave2是从头开始复制
+slave1、slave2 
+* replicaof ip port 配置文件
+* info replication / 看log
+
 
 从机不可以写 
 
