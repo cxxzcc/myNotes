@@ -2215,7 +2215,6 @@ slot槽位映射算法
    * Log文件名字
    * Dump.rdb名字
    * Appendonly 关掉或者换名字
-
 3. 制作6个实例，6379,6380,6381,6389,6390,6391
 4. cluster配置修改 
 	cluster-enabled yes  打开集群模式
@@ -2241,8 +2240,7 @@ slot槽位映射算法
 	cluster-node-timeout 5000
 	```
 5. 启动6个redis服务 redis-server redisCluster6385.conf
-
-8. 将六个节点合成一个集群
+6. 将六个节点合成一个集群
    组合之前，请确保所有redis实例启动后，nodes-xxxx.conf文件都生成正常。
    cd /opt/redis-6.2.1/src
    ```bash
@@ -2250,13 +2248,12 @@ slot槽位映射算法
    #用真实IP地址
    #--replicas 1 采用最简单的方式配置集群，一台主机，一台从机，正好三组。
    ```
-
-9. 集群方式登录 redis-cli -c -p 6379
-10. cluster nodes 命令查看集群信息
+7. 集群方式登录 redis-cli -c -p 6379
+8. cluster nodes 命令查看集群信息
 	cluster info
 	info replication
-
-
+	cluster keyslot key 查看key对应slot
+	cluster failover 手动调整为master
 
 
 
@@ -2264,9 +2261,7 @@ slot槽位映射算法
 **redis cluster 如何分配节点**
 
 一个集群至少要有三个主节点。
-
 选项 --cluster-replicas 1 表示我们希望为集群中的每个主节点创建一个从节点。
-
 分配原则尽量保证每个主数据库运行在不同的IP地址，每个从库和主库不在一个IP地址上。
 
 
@@ -2339,13 +2334,6 @@ public class JedisClusterTest {
 }
 ```
 
-#### 好处
-
-实现扩容
-
-分摊压力
-
-无中心配置相对简单
 
 #### 不足
 
