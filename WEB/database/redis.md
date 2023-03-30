@@ -2087,7 +2087,7 @@ redis集群是 AP
 
    redis做压测可以用自带的redis-benchmark工具
    
-   从机根据优先级别选举为主机：slave-priority
+   
 
 
 
@@ -2103,6 +2103,14 @@ broken pipe: client端关闭，server端发送数据
 	* master客观下线后 sentinel会选出一个leader sentinel
 		由leader进行故障迁移
 		==Raft算法== **先到先得**
+	* 从机根据以下三条选举为主机
+		1. slave-priority/replica-priority 配置文件中的优先级 越小越优先
+		2. 复制偏移位置offset最大的
+		3. 最小RunID的从节点 字典顺序， ASCII码
+	* 
+
+
+
 
 
 
