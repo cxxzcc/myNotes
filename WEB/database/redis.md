@@ -2082,15 +2082,7 @@ redis集群是 AP
 
 
 
-
-
-
-   redis做压测可以用自带的redis-benchmark工具
-   
-   
-
-
-
+redis做压测可以用自带的redis-benchmark工具
 broken pipe: client端关闭，server端发送数据
 
 
@@ -2106,33 +2098,18 @@ broken pipe: client端关闭，server端发送数据
 	* 从机根据以下三条选举为主机
 		1. slave-priority/replica-priority 配置文件中的优先级 越小越优先
 		2. 复制偏移位置offset最大的
-		3. 最小RunID的从节点 字典顺序， ASCII码
-	* 
+		3. 最小RunID的从节点 字典顺序， ASCII码 
+			每个redis实例启动后都会随机生成一个40位的runid
 
-
-
-
-
+建议
+* sentinel集群 
+* 节点奇数 
+* 节点配置一致
+* 不能保证数据不丢失
 
 **复制延时**
 
 由于所有的写操作都是先在Master上操作，然后同步更新到Slave上，所以从Master同步到Slave机器有一定的延迟，当系统很繁忙的时候，延迟问题会更加严重，Slave机器数量的增加也会使这个问题更加严重。
-
-
-
-**故障恢复**
-
-从变主选择条件依次为:
-
-1. 选择优先级靠前的
-2. 选择偏移量最大的
-3. 选择runid最小的从服务
-
-优先级在redis.conf中默认：slave-priority 100，值越小优先级越高
-
-偏移量是指获得原主机数据最全的
-
-每个redis实例启动后都会随机生成一个40位的runid
 
 ```java
 private static JedisSentinelPool jedisSentinelPool=null;
@@ -2159,7 +2136,8 @@ public static  Jedis getJedisFromSentinel(){
 
 ```
 
-## 集群
+### 集群
+
 
 容量不够，redis如何进行扩容？
 
@@ -2175,7 +2153,7 @@ Redis 集群实现了对Redis的水平扩容，即启动N个redis节点，将整
 
 Redis 集群通过分区（partition）来提供一定程度的可用性（availability）： 即使集群中有一部分节点失效或者无法进行通讯， 集群也可以继续处理命令请求。
 
-### 步骤
+#### 步骤
 
 1. 删除持久化数据 
 
@@ -2258,7 +2236,7 @@ Redis 集群通过分区（partition）来提供一定程度的可用性（avail
 
 节点 C 负责处理 10923 号至 16383 号插槽。
 
-### 集群操作
+#### 集群操作
 
 **在集群中录入值**
 
@@ -2294,7 +2272,7 @@ redis.conf中的参数 cluster-require-full-coverage
 
 
 
-### 集群jedis
+#### 集群jedis
 
 即使连接的不是主机，集群会自动切换主机存储。主机写，从机读。
 
@@ -2312,7 +2290,7 @@ public class JedisClusterTest {
 }
 ```
 
-### 好处
+#### 好处
 
 实现扩容
 
@@ -2320,7 +2298,7 @@ public class JedisClusterTest {
 
 无中心配置相对简单
 
-### 不足
+#### 不足
 
 多键操作是不被支持的 
 
