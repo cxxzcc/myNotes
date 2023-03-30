@@ -2138,13 +2138,9 @@ public static  Jedis getJedisFromSentinel(){
 
 ### 集群
 
-
 容量不够，redis如何进行扩容？
-
 并发写操作， redis如何分摊？
-
 另外，主从模式，薪火相传模式，主机宕机，导致ip地址发生变化，应用程序中配置需要修改对应的主机地址、端口等信息。
-
 之前通过代理主机来解决，但是redis3.0中提供了解决方案。就是无中心化集群配置。
 
 
@@ -2152,6 +2148,26 @@ public static  Jedis getJedisFromSentinel(){
 Redis 集群实现了对Redis的水平扩容，即启动N个redis节点，将整个数据库分布存储在这N个节点中，每个节点存储总数据的1/N。
 
 Redis 集群通过分区（partition）来提供一定程度的可用性（availability）： 即使集群中有一部分节点失效或者无法进行通讯， 集群也可以继续处理命令请求。
+
+![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230330143648.png)
+
+作用
+* 读写分离
+* 高可用
+* 支持海量数据读写
+* cluster自带sentinel 不用使用哨兵模式
+* 客户端不用连接cluster所有节点,只需连接一个可用节点
+* 槽位slot负责分配到各个物理服务节点，由对应的集群来负责维护节点、插槽和数据之间的关系
+
+#### slot
+
+
+
+
+
+
+
+
 
 #### 步骤
 
