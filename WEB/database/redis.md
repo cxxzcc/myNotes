@@ -2175,7 +2175,16 @@ slot槽位映射算法
 2. 一致性hash
 	目的是node数量变化,减少影响的映射关系
 	* 一致性hash环
+		⚠️upload failed, check dev console
+	* 节点映射
+	节点映射到环上的某一个位置
+	* 计算hash(key)落到hash环上 顺时针走 存入遇到的第一个node
 	
+	* 优点: 容错  扩展性
+
+
+
+
 
 
 #### 步骤
