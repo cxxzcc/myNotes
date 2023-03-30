@@ -2100,9 +2100,9 @@ broken pipe: client端关闭，server端发送数据
 * ODown客观下线(Objectively Down) 多sentinel 意见一致
 	sentinel monitor mastername 127.0.0.1 6379 quorum
 	quorum sentinel一致数量
-
-
-
+	* master客观下线后 sentinel会选出一个leader sentinel
+		由leader进行故障迁移
+		==Raft算法== **先到先得**
 
 
 
