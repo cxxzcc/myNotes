@@ -1911,7 +1911,7 @@ redis集群是 AP
 
 #### 步骤
 
-1. 拷贝多个redis.conf文件include(写绝对路径)
+1. 拷贝多个redis.conf文件include(写绝对路径) 配从不配主
 
    ```bash
    #新建redis6379.conf，填写以下内容
@@ -1929,7 +1929,10 @@ redis集群是 AP
    pidfile /var/run/redis_6381.pid
    port 6381
    dbfilename dump6381.rdb
-   
+
+   主机如有密码
+   从机配 masterauth 111111
+
    slave-priority 10
    #设置从机的优先级，值越小，优先级越高，用于选举主机时使用。默认100
    
@@ -1938,8 +1941,9 @@ redis集群是 AP
    #查看系统进程，看看三台服务器是否启动
    #查看三台主机运行情况
    info replication  #打印主从复制的相关信息
-   
-   slaveof  <ip><port>   #成为某个实例的从服务器
+
+   replicaof <ip><port> 一般写入配置文件
+   slaveof  <ip><port>   #成为某个实例的从服务器 断开需重配
    #在6380和6381上执行: 
    slaveof 127.0.0.1 6379
    
