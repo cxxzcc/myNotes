@@ -2073,9 +2073,14 @@ redis集群是 AP
 	```
 
 
-
 1. 启动哨兵
-   /usr/local/bin
+	redis-cli -a 123456 -p 6379 启动一主二从
+	redis-sentinel sentinel26379.conf --sentinel 启动三台哨兵
+
+
+
+
+1. /usr/local/bin
    redis做压测可以用自带的redis-benchmark工具
    执行redis-sentinel /myredis/sentinel.conf 
    从机根据优先级别选举为主机：slave-priority
