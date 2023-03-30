@@ -2078,6 +2078,9 @@ redis集群是 AP
 	哨兵会修改redis.conf sentinel.conf 
 	redis.conf中会多一行slaveof的配置，sentinel.conf的监控目标会随之调换
 	可以同时监控多个master
+	
+
+
 
 
 
@@ -2089,6 +2092,16 @@ redis集群是 AP
 
 
 broken pipe: client端关闭，server端发送数据
+
+
+哨兵原理
+* SDown主观下线(Subjectively Down) 单sentinel检测 
+	sentinel down-after-milliseconds 时间后失去连接
+* ODown客观下线(Objectively Down) 多sentinel 意见一致
+	sentinel monitor mastername 127.0.0.1 6379 quorum
+	quorum sentinel一致数量
+
+
 
 
 
