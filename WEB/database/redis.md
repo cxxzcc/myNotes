@@ -1969,14 +1969,17 @@ redis集群是 AP
 
 **一主二从**
 
-slave1、slave2 
-* replicaof ip port 配置文件
-* info replication / 看log
+1. slave1、slave2 配置版
+	* replicaof ip port 配置文件
+	* info replication / 看log
+2. 命令版 重启失效
+	* slaveof ip port
 
-
-从机不可以写 
-
-主机shutdown后从机原地待命
+特点
+* 主写从读
+	从不可写 
+* 从机全复制
+* 主机shutdown后从机原地待命, 主启动后恢复
 
 
 
@@ -1984,7 +1987,7 @@ slave1、slave2
 
 上一个Slave可以是下一个slave的Master，Slave同样可以接收其他 slaves的连接和同步请求，那么该slave作为了链条中下一个的master, 可以有效减轻master的写压力,去中心化降低风险。
 
-用 slaveof < ip>< port>
+用 slaveof ip port
 
 中途变更转向:会清除之前的数据，重新建立拷贝最新的
 
