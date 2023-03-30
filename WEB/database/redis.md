@@ -2006,10 +2006,21 @@ redis集群是 AP
 #### 原理
 
 * Slave启动成功连接到master后会发送一个sync命令
-* Master接到命令启动后台的存盘进程，同时收集所有接收到的用于修改数据集命令， 在后台进程执行完毕之后，master将传送整个数据文件到slave,以完成一次完全同步
-* 全量复制：而slave服务在接收到数据库文件数据后，将其存盘并加载到内存中。
+* Master接到命令启动后台的存盘进程，同时收集所有接收到的用于修改数据集命令，在后台进程执行完毕之后，master将传送整个rdb数据文件到slave,以完成一次完全同步
+* 全量复制：而slave服务在接收到数据库文件数据后，存盘并加载到内存。覆盖原有数据
+* repl-ping-replica-period 10 保持心跳连接
 * 增量复制：Master继续将新的所有收集到的修改命令依次传给slave,完成同步
-* 但是只要是重新连接master,一次完全同步（全量复制)将被自动执行
+* 从机下线,断点续传
+	master会检查backlog里面的offset，master和slave都会保存一 个复制的offset还有一个masterId,
+	offset是保存在backlog中的。Master只 会把已经复制的offset后面的数据复制给Slave,类似断点续传
+
+缺点
+* 复制延时，信号衰减
+* master挂了 不会自动选主
+
+
+
+
 
 ### 哨兵模式sentinel
 
