@@ -2071,24 +2071,24 @@ redis集群是 AP
 	sentinel monitor mymaster 192.168.111.169 6379 2
 	sentinel auth-pass mymaster 111111
 	```
-
-
-1. 启动哨兵
+4. 启动哨兵
 	redis-cli -a 123456 -p 6379 启动一主二从
 	redis-sentinel sentinel26379.conf --sentinel 启动三台哨兵
+5. 主机下线 重新选主
+	哨兵会修改redis.conf sentinel.conf 
+	redis.conf中会多一行slaveof的配置，sentinel.conf的监控目标会随之调换
+	可以同时监控多个master
 
 
 
 
-1. /usr/local/bin
    redis做压测可以用自带的redis-benchmark工具
-   执行redis-sentinel /myredis/sentinel.conf 
+   
    从机根据优先级别选举为主机：slave-priority
-   原主机重启后会变为从机。
 
 
 
-
+broken pipe: client端关闭，server端发送数据
 
 
 
