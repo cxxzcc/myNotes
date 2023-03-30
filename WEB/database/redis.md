@@ -2026,16 +2026,22 @@ redis集群是 AP
 
 **反客为主的自动版**，能够后台监控主机是否故障，如果故障了根据投票数自动将从库转换为主库
 
+* 主从监控
+* 消息通知
+* 故障转移
+* 配置中心 客户端连接哨兵获取redis服务master
+
+
+
 #### 步骤
 
+三台sentinel+一主二从
+
 1. 自定义的/myredis目录下新建sentinel.conf文件，名字绝不能错
-
 2. 配置哨兵,填写内容
-
-   sentinel monitor mymaster 127.0.0.1 6379 1
-
-   其中mymaster为监控对象起的服务器名称， 1 为至少有多少个哨兵同意迁移的数量。
-
+	sentinel monitor mastername 127.0.0.1 6379 quorum
+	配置监控master， ==quorum下线最少哨兵数量==。
+	sentinel auth-pass mastername password 配置master密码
 3. 启动哨兵
 
    /usr/local/bin
