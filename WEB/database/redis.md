@@ -1944,6 +1944,7 @@ redis集群是 AP
 
    replicaof <ip><port> 一般写入配置文件
    slaveof  <ip><port>   #成为某个实例的从服务器 断开需重配
+   slaveof no one 成为master
    #在6380和6381上执行: 
    slaveof 127.0.0.1 6379
    
@@ -1952,12 +1953,16 @@ redis集群是 AP
    #可以将配置增加到文件中。永久生效。
    ```
 
-2. 开启daemonize yes
-3. Pid文件名字pidfile
-4. 指定端口port
-5. Log文件名字
-6. dump.rdb名字dbfilename
-7. Appendonly 关掉或者换名字
+1. 配置文件daemonize yes 
+2. 绑定ip注掉 bind 127.0.0.1
+3. protected-mode no
+4. 指定当前工作目录，dir /myredis
+5. Pid文件名字 pidfile
+6. 指定端口port
+7. Log文件名字 logfile
+8. 密码 requirepass
+9. dump.rdb名字 dbfilename
+10. Appendonly 关掉或者换名字
 
 
 
