@@ -2040,19 +2040,51 @@ redis集群是 AP
 1. 自定义的/myredis目录下新建sentinel.conf文件，名字绝不能错
 2. 配置哨兵,填写内容
 	sentinel monitor mastername 127.0.0.1 6379 quorum
-	配置监控master， ==quorum下线最少哨兵数量==。
+	配置监控master， ==quorum下线最少哨兵数量 客观下线==。
 	sentinel auth-pass mastername password 配置master密码
-3. 启动哨兵
+	sentinel down-after-milliseconds master-name milliseconds：
+	指定多少毫秒之后，主节点没有应答哨兵，此时哨兵主观上认为主节点下线
+	
+	sentinel parallel-syncs master-name nums：
+	表示允许并行同步的slave个数，当Master挂了后，哨兵会选出新的Master，此时，剩余的slave会向新的master发起同步数据
+	
+	sentinel failover-timeout master-name milliseconds：
+	故障转移的超时时间，进行故障转移时，如果超过设置的毫秒，表示故障转移失败
+	
+	sentinel notification-script master-name script-path ：
+	配置当某一事件发生时所需要执行的脚本
+	
+	sentinel client-reconfig-script master-name script-path：
+	客户端重新配置主节点参数脚本
+	bind 服务监听地址，用于客户端连接，默认本机地址
+	daemonize 是否以后台daemon方式运行
+	protected-mode 安全保护模式
+3. 新建三个配置文件 
+	```conf
+	bind 0.0.0.0
+	daemonize yes
+	protected-mode no
+	port 26379
+	logfile "/myredis/sentinel26379.log"
+	pidfile /var/run/redis-sentinel26379.pid
+	dir /myredis
+	sentinel monitor mymaster 192.168.111.169 6379 2
+	sentinel auth-pass mymaster 111111
+	```
 
+
+
+1. 启动哨兵
    /usr/local/bin
-
    redis做压测可以用自带的redis-benchmark工具
-
    执行redis-sentinel /myredis/sentinel.conf 
-
    从机根据优先级别选举为主机：slave-priority
-
    原主机重启后会变为从机。
+
+
+
+
+
 
 
 
