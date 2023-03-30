@@ -2168,6 +2168,11 @@ Redis 集群通过分区（partition）来提供一定程度的可用性（avail
 每个节点负责一部分slot 即一个切片
 对key进行CRC16(key)算法处理并通过对总分片数量取模。再使用确定性哈希函数确定分片
 
+
+
+集群使用公式 CRC16(key) % 16384 来计算键 key 属于哪个槽， 其中 CRC16(key) 语句用于计算键 key 的 CRC16 校验和 。
+
+
 方便扩缩容和数据分派查找
 
 slot槽位映射算法
@@ -2293,28 +2298,30 @@ slot槽位映射算法
 	redis-cli -a 密码 --cluster check 真实ip地址:6381
 5. 重新分配slot
 	redis-cli -a 密码 --cluster **reshard** IP:port
+6. 再查-已分配slot
+7. 为新master挂slave
+	redis-cli -a 密码 --cluster add-node ip:新slave端口 ip:新master端口 --cluster-slave --cluster-master-id 新主机节点ID
 
 
-
-
-
-
+#### 缩容
+1. 检查cluster 获取slave id
+	  redis-cli -a 密码 --cluster check 192.168.111.174:6388
+2. 删除slave
+	redis-cli -a 密码 --cluster del-node ip:从机端口 从机6388节点ID
+3. 清空master slot
+	redis-cli -a 111111 --cluster reshard 192.168.111.175:6381
+4. 检查
+5. 删除空slot的master
+5. 检查
 
 
 
 **slots**
 
-一个 Redis 集群包含 16384 个插槽（hash slot）， 数据库中的每个键都属于这 16384 个插槽的其中一个， 
 
-集群使用公式 CRC16(key) % 16384 来计算键 key 属于哪个槽， 其中 CRC16(key) 语句用于计算键 key 的 CRC16 校验和 。
 
-集群中的每个节点负责处理一部分插槽。 举个例子， 如果一个集群可以有主节点， 其中：
 
-节点 A 负责处理 0 号至 5460 号插槽。
 
-节点 B 负责处理 5461 号至 10922 号插槽。
-
-节点 C 负责处理 10923 号至 16383 号插槽。
 
 #### 集群操作
 
