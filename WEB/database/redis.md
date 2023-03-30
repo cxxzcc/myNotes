@@ -2169,8 +2169,7 @@ Redis 集群通过分区（partition）来提供一定程度的可用性（avail
 对key进行CRC16(key)算法处理并通过对总分片数量取模。再使用确定性哈希函数确定分片
 
 
-
-集群使用公式 CRC16(key) % 16384 来计算键 key 属于哪个槽， 其中 CRC16(key) 语句用于计算键 key 的 CRC16 校验和 。
+集群使用公式 CRC16(key) % 16384 来计算键 key 属于哪个槽， 其中 CRC16(key) 语句用于计算键 key 的 CRC16 校验和 
 
 
 方便扩缩容和数据分派查找
@@ -2316,12 +2315,6 @@ slot槽位映射算法
 
 
 
-**slots**
-
-
-
-
-
 
 #### 集群操作
 
@@ -2330,20 +2323,23 @@ slot槽位映射算法
 在redis-cli每次录入、查询键值，redis都会计算出该key应该送往的插槽，如果不是该客户端对应服务器的插槽，redis会报错，并告知应前往的redis实例地址和端口。
 
 redis-cli客户端提供了 –c 参数实现自动重定向。
-
 如 redis-cli -c –p 6379 登入后，再录入、查询键值对可以自动重定向。
-
 不在一个slot下的键值，是不能使用mget,mset等多键操作。
-
 可以通过{}来定义组的概念，从而使key中{}内相同内容的键值对放到一个slot中去。
+
 
 ```bash
 mset name{user} lucy age{user} 20
+
+mset k1{a} v1 k2{a} v2 k3{a} v3
+mget k1{a} k2{a} k3{a}
 
 cluster keyslot <key>               #计算插槽值
 cluster countkeysinslot <slot>      #返回 count
 cluster getkeysinslot <slot><count> #返回 count 个 slot 槽中的键
 ```
+crc16算法 
+![image-20230330165254801](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/image-20230330165254801.png)
 
 
 
