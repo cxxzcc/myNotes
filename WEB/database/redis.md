@@ -3797,11 +3797,34 @@ key-value
 * key 一般为string
 * value 是 redisObject 
 
+Redis中每个对象都是一个redisObject结构
+每个键值对都会有一个dictEntry
+![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230331164326.png)
+
+redisObject + Redis数据类型+ Redis所有编码方式(底层实现)三者之间的关系
+
+![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230331164406.png)
+![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230331164619.png)
 
 
 
 
-redisObject
+redis6相关的底层模型和结构
+string = SDS
+Set = intset + hashtable
+ZSet = skiplist + zipL ist
+List = quicklist + zipL ist
+Hash = hashtable + zipList
+redis7相关的底层模型和结构
+string = SDS 
+Set = intset + hashtable
+ZSet = skipList + listpack 紧凑列表
+List = quicklist
+Hash = hashtable + listpack紧凑列表
+
+
+
+
 
 
 
