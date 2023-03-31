@@ -3806,14 +3806,16 @@ redisObject + Redis数据类型+ Redis所有编码方式(底层实现)三者之�
 ![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230331164406.png)
 ![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230331164619.png)
 
+![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230331165651.png)
 
+![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230331165802.png)
 
 
 redis6相关的底层模型和结构
 string = SDS
 Set = intset + hashtable
-ZSet = skiplist + zipL ist
-List = quicklist + zipL ist
+ZSet = skiplist + zipList
+List = quicklist + zipList
 Hash = hashtable + zipList
 redis7相关的底层模型和结构
 string = SDS 
@@ -3824,7 +3826,7 @@ Hash = hashtable + listpack紧凑列表
 
 
 
-
+object encoding hello 查看编码
 
 
 
