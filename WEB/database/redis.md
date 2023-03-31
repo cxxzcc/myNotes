@@ -3808,25 +3808,49 @@ redisObject + Redis数据类型+ Redis所有编码方式(底层实现)三者之�
 
 ![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230331165651.png)
 
+redisObject
 ![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230331165802.png)
 
-
-redis6相关的底层模型和结构
-string = SDS
-Set = intset + hashtable
-ZSet = skiplist + zipList
-List = quicklist + zipList
-Hash = hashtable + zipList
-redis7相关的底层模型和结构
-string = SDS 
-Set = intset + hashtable
-ZSet = skipList + listpack 紧凑列表
-List = quicklist
-Hash = hashtable + listpack紧凑列表
+![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230331165910.png)
 
 
 
-object encoding hello 查看编码
+
+**redis6相关的底层模型和结构**
+* string = SDS
+* Set = intset + hashtable
+* ZSet = skiplist + zipList
+* List = quicklist + zipList
+* Hash = hashtable + zipList
+**redis7相关的底层模型和结构**
+* string = SDS 
+* Set = intset + hashtable
+* ZSet = skipList + listpack 紧凑列表
+* List = quicklist
+* Hash = hashtable + listpack紧凑列表
+
+
+命令
+* object encoding hello 查看编码
+* debug object key 
+	Value at: 内存地址
+	refcount: 引用次数
+	encoding: 物理编码类型
+	serializedlength: 序列化后的长度（注意这里的长度是序列化后的长度，保存为rdb文件时使用了该算法，不是真正存贮在内存的大小),会对字串做一些可能的压缩以便底层优化
+	lru：记录最近使用时间戳
+	lru_seconds_idle：空闲时间
+
+各个类型的数据结构的编码映射和定义
+
+![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230331170027.png)
+
+
+#### String
+
+
+三种物理编码
+* int
+
 
 
 
