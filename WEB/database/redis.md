@@ -3793,6 +3793,19 @@ redis底层数据结构
 * 紧凑列表listpack
 
 
+key-value
+* key 一般为string
+* value 是 redisObject 
+
+
+
+
+
+redisObject
+
+
+
+
 
 
 
