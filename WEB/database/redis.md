@@ -3810,6 +3810,7 @@ redisObject + Redis数据类型+ Redis所有编码方式(底层实现)三者之�
 
 redisObject
 ![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230331165802.png)
+![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230331171207.png)
 
 ![image.png](https://cuichonghe.oss-cn-shenzhen.aliyuncs.com/markdown/20230331165910.png)
 
@@ -3850,6 +3851,20 @@ redisObject
 
 三种物理编码
 * int
+	保存long型(长整型)的64位(8个字节)有符号整数
+	浮点数用字符串存
+* embstr
+	代表embstr格式的SDS(Simple Dynamic String简单动态字符串)，保存长度小于44字节的字符串
+	embedded string,表示嵌入式的String
+* raw
+	大于44字节字符串
+
+
+Redis没有直接复用C语言的字符串，而是使用--SDS
+
+在Redis数据库里，包含字符串值的键值对都是由SDS实现的(Redis中所有的键都是由字符串对象实现的即底层是由SDS实现，Redis中所有的值对象中包含的字符串对象底层也是由SDS实现)**
+
+
 
 
 
