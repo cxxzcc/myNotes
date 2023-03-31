@@ -2052,8 +2052,8 @@ http://openjdk.java.net/projects/jdk/15/
 	```
 2. string byte[]存储 原本char[]
 	StringBuffer 和 StringBuilder也一样
-
-
+3. String 实现了 Constable 接口
+	describeConstable() 返回optional对象
 
 
 

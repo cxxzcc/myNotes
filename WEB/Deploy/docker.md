@@ -710,6 +710,15 @@ docker run -p 6379:6379
 
 docker exec -it 运行着Rediis服务的容器ID redis-cli
 ```
+
+
+
+
+
+
+
+
+
 ### nacos
 ```shell
 docker run --name nacos -d 
