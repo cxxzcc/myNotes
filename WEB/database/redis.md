@@ -3776,14 +3776,21 @@ redis内存满了 OOM
 * 开启惰性删除
 
 ### 源码
+src 目录下
+参考书
+* Redis设计与实现
+* Redis5设计与源码分析
 
 
-
-
-
-
-
-
+redis底层数据结构
+* SDS动态字符串
+* 双向链表
+* 压缩列表ziplist
+* 哈希表hashtable
+* 跳表skiplist
+* 整数集合intset
+* 快速列表quicklist
+* 紧凑列表listpack
 
 
 
