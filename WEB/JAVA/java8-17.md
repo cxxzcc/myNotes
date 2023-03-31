@@ -194,24 +194,6 @@ LongPredicate boolean test(long value) 接收一个long值
 
 
 
-## optional
-
-```java
-创建
-Optional.empty(); 创建一个空的Optional 
-Optional.of("").get();  创建一个Optional实例，value必须非空,get非空取值,空抛异常
-Optional.ofNullable("").orElse(""); 
-Optional.ofNullable(null).orElseGet(() -> abc().getResult(""));  
-//为空，就用Supplier接口的Lambda表达式提供的值代替 
-Optional.ofNullable("").orElseThrow(() -> new FileNotFoundException());
-//为空抛异常
-Optional.ofNullable("").ifPresent((x) -> System.out.println(x));
-//为空走consumer
-
-
-```
-
-
 
 
 
@@ -2054,4 +2036,31 @@ http://openjdk.java.net/projects/jdk/15/
 
 ## api
 1. optional
-	
+	```java
+	创建
+	Optional.empty(); 创建一个空的Optional 
+	Optional.of("").get();  创建一个Optional实例，value必须非空,get非空取值,空抛异常
+	Optional.ofNullable("").orElse(""); 
+	Optional.ofNullable(null).orElseGet(() -> abc().getResult(""));  
+	//为空，就用Supplier接口的Lambda表达式提供的值代替 
+	Optional.ofNullable("").orElseThrow(() -> new FileNotFoundException());
+	//为空抛异常
+	Optional.ofNullable("").ifPresent((x) -> System.out.println(x));
+	//为空走consumer
+	Optional.ofNullable("").stream();  
+	//value非空，返回仅包含此value的Stream；否则，返回一个空的Stream
+	```
+2. string byte[]存储 原本char[]
+	StringBuffer 和 StringBuilder也一样
+
+
+
+
+
+
+
+
+
+
+
+
