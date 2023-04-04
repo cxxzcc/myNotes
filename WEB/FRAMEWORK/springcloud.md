@@ -498,7 +498,27 @@ spring:
 	* vim zoo.cfg
 		dataDir=/opt/module/zookeeper-3.5.7/zkData
 	* mkdir zkData
-	
+	* 启动
+		* bin/zkServer.sh start
+		* bin/zkServer.sh status
+		* bin/zkCli.sh 启动client
+		* quit 
+		* bin/zkServer.sh stop
+2. 配置文件zoo.cfg
+	* tickTime = 2000：通信心跳时间 服务器与客户端心跳时间 ms
+	* initLimit = 10：Leader-Follower初始通信时限
+	* syncLimit = 5：LF同步通信时限
+	* dataDir：保存Zookeeper中的数据
+	* clientPort = 2181：客户端连接端口
+3. 集群安装
+
+
+
+
+
+
+
+
 
 
 
