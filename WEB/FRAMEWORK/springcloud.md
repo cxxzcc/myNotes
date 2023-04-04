@@ -463,7 +463,8 @@ spring:
 </dependency>
 ```
 
-1.2.2
+### 1.2.2 入门
+
 1. Zookeeper：一个Leader，多个Follower组成的集群
 2. 集群中只要有半数以上节点存活，Zookeeper集群就能正常服务。适合奇数安装。 
 3. 全局数据一致：每个Server保存一份相同的数据副本，Client无论连接到哪个Server，数据都是一致的。 
@@ -479,18 +480,25 @@ spring:
 
 
 应用
-* 统一命名服务
+* 统一命名服务  域名
 * 统一配置管理
-* 统一集群管理、服务器节点动态上下 线、软负载均衡
+* 统一集群管理
+* 服务器节点动态上下线
+* 软负载均衡
 
+### 1.2.3 安装
+[zookeeper.apache.org](https://zookeeper.apache.org/)
 
-
-
-
-
-
-
-
+1. 本地安装
+	* jdk
+	* 拷贝 apache-zookeeper-3.5.7-bin.tar.gz 安装包到 Linux 系统下
+	* tar -zxvf apache-zookeeper-3.5.7- bin.tar.gz -C /opt/module/
+	* mv apache-zookeeper-3.5.7 -bin/ zookeeper-3.5.7
+	* mv zoo_sample.cfg zoo.cfg
+	* vim zoo.cfg
+		dataDir=/opt/module/zookeeper-3.5.7/zkData
+	* mkdir zkData
+	
 
 
 
