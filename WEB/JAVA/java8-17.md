@@ -201,6 +201,17 @@ LongPredicate boolean test(long value) 接收一个long值
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 # java9
 
 
