@@ -306,6 +306,22 @@ DatagramPacket
 -   `public int getLength()`返回将要发送或接收到的数据的长度
 
 
+URL
+-   public String getProtocol( ) 获取该URL的协议名
+-   public String getHost( ) 获取该URL的主机名
+-   public String getPort( ) 获取该URL的端口号
+-   public String getPath( ) 获取该URL的文件路径
+-   public String getFile( ) 获取该URL的文件名
+-   public String getQuery( ) 获取该URL的查询名
+
+URLConnectonn u = netchinaren.openConnection()
+-   public Object getContent( ) throws IOException
+-   public int getContentLength( )
+-   public String getContentType( )
+-   public long getDate( )
+-   public long getLastModified( )
+-   public InputStream getInputStream ( ) throws IOException
+-   public OutputSteram getOutputStream( )throws IOException
 
 ```
 
