@@ -119,7 +119,9 @@ Map<Boolean, List<Dish>> result = menu.stream().collect(groupingBy(Dish ::�
 List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);  
 Map<Boolean, List<Integer>> result = integerList.stream().collect(partitioningBy(i -> i < 3));
 
-
+java9
+Stream<Object> stream1 = Stream.ofNullable(null)
+Stream.iterate(1,i -> i < 100,i -> i + 1).forEach(System.out::println)
 
 ```
 
