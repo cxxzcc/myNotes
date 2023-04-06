@@ -221,6 +221,51 @@ TCP协议中，在发送数据的准备阶段，客户端与服务器之间的�
 -   第二次握手，服务器端发送针对客户端TCP连接请求的确认
 -   第三次握手，客户端发送确认的确认
 
+### 四次挥手
+
+TCP协议中，在发送数据结束后，释放连接时需要经过四次挥手。
+
+-   第一次挥手：客户端向服务器端提出结束连接，`让服务器做最后的准备工作`。此时，客户端处于半关闭状态，即表示不再向服务器发送数据了，但是还可以接受数据。
+-   第二次挥手：服务器接收到客户端释放连接的请求后，`会将最后的数据发给客户端`。并告知上层的应用进程不再接收数据。
+-   第三次挥手：服务器发送完数据后，会给客户端`发送一个释放连接的报文`。那么客户端接收后就知道可以正式释放连接了。
+-   第四次挥手：客户端接收到服务器最后的释放连接报文后，要`回复一个彻底断开的报文`。这样服务器收到后才会彻底释放连接。这里客户端，发送完最后的报文后，会等待2MSL，因为有可能服务器没有收到最后的报文，那么服务器迟迟没收到，就会再次给客户端发送释放连接的报文，此时客户端在等待时间范围内接收到，会重新发送最后的报文，并重新计时。如果等待2MSL后，没有收到，那么彻底断开。
+
+### 网络编程API
+
+#### InetAddress
+
+InetAddress类主要表示IP地址，两个子类：Inet4Address、Inet6Address。
+
+InetAddress 类没有提供公共的构造器，而是提供 了 如下几个 静态方法来获取InetAddress 实例
+
+-   public static InetAddress getLocalHost()
+-   public static InetAddress getByName(String host)
+-   public static InetAddress getByAddress(byte[] addr)
+
+InetAddress 提供了如下几个常用的方法
+
+-   public String getHostAddress() ：返回 IP 地址字符串（以文本表现形式）
+-   public String getHostName() ：获取此 IP 地址的主机名
+-   public boolean isReachable(int timeout)：测试是否可以达到该地址
+
+#### Socket
+
+-   网络上具有唯一标识的IP地址和端口号组合在一起构成唯一能识别的标识符套接字（Socket）。
+-   利用套接字(Socket)开发网络应用程序早已被广泛的采用，以至于成为事实上的标准。网络通信其实就是Socket间的通信。
+-   通信的两端都要有Socket，是两台机器间通信的端点。
+-   Socket允许程序把网络连接当成一个流，数据在两个Socket间通过IO传输。
+-   一般主动发起通信的应用程序属客户端，等待通信请求的为服务端。
+Socket分类：
+-   流套接字（stream socket）：使用TCP提供可依赖的字节流服务
+    -   ServerSocket：此类实现TCP服务器套接字。服务器套接字等待请求通过网络传入。
+    -   Socket：此类实现客户端套接字（也可以就叫“套接字”）。套接字是两台机器间通信的端点。
+-   数据报套接字（datagram socket）：使用UDP提供“尽力而为”的数据报服务
+    
+    -   DatagramSocket：此类表示用来发送和接收UDP数据报包的套接字。
+
+
+
+
 
 
 
