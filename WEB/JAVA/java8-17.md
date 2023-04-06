@@ -190,8 +190,9 @@ LongPredicate boolean test(long value) 接收一个long值
     - 对象 :: 实例方法名
     - 类 :: 静态方法名
     - 类 :: 实例方法名
-
-
+* 构造器引用
+	* 类名::new
+	* 数组类型名::new
 
 
 
