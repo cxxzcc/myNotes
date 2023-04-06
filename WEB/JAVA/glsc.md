@@ -618,6 +618,17 @@ mysql
 写并发低（多读），优先选择：乐观锁
 写并发高，优先选择：mysql悲观锁
 
+redis
+* 乐观锁 
+	watch mutli exec
+	性能差
+
+
+
+
+
+
+
 
 
 
