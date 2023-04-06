@@ -25,14 +25,14 @@
 1.集合
 List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);  
 Stream<Integer> stream = integerList.stream();
+integerList.parallelStream() //并行流
 
 2.数组
-List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);  
-Stream<Integer> stream = integerList.stream();
+String[] arr = {"hello","world"};
+Stream<String> stream = Arrays.stream(arr);
 
 3.数值
-List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5);  
-Stream<Integer> stream = integerList.stream();
+Stream<Integer> stream = Stream.of(1,2,3,4,5);
 
 4.文件
 Stream<String> lines = Files.lines(Paths.get("data.txt"), Charset.defaultCharset())
@@ -57,7 +57,7 @@ distinct
 limit
 skip
 map 将接受的元素映射成另外一个元素
-flatMap 将一个流中的每个值都转换为另一个流
+flatMap 将一个流中的每个值都转换为另一个流,然后把所有流连接成一个流
 	Arrays.asList("Hello", "World").stream().map(x -> x.split("")).flatMap(Arrays::stream)
 
 allMatch 匹配所有
