@@ -60,11 +60,11 @@ map 将接受的元素映射成另外一个元素
 flatMap 将一个流中的每个值都转换为另一个流,然后把所有流连接成一个流
 	Arrays.asList("Hello", "World").stream().map(x -> x.split("")).flatMap(Arrays::stream)
 
+2.终端操作
 allMatch 匹配所有
-allMatch 匹配所有
+anyMatch 匹配最少一个
 noneMatch 全部不匹配
 
-2.终端操作
 count 统计出流中元素个数 collect(counting()) 
 findFirst 查找第一个
 findAny 随机查找一个
