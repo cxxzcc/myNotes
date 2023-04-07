@@ -3369,7 +3369,7 @@ key可能会在某些时间点被超高并发地访问，是一种非常“热�
 	* 自旋加锁
 	* 可重入 使用hash
 	* 操作原子 lua
-	* 自动续期
+	* 自动续期 watchdog
 	* 避免死锁 过期时间
 * unlock
 	* 谁加锁谁解锁
@@ -3698,6 +3698,12 @@ eval "redis.call('set',KEYS[1],ARGV[1]) return redis.call('get',KEYS[1])" 1 k2 v
 
 eval "if redis.call('get',KEYS[1])==ARGV[1] then return redis.call('del',KEYS[1]) else return 0 end" 1 zzyyRedisLock 1111-2222-3333
 ```
+
+
+
+
+
+
 
 #### RedLock
 
