@@ -1189,6 +1189,11 @@ public class RedLockController {
 
 
 
+
+
+
+
+
 ### 1.2.3 缓存数据一致性
 
 就是缓存中的数据如何与数据库保持一致
