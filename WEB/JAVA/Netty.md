@@ -40,6 +40,8 @@ HashedWheelTimer使用时间轮数据结构的工具类
 - timeUnit  时间单位
 - ticksPerWheel  就是轮子一共有多个格子
 
+将间隔时间的长度先用hash进行处理,放入wheel的tick 即为HashedWheelTimer
+
 ### 注意点
 * 一个HashedWheelTimer对象只有一个worker线程
 * 每次添加的任务只会执行一次
@@ -48,3 +50,4 @@ HashedWheelTimer使用时间轮数据结构的工具类
 * 所有的任务都是顺序串行执行的
 	上一个任务的异常延时会影响到下一个任务
 	所以时间轮执行的任务都是比较快的
+* HashedWheelTimer被实例化启动后，会创建一个新的线程，因此，你的项目里应该只创建它的唯一一个实例
