@@ -97,6 +97,9 @@ else :
 
 true 循环 false 进else结束循环
 
+for 变量 in 序列 :
+	代码块
+else可以用在for循环
 
 pass 判断/循环中占位
 ```
@@ -130,6 +133,21 @@ del stus[2] # 删除索引为2的元素
 
 通过切片来修改删除元素
 
+
+
+append()向后添加  
+insert()  
+extend()把序列添加到序列
+clear()  
+pop()  
+remove()
+reverse()反转
+sort() 默认升序 reverse=True降序
+
+range()生成自然数序列
+range(0,10,2) start end 步长
+for i in range(30):  
+	print(i)
 ```
 
 
