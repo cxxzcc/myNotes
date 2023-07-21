@@ -2738,7 +2738,7 @@ lazyfree-lazy-user-del yes
 	多线程数据不一致
 * 先删除缓存,再更新数据库
 	多线程数据不一致
-	==延时双删==
+* ==延时双删==
 	* 删redis
 	* update库
 	* sleep一段时间
