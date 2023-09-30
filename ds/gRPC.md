@@ -29,6 +29,11 @@ gPRC使用的是合约优先的API开发模式，它默认使用Protocol buffers
 * 适合传递大量的数据
 * 通过设定某些规则，是的API的进化也很简单
 
+数据类型
+* 数值型，数值型有很多种形式: double, float, int32, int64, uint32, uint64, sint32, sint64,fixed32, fixed64, sfixed32, sfixed64。
+* 布尔型，bool型可以有True和False两个值。
+* 字符串，string表示任意长度的文本，但是它必须包含的是UTF-8编码或7位ASCII的文本，长度不可超过232。
+* 字节型，bytes可 表示任意的byte数组序列，但是长度也不可以超过232
 
 
 
