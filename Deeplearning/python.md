@@ -1,12 +1,15 @@
 
 # jupyter
 
+[Users Manual](https://jupyter.brynmawr.edu/services/public/dblank/Jupyter%20Notebook%20Users%20Manual.ipynb)
+
 A jupyter notebook document has the .ipynb extension and is composed of a number of cells. In cells, you can write program code, make marked and unmarked notes. These three types of cells correspond to: 
     1. code
     2. markdown
     3. raw
 
-
+After filling the cell, you need to press *Shift + Enter*, this command will process the contents of the cell:   
+interpret the code or lay out the marked-up text.
 
 
 
