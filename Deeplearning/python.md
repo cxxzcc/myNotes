@@ -23,7 +23,11 @@ interpret the code or lay out the marked-up text.
 - [100 numpy exercises](http://www.labri.fr/perso/nrougier/teaching/numpy.100/)
 - [numpy for matlab users](https://numpy.org/doc/stable/user/numpy-for-matlab-users.html)
 
+# Matplotlib
 
+- [matplotlib](http://matplotlib.org/)
+- [matplotlib - 2D and 3D plotting in Python](http://nbviewer.jupyter.org/github/jrjohansson/scientific-python-lectures/blob/master/Lecture-4-Matplotlib.ipynb)
+- [visualization in pandas](http://pandas.pydata.org/pandas-docs/stable/visualization.html)
 
 
 
