@@ -12,7 +12,16 @@ After filling the cell, you need to press *Shift + Enter*, this command will pro
 interpret the code or lay out the marked-up text.
 
 
+---
 
+# NumPy
+
+**NumPy** – Python library that allows to conveniently work with multidimensional arrays and matrices, containing mathematical functions. In addition, NumPy can vectorize many of the computations that take place in machine learning.
+
+- [numpy](http://www.numpy.org/)
+- [numpy tutorial](http://cs231n.github.io/python-numpy-tutorial/)
+- [100 numpy exercises](http://www.labri.fr/perso/nrougier/teaching/numpy.100/)
+- [numpy for matlab users](https://numpy.org/doc/stable/user/numpy-for-matlab-users.html)
 
 
 
