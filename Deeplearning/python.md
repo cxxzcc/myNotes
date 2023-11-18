@@ -7,7 +7,17 @@ conda config --show
 
 conda env list 
 
+查看conda版本：conda --version
+查看conda的环境配置：conda config --show
+添加镜像：conda config --add channels <镜像>
+更新conda：conda update conda
 
+创建虚拟环境：conda create -n <环境名> python=<Python版本> 
+            conda env create -f xx.yml
+查看虚拟环境：conda info -e
+激活虚拟环境：conda activate <环境名>
+退出虚拟环境：conda deactivate
+删除虚拟环境：conda remove --name <环境名> --all
 
 
 
