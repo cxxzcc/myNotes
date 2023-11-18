@@ -2,7 +2,17 @@
 
 ```shell
 
+conda info 
+conda config --show
 
+conda env list 
+
+
+
+
+
+
+```
 
 
 
