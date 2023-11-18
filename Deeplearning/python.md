@@ -6,6 +6,11 @@ conda info
 conda config --show
 
 conda env list 
+conda config --get 查看已修改配置
+conda config --add channels 通道地址
+conda config --remove channels 通道地址
+
+
 
 查看conda版本：conda --version
 查看conda的环境配置：conda config --show
