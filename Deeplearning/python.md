@@ -60,8 +60,14 @@ interpret the code or lay out the marked-up text.
 	# 格式化字符串  
 	print(f'欢迎 {name} 光临！')
 	
+	
 	# 字符串乘数字，重复指定的次数并返回  
 	a = a * 20
+	
+	
+	
+	input('Please type something: ')
+	print('hello', 'world', '!', sep='_', end='\n\n')  separator
 	```
 
 * 空值 None
