@@ -21,6 +21,17 @@ conda env list
 
 
 
+# 查看当前环境下的所有包
+conda list
+# 安装numpy
+conda install numpy  # 可以不添加版本，默认为最新版本
+conda install numpy=1.24.3
+# 更新某个包到最新版本
+conda update numpy
+# conda卸载包
+conda uninstall numpy
+# 清理缓存
+conda clean -t
 
 ```
 
@@ -31,7 +42,6 @@ conda env list
 
 
 
-```
 
 
 
