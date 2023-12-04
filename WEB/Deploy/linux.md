@@ -67,6 +67,36 @@ snap connnect nmap:network-control
 ```
 
 
+
+### Vulnerabilities in TCP/IP
+https://blog.csdn.net/zengxyuyu/article/details/53434728
+#### ARP redirect
+
+#### RST Hijacking
+
+
+#### ICMP
+
+#### OpenVAS
+
+vulnerability scanner tool
+ 
+To install OpenVAS:
+
+- Install docker on your host machine: [https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)
+- Grab the OpenVAS container from the docker registry and start it up: [https://hub.docker.com/r/mikesplain/openvas](https://hub.docker.com/r/mikesplain/openvas)
+
+In the web browser, go to: `https://127.0.0.1`
+
+Login using the following credentials:
+- Username: admin
+- Password: admin
+Once you are in, go to Scans > Tasks and open the Task Wizard.
+
+
+
+
+
 ## 命令
 
 
