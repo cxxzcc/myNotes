@@ -29,7 +29,44 @@ java -jar xxx.jar --server.port=8080
 nohup java -jar xxx.jar &
 nohup java -jar xxx.jar >./logs.txt &
 
+
 ```
+
+
+## network
+
+### Listen network
+
+#### tcpdump
+
+```shell
+
+tcpdump -i eth1 -X -XX dst host <IP destination>
+```
+#### Wireshark
+网络封包分析软件
+https://www.cnblogs.com/88223100/p/Wireshark_Useage.html
+https://zhuanlan.zhihu.com/p/591219489
+
+```shell
+wireshark
+```
+
+
+
+#### namp
+网络探测工具，**能够对目标主机进行端口扫描、操作系统识别、服务版本探测等操作**
+https://www.linuxcool.com/lmlxjyycjjqq
+https://nmap.org/man/zh/index.html
+
+```shell
+apt install nmap
+nmap <IP from remote machine>
+nmap -O <IP from remote machine> //os识别
+snap connnect nmap:network-control
+```
+
+
 ## 命令
 
 
