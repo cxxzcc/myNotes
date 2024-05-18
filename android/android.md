@@ -13,7 +13,7 @@ log 范围由小到大
 混合开发 跨平台 flutter react native
 
 
-项目结构
+# 项目结构
 app目录下
 * manifests子目录， 下面只有一个XML文件AndroidManifest.xml, 运行配置文件。
 * java子录，下面有3个com.example.myapp包，第一个包存放当前模块的Java源代码，后面两个包存放测试用的Java代码。
@@ -45,3 +45,7 @@ AndroidManifest.xml的根节点为manifest,package指定App的包名。applicati
     <category android:name="android.intent.category.LAUNCHER" /> #显示图标 
 </intent-filter>
 ```
+
+# 控件
+
+
