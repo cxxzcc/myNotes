@@ -41,8 +41,7 @@ AndroidManifest.xml的根节点为manifest,package指定App的包名。applicati
 注意application下还有个activity市点，它是活动页面的注册声明，只有AndroidManifest.xml中正确配置activity节点，才能在运行时访问对应的活动页面。初始配置的MainActivity正是App的默认主页，之所以说该页面是App主页，是因为它的activity书点内部还配置了以下的过滤信息:
 ```xml
 <intent-filter>  
-    <action android:name="android.intent.action.MAIN" />  
-  
-    <category android:name="android.intent.category.LAUNCHER" />  
+    <action android:name="android.intent.action.MAIN" /> #入口界面
+    <category android:name="android.intent.category.LAUNCHER" /> #显示图标 
 </intent-filter>
 ```
