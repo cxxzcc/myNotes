@@ -38,9 +38,11 @@ AndroidManifest.xml的根节点为manifest,package指定App的包名。applicati
 * android:supportsRtl, 是否支持阿拉伯语/波斯语这种从右往左的文字排外顺序。为true表示支持, 为false则表示不支持。
 * android:theme, 指定App的显示风格。
 
-注意到application卜血体右个acivity节点。它是活动次血的江册声明，在Ancroid Manit
-自动开播
-才能在
-认行时访问则应的活动大血。初始督器的Ma nActivty止是App的款认土大。之所以说话大血是A0p主灾，是因为它Nactivit带点内 音$人
-中心人的讨纪信白.
-百安坪放沿罢
+注意application下还有个activity市点，它是活动页面的注册声明，只有AndroidManifest.xml中正确配置activity节点，才能在运行时访问对应的活动页面。初始配置的MainActivity正是App的默认主页，之所以说该页面是App主页，是因为它的activity书点内部还配置了以下的过滤信息:
+```xml
+<intent-filter>  
+    <action android:name="android.intent.action.MAIN" />  
+  
+    <category android:name="android.intent.category.LAUNCHER" />  
+</intent-filter>
+```
