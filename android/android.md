@@ -30,3 +30,17 @@ Gradle Scripts下面主要是工程的编译配置文件，主要有:
 * local.properties, 项目的本地配置文件，它在工程编译时自动生成，用于描述开发者电脑的环境配置，包括SDK的本地路径、NDK的本地路径等。
 
 
+AndroidManifest.xml的根节点为manifest,package指定App的包名。application节点，各属性说明如下:
+* android:allowBackup. 否允许应用备份。允许备份系统应用和第三方应用的apk安装包和应用数据，以便在刷机或者数据丢失后恢复应，即可诵过adb backup和adb restore来进行对应数据的备份和恢复。为true表示允许，为false则表示不允许。
+* android:icon, 指定App在手机屏幕上显示的图标。
+* android:label, 指定App在手机屏幕显示的名称。
+* android:roundIcon, 指定App的圆角图标
+* android:supportsRtl, 是否支持阿拉伯语/波斯语这种从右往左的文字排外顺序。为true表示支持, 为false则表示不支持。
+* android:theme, 指定App的显示风格。
+
+注意到application卜血体右个acivity节点。它是活动次血的江册声明，在Ancroid Manit
+自动开播
+才能在
+认行时访问则应的活动大血。初始督器的Ma nActivty止是App的款认土大。之所以说话大血是A0p主灾，是因为它Nactivit带点内 音$人
+中心人的讨纪信白.
+百安坪放沿罢
