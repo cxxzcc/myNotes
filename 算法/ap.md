@@ -91,6 +91,12 @@ To obtain an instance of java.lang.Class
 > 	String.class 
 > 	Class.forName("java.lang.String")
 
+### Javassist
+
+* Load-time intercession for Java. 
+* Does not modify the runtime or compiler. 
+* Modifies class bytecodes at class load-time.
+
 
 
 
@@ -106,3 +112,4 @@ Intercession    干预
 Reification     具体化
 lexical         词汇的
 reify           具体化
+purpose          目的
