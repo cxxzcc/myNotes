@@ -68,6 +68,29 @@ Two levels of Reification
 > 	Intercession over behavioral reification makes compilation harder.
 
 
+## Reflection in Java
+Types 
+* Primitive Types: boolean, byte, short, int, long, char, float, and double. 
+* Reference Types: java.lang.String, java.io.Serializable, java.lang.Integer, and all the others.
+
+Reified Types 
+* For each (primitive or reference) type, there is an (unique) instance of the class java.lang.Class that represents that type. 
+* The java.lang.Class class contains methods that: 
+	* provide information about the class (methods, variables, etc.), 
+	* create instances of the class, 
+	* change variables and call methods.
+
+
+To obtain an instance of java.lang.Class 
+* From an object foo: foo.getClass() 
+* From a type Bar: Bar.class 
+* From the name of a type "foo.bar.Baz" (if not found, throws the Checked exception ClassNotFoundException): Class.forName("foo.bar.Baz")
+
+> Example 
+> 	"I am a string".getClass() 
+> 	String.class 
+> 	Class.forName("java.lang.String")
+
 
 
 
