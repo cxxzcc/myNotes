@@ -50,11 +50,18 @@ Two levels of Reflection
 
 
 
+## Reification 
 
+### Definition 
 
+Reification: the creation of an entity that represents, in the meta-system, an entity of the object-system. Reification is a pre-condition for reflection.
 
+>Examples 
+>	What is the class of this instance? ⇒ reification of classes. Which are the methods of this class? ⇒ reification of methods. What was the call chain that caused this bug? ⇒ reification of the stack. Which are the values of the free variables of this function? ⇒ reification of the lexical environment.
 
-
+Two levels of Reification 
+* Structural Reification: the ability of a system to reify its own structure. 
+* Behavioral (or computational) Reification: the ability of a system to reify its own execution.
 
 	
 
@@ -71,3 +78,5 @@ reflective  反射
 examine     检查
 Introspection   自省
 Intercession    干预
+Reification     具体化
+lexical         词汇的
