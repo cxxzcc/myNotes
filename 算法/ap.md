@@ -97,7 +97,11 @@ To obtain an instance of java.lang.Class
 * Does not modify the runtime or compiler. 
 * Modifies class bytecodes at class load-time.
 
-
+Operation Sequence 
+* Reification: Creating a CtClass (Compile time Class) object representing the bytecodes of a class. 
+* Modification: Introspecting and altering the class definition. 
+* Translation: Computing the bytecodes of the modified class. 
+* Reflection: Loading the obtained bytecodes into the JVM or rewriting them to class files
 
 
 
