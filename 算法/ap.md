@@ -15,9 +15,9 @@ The domain is represented by the internal structures of the system:
 * Program prescribing data manipulation.
 
 > Notes
->   A program is not a computational system. 
->   A program describes (part of) a computational system. 
->   A running program is a computational system.
+>	A program is not a computational system. 
+>	A program describes (part of) a computational system. 
+>	A running program is a computational system.
 
 ## Computational Meta-System 
 ### Definition 
@@ -32,9 +32,31 @@ A computational meta-system operates on data that represents the computational o
 	A (classic) compiler is not a computational meta-system (its domain is a program and not a computational system)
 
 
+## Reflection 
+### Definition 
+
+Reflection: the process of reasoning about and/or acting upon oneself. 
+
+Reflective System: a meta-system that has itself as object-system. 
+
+A reflective system is a system that can represent and manipulate its own structure and behavior at run time
+
+Two levels of Reflection
+* ==Introspection==: the ability of a program to examine its own structure and behavior
+* ==Intercession==: the ability of a program to modify its own structure and behavior.
+
+>Examples 
+>	Introspection: How many parameters has the function foo? Intercession: Change the class of this instance to Bar!
 
 
 
+
+
+
+
+
+
+	
 
 
 
@@ -45,3 +67,7 @@ A computational meta-system operates on data that represents the computational o
 reasons about 推理
 acts upon     操作
 Program prescribing 规定 data manipulation 操作  
+reflective  反射
+examine     检查
+Introspection   自省
+Intercession    干预
