@@ -188,9 +188,12 @@ Effective Method Computation
 
 
 
+Applicable Methods 
+* Given a generic function and required arguments a0,…,an, an applicable method is a method whose parameter specializers p0,…,pn are satisfied by their corresponding arguments. 
+* A parameter specializer pi is satisfied by their corresponding argument ai if (typep ai 'pi)
 
-
-
+Qualifiers 
+* Each method can have zero or more qualifiers. Each qualifier can be any object except a list (so that qualifiers can be distinguished from parameter lists). A standard method combination distinguishes: Primary Methods: non-qualified methods. Auxiliary Methods: methods qualified with the symbol :before, :after, or :around. Other method combinations can use other categories. New method combinations can be defined.
 
 
 
