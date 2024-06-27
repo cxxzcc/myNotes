@@ -300,8 +300,17 @@ Our evaluator will operate in terms of an abstract syntax: the syntax is recogni
 * Example: Abstract Syntax for Assignments 
 	* (define (set? expression) (eq? (car expression) 'set!))
 
+Naming 
+* Naming is the fundamental abstraction operator. 
+* A name abstracts a value and creates a scope where the name has a meaning. 
+* A name is not a first class value but denotes a first class value. 
+* Names are maintained in an environment: a collection of names. 
+* The environment is implemented as an association list: ((name0.value0)(name1.value1)…(namen.valuen))
 
-
+Pre-defined Names 
+* The REPL starts in a clean state. 
+* Forcing us to introduce all needed names. 
+* Make it better: we can provide some pre-defined names.
 
 
 
