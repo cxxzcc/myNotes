@@ -174,7 +174,17 @@ Object-Oriented Programming - Multiple Dispatch
 ```
 
 
+## Generic Functions
 
+Generic Function Application
+1. Computes the effective method.
+2. If it exists,calls the effective method with the same arguments of the generic function call.
+3. If it does not exist,calls no-applicable-method using,as arguments, the original generic function and the arguments of the original call.
+
+Effective Method Computation
+1. Selects the applicable methods.
+2. Sorts applicable methods by precedence order.
+3. Combines applicable methods,producing the effective method.
 
 
 
