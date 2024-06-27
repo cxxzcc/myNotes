@@ -193,7 +193,26 @@ Applicable Methods
 * A parameter specializer pi is satisfied by their corresponding argument ai if (typep ai 'pi)
 
 Qualifiers 
-* Each method can have zero or more qualifiers. Each qualifier can be any object except a list (so that qualifiers can be distinguished from parameter lists). A standard method combination distinguishes: Primary Methods: non-qualified methods. Auxiliary Methods: methods qualified with the symbol :before, :after, or :around. Other method combinations can use other categories. New method combinations can be defined.
+* Each method can have zero or more qualifiers. 
+* Each qualifier can be any object except a list (so that qualifiers can be distinguished from parameter lists). 
+* A standard method combination distinguishes: 
+	* Primary Methods: non-qualified methods. 
+	* Auxiliary Methods: methods qualified with the symbol :before, :after, or :around. 
+* Other method combinations can use other categories. 
+* New method combinations can be defined.
+
+Sorting the Applicable Methods Sorts applicable methods by precedence order from most specific to least specific. Given two applicable methods: 1 Their parameter specializers are examined in order (by default, from left to right). 2 When two specializers differ, the highest precedence method is the one whose parameter specializer occurs first in the class precedence list of the corresponding argument. 3 When one specializer is an instance specializer ((eql object)), the highest precedence method is the one whose parameter contains that specializer. 4 When all specializers are identical, the two methods must have different qualifiers and either one can be selected to precede the other.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
