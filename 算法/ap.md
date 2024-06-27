@@ -129,7 +129,34 @@ Object-Oriented Programming - Multiple Dispatch
 (foo a b)
 (call (function 'foo(type-of a)(type-of b)) a b)
 
+;test
+(defgeneric add(x y)) 
+(defmethodadd ((x number)(y number)) 
+	(+ x y))
 
+> (add 1 3) 
+4
+
+(defmethodadd ((x list)(y list)) 
+	(mapcar #'add x y)) 
+
+>(add '(1 2 3) '(4 5 6)) 
+(5 7 9) 
+>(add '(1 (2 3)) '(4 (5 6))) 
+(5 (7 9))
+
+
+(defmethod add ((x list) (y t)) 
+	(add x (make-list (length x) :initial-element y)))
+ 
+> (add '(1 2) 3) 
+(4 5)
+
+(defmethod add ((x t) (y list)) 
+	(add (make-list (length y) :initial-element x) y)) 
+	
+> (add 1 '(2 3)) 
+(3 4)
 
 
 ```
