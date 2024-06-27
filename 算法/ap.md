@@ -106,6 +106,46 @@ Operation Sequence
 
 
 
+
+
+
+
+# CLOS
+Common Lisp Object System
+
+
+
+Function Call
+```lisp
+Functional and Imperative Programming 
+(foo a b) 
+(call (function 'foo) a b)
+
+Object-Oriented Programming - Single Dispatch 
+(foo a b) ⇔ a.foo(b)
+(call (function 'foo(type-of a)) a b)
+
+Object-Oriented Programming - Multiple Dispatch 
+(foo a b)
+(call (function 'foo(type-of a)(type-of b)) a b)
+
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 reasons about 推理
 acts upon     操作
 Program prescribing 规定 data manipulation 操作  
@@ -118,3 +158,6 @@ lexical         词汇的
 reify           具体化
 purpose          目的
 Inheritance      继承
+Generic Functions  泛型函数
+Functional and Imperative Programming 函数式和命令式编程
+Object-Oriented Programming 面向对象编程
