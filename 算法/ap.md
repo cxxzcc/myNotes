@@ -312,6 +312,33 @@ Pre-defined Names
 * Forcing us to introduce all needed names. 
 * Make it better: we can provide some pre-defined names.
 
+flet 
+* Augment the environment to contain associations between the names and the functions. 
+call 
+* Obtain the function associated with the name. 
+* Evaluate all argument expressions. 
+* Augment the environment to contain the associations between function parameters and the evaluated arguments. 
+* Evaluate the function body in the augmented environment.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
