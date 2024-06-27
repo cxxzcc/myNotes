@@ -284,7 +284,7 @@ Linguistic Abstraction
 A new programming language is invented to facilitate thedescription of the problem
 
 
-
+Evaluator An evaluator (or interpreter) of a language is a procedure that, when applied to an expression of that language, computes the operations described in that expression. Fundamental Ideia An evaluator is a program that computes the meaning of a program. Meta-Circular Evaluator An evaluator written in the language that it evaluates
 
 
 
