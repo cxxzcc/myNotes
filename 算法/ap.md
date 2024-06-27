@@ -117,3 +117,4 @@ Reification     具体化
 lexical         词汇的
 reify           具体化
 purpose          目的
+Inheritance      继承
