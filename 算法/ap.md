@@ -254,7 +254,31 @@ If there are applicable :around methods, the most specific one is called. If tha
 * next-method-p can be used in a method to determine whether a next applicable method exists.
 
 
+#### Simple Method Combination 
+* Primary Methods: methods qualified with the combination type (append, nconc, list, progn, max, min, +, and, or). 
+* Auxiliary Methods: methods qualified with :around.
 
+If there are no applicable :around methods: 
+1. The effective method is the application of the combination type (the operator) to the results of calling all the applicable primary methods sorted by precedence order
+
+If there are applicable :around methods, the most specific one is called. If that method calls call-next-method: 
+1. If there are more applicable :around methods, the next most specific :around method is called. 
+2. If there are no more applicable :around methods: 
+	1. The effective method is the application of the combination type (the operator) to the results of calling all the applicable primary methods sorted by precedence order.
+
+
+
+User-Defined Method Combination
+Definition
+* Name of the method combination. 
+* Parameters of the method combination (e.g., sorting order for applicable methods). 
+* Local variable to contain methods whose qualifiers … 
+* …satisfy this pattern 
+* Calls each applicable method in the effective method
+
+
+
+# Meta-Circular Evaluators
 
 
 
