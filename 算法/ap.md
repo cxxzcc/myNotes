@@ -280,7 +280,8 @@ Definition
 
 # Meta-Circular Evaluators
 
-
+Linguistic Abstraction
+A new programming language is invented to facilitate thedescription of the problem
 
 
 
