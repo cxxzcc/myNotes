@@ -201,7 +201,59 @@ Qualifiers
 * Other method combinations can use other categories. 
 * New method combinations can be defined.
 
-Sorting the Applicable Methods Sorts applicable methods by precedence order from most specific to least specific. Given two applicable methods: 1 Their parameter specializers are examined in order (by default, from left to right). 2 When two specializers differ, the highest precedence method is the one whose parameter specializer occurs first in the class precedence list of the corresponding argument. 3 When one specializer is an instance specializer ((eql object)), the highest precedence method is the one whose parameter contains that specializer. 4 When all specializers are identical, the two methods must have different qualifiers and either one can be selected to precede the other.
+Sorting the Applicable Methods 
+* Sorts applicable methods by precedence order from most specific to least specific. 
+* Given two applicable methods: 
+	* Their parameter specializers are examined in order (by default, from left to right). 
+	* When two specializers differ, the highest precedence method is the one whose parameter specializer occurs first in the class precedence list of the corresponding argument. 
+	* When one specializer is an instance specializer ((eql object)), the highest precedence method is the one whose parameter contains that specializer. 
+	* When all specializers are identical, the two methods must have different qualifiers and either one can be selected to precede the other.
+
+
+### Method Combination 
+* Happens after selecting and sorting applicable methods. 
+* Creates the effective method that will be applied to the generic function arguments. 
+* There are many pre-defined method combinations (known as method combination types): 
+	* Simple append, nconc, list, progn, max, min, +, and, or Requires using the same method combination type in the generic function and all methods of the generic function. 
+	* Standard standard Used by default when nothing is specified on the generic function. Implicitly used when the generic function is not specified.
+
+#### Standard Method Combination 
+* Primary methods define the main action of the effective method. 
+	* Only the most specific is (automatically) executed. 
+	* It can execute the next most specific method using call-next-method. 
+* Auxiliary methods modify that behavior: 
+	* :before Methods called before primary methods. 
+	* :after Methods called after primary methods. 
+	* :around Method called instead of other applicable methods but that can call some of them by using call-next-method.
+
+If there are no applicable :around methods: 
+1. All :before methods are called, from most specific to least specific, and their values are ignored. 
+2. The most specific primary method is called. 
+	1. If that method calls call-next-method, the next most specific method is called and their values are returned to the caller. 
+	2. The values returned by the most specific primary method become the values returned by the generic function call. 
+3. All :after methods are called, from least specific to most specific, and their values are ignored.
+
+If there are applicable :around methods, the most specific one is called. If that method calls call-next-method: 
+1. If there are more applicable :around methods, the next most specific :around method is called. 
+2. If there are no more applicable :around methods: 
+	1. All :before methods are called, from most specific to least specific, and their values are ignored. 
+	2. The most specific primary method is called. 
+		1. If that method calls call-next-method, the next most specific method is called and their values are returned to the caller. 
+		2. The values returned by the most specific primary method become the values returned by the generic function call. 
+	3. All :after methods are called, from least specific to most specific, and their values are ignored.
+
+
+
+* call-next-method might be called 
+	* without arguments: it uses the same arguments that were used in the method call. 
+	* with arguments: it uses the provided arguments but these should produce the same ordered sequence of applicable methods that was produced by the arguments used in the method call. 
+* If there are no more applicable methods, call-next-method calls the generic function no-next-method using, as arguments: 
+	* The generic function that contains the method that called call-next-method. 
+	* The method that called call-next-method. 
+	* The arguments that were used for calling call-next-method. 
+* next-method-p can be used in a method to determine whether a next applicable method exists.
+
+
 
 
 
