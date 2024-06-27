@@ -158,6 +158,18 @@ Object-Oriented Programming - Multiple Dispatch
 > (add 1 '(2 3)) 
 (3 4)
 
+(defmethod add ((x vector) (y vector)) 
+	(map 'vector #'add x y)) 
+
+> (add #(1 2 3) #(4 5 6)) 
+#(5 7 9)
+
+(defmethod add ((x vector) (y number)) 
+	(add x (make-array (list (length x)) :initial-element y))) 
+	
+> (add #(1 2 3) 4) 
+#(5 6 7)
+
 
 ```
 
