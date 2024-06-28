@@ -369,6 +369,35 @@ Solution
 
 
 
+## Macros 
+A macro call is a form that: 
+1. Receives syntactical forms as arguments. 
+2. Computes a syntactical form as result (the macro expansion). 
+3. The computed form is evaluated in place of the macro call. 
+Function Calls vs Macro Calls 
+* A function call evaluates the arguments and computes a result that is not evaluated. 
+* A macro call does not evaluate the arguments and computes a result that is evaluated.
+
+Macro Implementation 
+* A macro is a function but is called differently. 
+* We will implement macros simply as tagged functions. 
+* In a call, we first check whether the function contains the tag
+
+
+Macro Calls 
+* Don’t evaluate the operands. 
+* Evaluate the returned value (in the current environment)
+
+
+
+Solution 
+* Never repeat a parameter in a macro expansion. 
+* If necessary, expand into a binding form that binds a local variable to that parameter and reuse the local variable in the expanded code.
+
+
+
+
+
 reasons about 推理
 acts upon     操作
 Program prescribing 规定 data manipulation 操作  
