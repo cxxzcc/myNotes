@@ -357,8 +357,15 @@ Solving the Upwards Funarg Problem
 	* Java forbids non-final free variables in anonymous inner classes. 
 * Other languages (e.g., Scheme, Haskel, Common Lisp) implement environments with indefinite extent.
 
-
-
+Solution 
+* (the Common Lisp way– labels) 
+	* Creates the scope for the function name (temporarily binding it to some value). 
+	* Creates the function inside that scope. 
+	* Modifies the binding of the function name to point to the function.
+* (the Scheme way– define) 
+	* Creates an empty scope. 
+	* Creates the function inside that scope. 
+	* Modifies the scope, adding a new binding from the function name to the function.
 
 
 
