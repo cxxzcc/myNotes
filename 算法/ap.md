@@ -394,7 +394,9 @@ Solution
 * Never repeat a parameter in a macro expansion. 
 * If necessary, expand into a binding form that binds a local variable to that parameter and reuse the local variable in the expanded code.
 
-
+* Use name mangling techniques. 
+* Use gensyms. 
+* Use hygienic macros.
 
 
 
