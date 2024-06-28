@@ -325,7 +325,7 @@ call
 
 ## Dynamic Scope
 
-Downwards Funarg Problem
+### Downwards Funarg Problem
 
 * Passing a function with free variables as argument causes the downwards funarg problem… 
 * … where the function is called in an environment where the free variables might be shadowed by other variables of the calling context.
@@ -335,15 +335,27 @@ Solving
 * One potential solution might be to use name-mangling techniques to avoid name clashes.
 
 Downwards Funarg Problem 
-The correct solution is to associate the downward function to the scope where the function was created: 
-That scope is still active when the passed function is called…
-…unless it is possible to store the function somewhere and call it later. Some languages solve this last problem by restricting the language: Pascal forbids storing functions in variables. C forbids inner functions. Other languages (e.g., Scheme, Haskel, Common Lisp) implement environments with indefinite extent. But there is a more difficult problem
+* The correct solution is to associate the downward function to the scope where the function was created:
+	* That scope is still active when the passed function is called…
+	* …unless it is possible to store the function somewhere and call it later. 
+* Some languages solve this last problem by restricting the language: 
+	* Pascal forbids storing functions in variables. 
+	* C forbids inner functions. 
+* Other languages (e.g., Scheme, Haskel, Common Lisp) implement environments with indefinite extent. 
+* But there is a more difficult problem
 
 
 
+### Upwards Funarg Problem 
+* Returning a function with free variables as result causes the upwards funarg problem… 
+* … where the function is called in an environment where the free variables are not longer bound (or are bound to different values)
 
-
-
+Solving the Upwards Funarg Problem 
+* Some languages avoid the upwards funarg problem by restricting the language: 
+	* Pascal forbids functional returns. 
+	* C forbids inner functions. 
+	* Java forbids non-final free variables in anonymous inner classes. 
+* Other languages (e.g., Scheme, Haskel, Common Lisp) implement environments with indefinite extent.
 
 
 
