@@ -400,6 +400,13 @@ Solution
 
 
 
+
+
+
+
+
+
+
 reasons about 推理
 acts upon     操作
 Program prescribing 规定 data manipulation 操作  
