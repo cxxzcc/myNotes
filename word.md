@@ -15,4 +15,5 @@
  Optionally  可选的
  Troubleshooting 故障排除
  section       部分
- 
+ several     一些
+ suspend     暂停
