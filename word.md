@@ -12,3 +12,7 @@
  dedicated   专用
  subsequent  后续的
  directly    直接的
+ Optionally  可选的
+ Troubleshooting 故障排除
+ section       部分
+ 
