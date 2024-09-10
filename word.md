@@ -18,3 +18,6 @@
  several     一些
  suspend     暂停
  range       范围
+ cube        方块
+ warehouse   数据仓库
+ define      定义
