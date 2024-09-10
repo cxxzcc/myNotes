@@ -9,3 +9,4 @@
  amount      量
  further     进一步
  exceed      超过
+ dedicated   专用
