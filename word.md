@@ -4,3 +4,8 @@
  feature     特性
  disable     禁用
  quite       很,非常
+ assume      假设
+ increase    增加
+ amount      量
+ further     进一步
+ exceed      超过
