@@ -17,3 +17,4 @@
  section       部分
  several     一些
  suspend     暂停
+ range       范围
