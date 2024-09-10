@@ -10,3 +10,5 @@
  further     进一步
  exceed      超过
  dedicated   专用
+ subsequent  后续的
+ directly    直接的
