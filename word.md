@@ -21,3 +21,5 @@
  cube        方块
  warehouse   数据仓库
  define      定义
+ perform     进行
+ multidimensional 多维
