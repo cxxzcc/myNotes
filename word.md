@@ -37,3 +37,6 @@
  Syllabus   教学大纲
  Logistics  物流
  Policies   政策
+ Present    介绍
+ foundational 基础
+ concepts   概念 
