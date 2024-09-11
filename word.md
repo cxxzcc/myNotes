@@ -27,4 +27,13 @@
  organised  有组织的
  solve      解决
  quality    质量
- structures jie'gou
+ structures 结构
+ detect     检测
+ potential  可能
+ duplicates 重复
+ populate   填充
+ Explore    探索
+ Faculty    教师
+ Syllabus   教学大纲
+ Logistics  物流
+ Policies   政策
