@@ -24,3 +24,7 @@
  perform     进行
  multidimensional 多维
  refer      提到
+ organised  有组织的
+ solve      解决
+ quality    质量
+ structures jie'gou
