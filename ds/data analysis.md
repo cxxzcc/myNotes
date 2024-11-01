@@ -50,3 +50,38 @@ The same dialog was present in Schema Workbench
 in Pentaho Server (to connect to the data warehouse in order to run MDX queries), and
 
 Report Designer (to connect to a database or to a data warehouse in order to run SQL or MDX queries to generate a report).
+# 3
+Suppose you are building a transformation to detect approximate duplicate records in a database table with customers (first name, last name, e-mail, phone).
+
+a) How can you reduce the number of comparisons that need to be done between those records?
+
+join step with a condition
+
+If records are identified by an id, then the join condition could be A.id < B.id.
+
+b) If you had to choose a different string matching technique to compare each field, which techniques would you choose for each field and why?
+
+To compare first names, we could use Jaro or Jaro-Winkler, which are used to compare short strings.
+
+For the last name, we could use Soundex, where the comparison is based on phonetics rather than exact spelling.
+
+For the e-mail, we could use edit distance to align characters such as @ or dots.
+
+For phone we could use Jaccard, which considers transpositions and could be useful to compare phone numbers with the same digits but in a different order.
+
+c) After you have computed the string matching result for each field, how do you decide if two records are duplicates or not? Please explain.
+
+use a formula with weights (e.g. sim_total = 0.3*sim1 + 0.4*sim2 + 0.3*sim3)
+
+a threshold for that measure.
+
+Pairs of records with an overall measure above or below the threshold (above if similarity; below if distance) will be considered potential duplicates.
+
+# 4
+In the same customers table as before, suppose that some customers may not have an e-mail or phone(or both), and other customers may have multiple e-mails and multiple phones.
+
+a) How would you use a data profiling tool to discover these anomalies? Please explain.
+
+DataCleaner to check the number of NULL values
+
+check the string length or word count
