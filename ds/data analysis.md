@@ -25,17 +25,15 @@ In this course you have learned and used ETL tools, such as Pentaho Data integra
 
 a) ETL tools are used to build materialized or non-materialized views? Justify your answer.
 
-An ETL process consists in extracting data from data sources, transforming the data, and loading (i.e. storing) the output somewhere, for example in a file, in database table, or in a data warehouse.
+ETL process consists extract transform and load
 
 The output is materialized because it is stored in a persistent way and becomes available without recomputation.
 
-b) Suppose you use PDI to migrate data from an input table to an output table. The input table is 20
+b) Suppose you use PDI to migrate data from an input table to an output table. The input table is 20GB in size, but you only have 8 GB of RAM. Do you think it will work? Justify your answer.
 
-GB in size, but you only have 8 GB of RAM. Do you think it will work? Justify your answer.
+PDI works in streaming mode
 
-PDI works in streaming mode, meaning that some records are being processed and written to the output at the same time as more records are being read from the input.
-
-So, in principle, it should not be necessary to have all records in memory at any point in time. It should work.
+it should not be necessary to have all records in memory at any point in time. It should work.
 
 c) In PDI, there is a dialog to define a database connection. In which other tools have you seen a similar dialog? What was the purpose of defining a database connection in those other tools?
 
