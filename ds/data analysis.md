@@ -1,19 +1,15 @@
 
-
-Mediated schema
-
 # 1
-In this course you have learned how to create SQL views over a database.
 
 a) What is the relationship between views and a mediated schema?
 
-A mediated schema defines a common set of attributes that serve as an abstraction over multiple data sources.
+mediated schema defines a common set of attributes that serve as an abstraction over multiple data sources.
 
-SQL views are used to define the schema mapping between the data sources and the mediated schema.
+view use to define the schema mapping between the data sources and the mediated schema.
 
 b) A view can be defined based on other views. What is the purpose of doing this when defining a mediated schema?
 
-It is possible to define local views as wrappers over data sources.
+define local views as wrappers over data sources.
 
 The mediated schema can then be defined based on a set of global views over local views.
 
