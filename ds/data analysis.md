@@ -72,8 +72,8 @@ In the same customers table as before, suppose that some customers may not have 
 
 a) How would you use a data profiling tool to discover these anomalies? Please explain.
 
-DataCleaner to check the number of NULL values
-
+DataCleaner 
+check the number of NULL values
 check the string length or word count
 
 # 5
