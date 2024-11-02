@@ -57,7 +57,7 @@ last name-Soundex-base on phonetics
 
 e-mail-edit distance - align characters such as @ or dots.
 
-phone-Jaccard, which considers transpositions and could be useful to compare phone numbers with the same digits but in a different order.
+phone-Jaccard, considers transpositions and useful to compare phone numbers with the same digits but in a different order.
 
 c) After you have computed the string matching result for each field, how do you decide if two records are duplicates or not? Please explain.
 
