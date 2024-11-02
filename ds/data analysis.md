@@ -31,37 +31,33 @@ The output is materialized because it is stored in a persistent way and becomes 
 
 b) Suppose you use PDI to migrate data from an input table to an output table. The input table is 20GB in size, but you only have 8 GB of RAM. Do you think it will work? Justify your answer.
 
+work
 PDI works in streaming mode
-
-it should not be necessary to have all records in memory at any point in time. It should work.
 
 c) In PDI, there is a dialog to define a database connection. In which other tools have you seen a similar dialog? What was the purpose of defining a database connection in those other tools?
 
-The same dialog was present in Schema Workbench
-
+Schema Workbench
 (to connect to the data warehouse tables that are needed to define the OLAP cube),
 
-in Pentaho Server (to connect to the data warehouse in order to run MDX queries), and
+Pentaho Server (to connect to the data warehouse in order to run MDX queries)
 
-Report Designer (to connect to a database or to a data warehouse in order to run SQL or MDX queries to generate a report).
+Report Designer (to connect to a database/data warehouse in order to run SQL or MDX queries to generate a report).
 # 3
 Suppose you are building a transformation to detect approximate duplicate records in a database table with customers (first name, last name, e-mail, phone).
 
 a) How can you reduce the number of comparisons that need to be done between those records?
 
-join step with a condition
-
-If records are identified by an id, then the join condition could be A.id < B.id.
+join step with a condition like A.id < B.id.
 
 b) If you had to choose a different string matching technique to compare each field, which techniques would you choose for each field and why?
 
-To compare first names, we could use Jaro or Jaro-Winkler, which are used to compare short strings.
+first names-Jaro/Jaro-Winkler-compare short strings.
 
-For the last name, we could use Soundex, where the comparison is based on phonetics rather than exact spelling.
+last name-Soundex-based on phonetics
 
-For the e-mail, we could use edit distance to align characters such as @ or dots.
+e-mail-edit distance - align characters such as @ or dots.
 
-For phone we could use Jaccard, which considers transpositions and could be useful to compare phone numbers with the same digits but in a different order.
+phone-Jaccard, which considers transpositions and could be useful to compare phone numbers with the same digits but in a different order.
 
 c) After you have computed the string matching result for each field, how do you decide if two records are duplicates or not? Please explain.
 
