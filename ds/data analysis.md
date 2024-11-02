@@ -64,9 +64,7 @@ c) After you have computed the string matching result for each field, how do you
 use a formula with weights (e.g. sim_total = 0.3*sim1 + 0.4*sim2 + 0.3*sim3)
 
 a threshold for that measure.
-
-Pairs of records with an overall measure above or below the threshold (above if similarity; below if distance) will be considered potential duplicates.
-
+records with an overall measure above or below the threshold (above if similarity; below if distance) will duplicates.
 # 4
 In the same customers table as before, suppose that some customers may not have an e-mail or phone(or both), and other customers may have multiple e-mails and multiple phones.
 
