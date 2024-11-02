@@ -53,7 +53,7 @@ b) If you had to choose a different string matching technique to compare each fi
 
 first names-Jaro/Jaro-Winkler-compare short strings.
 
-last name-Soundex-based on phonetics
+last name-Soundex-base on phonetics
 
 e-mail-edit distance - align characters such as @ or dots.
 
