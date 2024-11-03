@@ -88,8 +88,7 @@ b) If the customer dimension has four levels (customer, city, state, country) an
 ragged hierarchy.
 
 allow that attribute to be NULL (star structure) or
-
-have a foreign key between the city table and the country table (snow structure)
+a foreign key between city table and country table (snow structure)
 
 c) If the customer dimension has three levels (customer, city, country), what could make you decide between having a star structure or having a snowflake structure for this dimension?
 
