@@ -50,3 +50,5 @@ cryptography 密码学
 sensitive 敏感的
 Assume 假设
 authorize 授权
+agile 敏捷
+Penetration 渗透
