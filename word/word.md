@@ -40,3 +40,13 @@
  Present    介绍
  foundational 基础
  concepts   概念 
+
+
+
+rigid 死板
+tampered 被篡改
+explicitly 明确的
+cryptography 密码学
+sensitive 敏感的
+Assume 假设
+authorize 授权
