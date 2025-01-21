@@ -57,3 +57,15 @@ iptables
 * chains：Input, Output, Forward
 * tables：NAT, Mangle, Filter
 * actions：Drop, Accept, Modify
+
+
+
+> HTTP uses TCP on port 80
+> ＞1023
+> DNS uses UDP on port 53
+
+
+
+
+
+
