@@ -10,3 +10,7 @@ explicit 明确
 Penetration 渗透
 perform 执行
 Procedures 流程
+infiltrate 渗透
+exploiting 开发
+gain 获得
+disrupt 破坏
