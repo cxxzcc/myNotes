@@ -53,9 +53,9 @@ Kaminsky: Lack of authenticity of DNS messages
 
 # firewall
 
-iptables
-* chains：Input, Output, Forward
+iptables : Tables contain Chains,Chains contain Rules
 * tables：NAT, Mangle, Filter
+* chains：Input, Output, Forward
 * actions：Drop, Accept, Modify
 
 
