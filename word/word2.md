@@ -14,3 +14,5 @@ infiltrate 渗透
 exploiting 开发
 gain 获得
 disrupt 破坏
+countermeasure 对策
+discarding 丢弃

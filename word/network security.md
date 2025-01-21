@@ -45,3 +45,6 @@ Data link layer：MAC flooding  ARP spoofing/poisoning
 Network layer：IP spoofing
 Transport layer：TCP hijack  SYN flooding
 Application layer： Remote Code Execution (RCE)
+
+
+Kaminsky: Lack of authenticity of DNS messages
