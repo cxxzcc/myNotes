@@ -32,3 +32,16 @@ Top 10 recommendations
 8. Always consider the users 
 9. Understand how external components affect attack surface 
 10. Be flexible when considering future objects and actors
+
+
+
+
+
+
+
+
+Physical Layer：Sniffers
+Data link layer：MAC flooding  ARP spoofing/poisoning
+Network layer：IP spoofing
+Transport layer：
+Application layer：
