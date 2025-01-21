@@ -38,7 +38,7 @@ Top 10 recommendations
 
 
 
-
+# Network vulnerabilities
 
 Physical Layer：Sniffers
 Data link layer：MAC flooding  ARP spoofing/poisoning
@@ -48,3 +48,12 @@ Application layer： Remote Code Execution (RCE)
 
 
 Kaminsky: Lack of authenticity of DNS messages
+
+
+
+# firewall
+
+iptables
+* chains：Input, Output, Forward
+* tables：NAT, Mangle, Filter
+* actions：Drop, Accept, Modify
