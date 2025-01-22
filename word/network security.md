@@ -101,3 +101,33 @@ CRL (Certificate Revocation Lists)
 OCSP (Online Certificate Status Protocol )
 
 
+
+
+
+
+# Authentication
+Kerberos - the user uses his password less times
+* Authentication Service (AS) 
+	* Allows client to login in Kerberos
+	* Each client has a shared key with AS derived from password
+* Ticket Granting Service (TGS)
+	* Provides time-limited credentials (tickets) for several services/servers
+
+
+
+
+# Wireless security
+WEP protocol
+
+
+
+
+
+
+
+
+
+
+
+
+
