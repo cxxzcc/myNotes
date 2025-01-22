@@ -78,3 +78,20 @@ detect long running attacks, detect suspicious flows,N
 
 HIDS
 observe traffic received at server, observe disk access anomalies, observe CPU and RAM usage anomalies,
+
+
+
+# Secret key management
+
+Replay Attacks - Sequence Numbers and Timestamps
+
+
+
+
+# Public key management
+
+
+
+
+
+
