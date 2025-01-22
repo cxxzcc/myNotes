@@ -138,14 +138,15 @@ WPA
 
 
 IPsec（Internet Protocol Security）
-* ***Authentication Header (AH)**
+* Authentication Header (AH)
+	* Authentication. Integrity. Freshness
+* Encapsulating Security Payload (ESP)
+	* Confidentiality.Authentication. Integrity. Freshness
 
 
-**Encapsulating Security Payload (ESP)**
-* Confidentiality
+# TLS
 
-
-
+protect confidentiality and integrity of the payloads
 
 
 
