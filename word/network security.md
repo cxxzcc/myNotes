@@ -126,6 +126,23 @@ WEP protocol
 WPA
 
 
+802.11i = WPA2 = WPA + AES-CCMP
+* AES-CCMP Confidentiality authenticity
+
+
+802.1X and EAP
+
+
+
+# IPSec
+
+
+IPsec（Internet Protocol Security）
+* ***Authentication Header (AH)**
+
+
+**Encapsulating Security Payload (ESP)**
+* Confidentiality
 
 
 
