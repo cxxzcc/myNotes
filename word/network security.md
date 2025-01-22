@@ -40,7 +40,7 @@ Top 10 recommendations
 
 # Network vulnerabilities
 
-Physical Layer：Sniffers
+Physical Layer：Sniffers -require promiscuous mode to work as intended
 Data link layer：MAC flooding  ARP spoofing/poisoning
 Network layer：IP spoofing
 Transport layer：TCP hijack  SYN flooding
@@ -49,7 +49,7 @@ Application layer： Remote Code Execution (RCE)
 
 Kaminsky: Lack of authenticity of DNS messages
 
-
+ARP Redirect Change the ARP table of a remote machine
 
 # firewall
 
