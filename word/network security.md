@@ -75,3 +75,6 @@ if public server is compromised, the other machines are still protected
 NIDS
 traffic that can be observed
 detect long running attacks, detect suspicious flows,N
+
+HIDS
+observe traffic received at server, observe disk access anomalies, observe CPU and RAM usage anomalies,
