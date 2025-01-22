@@ -54,6 +54,10 @@ Kaminsky: Lack of authenticity of DNS messages
 
 ARP Redirect Change the ARP table of a remote machine
 
+
+DNSSEC secures DNS by ensuring the authenticity of responses, safeguarding domain names' IP associations and DNS records against unauthorized alterations.
+
+DNSSEC provides authentication for DNS responses, preventing cache poisoning, which is central to the Kaminsky attack.
 # firewall
 
 iptables : Tables contain Chains,Chains contain Rules
