@@ -94,8 +94,13 @@ observe traffic received at server, observe disk access anomalies, observe CPU a
 MAC - Integrity + Authentication
 
 
+
 Diffie-Hellman algorithm achieves PFS (Perfect Forward Secrecy)
-If a and b are ephemeral
+* If a and b are ephemeral
+* A shared secret
+
+
+
 
 
 
@@ -132,7 +137,7 @@ Kerberos - the user uses his password less times
 * Ticket Granting Service (TGS)
 	* Provides time-limited credentials (tickets) for several services/servers
 
-
+**Kerberos ticket** serves both **authentication** and **authorization** purposes
 
 
 # Wireless security
