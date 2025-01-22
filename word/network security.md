@@ -120,6 +120,7 @@ PKI (Public Key Infrastructure)
 * Definition and usage of certification chains
 * Update, publication and query of certificate revocation lists
 
+CA issues digital certificates and manages CRLs, which list certificates that have been revoked
 
 CRL (Certificate Revocation Lists)
 OCSP (Online Certificate Status Protocol )
