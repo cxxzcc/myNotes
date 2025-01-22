@@ -147,7 +147,9 @@ WEP protocol
 * Integrity control is weak
 
 
-WPA
+WPA/WPA2
+* RADIUS
+* large networks
 
 
 802.11i = WPA2 = WPA + AES-CCMP
