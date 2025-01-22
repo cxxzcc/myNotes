@@ -118,6 +118,12 @@ Kerberos - the user uses his password less times
 
 # Wireless security
 WEP protocol
+* Authenticating with the same keystream
+* The AP is not authenticated
+* Integrity control is weak
+
+
+WPA
 
 
 
