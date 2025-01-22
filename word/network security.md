@@ -48,6 +48,9 @@ Application layer： Remote Code Execution (RCE)
 
 
 Kaminsky: Lack of authenticity of DNS messages
+* prevent
+	* Change the source port in every request
+	* Use DNSSEC
 
 ARP Redirect Change the ARP table of a remote machine
 
