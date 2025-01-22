@@ -84,6 +84,22 @@ observe traffic received at server, observe disk access anomalies, observe CPU a
 
 
 
+
+
+
+
+# Cryptography
+
+
+MAC - Integrity + Authentication
+
+
+Diffie-Hellman algorithm achieves PFS (Perfect Forward Secrecy)
+If a and b are ephemeral
+
+
+
+
 # Secret key management
 
 Replay Attacks - Sequence Numbers and Timestamps
