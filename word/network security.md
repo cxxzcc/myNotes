@@ -90,8 +90,14 @@ Replay Attacks - Sequence Numbers and Timestamps
 
 # Public key management
 
+PKI (Public Key Infrastructure)
+* Secure creation of asymmetric key pairs
+* Creation and distribution of public key certificates
+* Definition and usage of certification chains
+* Update, publication and query of certificate revocation lists
 
 
-
+CRL (Certificate Revocation Lists)
+OCSP (Online Certificate Status Protocol )
 
 
