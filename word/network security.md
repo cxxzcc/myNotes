@@ -169,15 +169,20 @@ IPsec（Internet Protocol Security）
 * Encapsulating Security Payload (ESP)
 	* Confidentiality.Authentication. Integrity. Freshness
 
+Sequence number in header
 
-# TLS
+# TLS SSH
 
 protect confidentiality and integrity of the payloads
 
 
 
 
+Cipher Suite - A choice of encryption and integrity algorithms
 
 
+
+TOFU
+* It is secure only if there was no attack on the first connection to the server
 
 
