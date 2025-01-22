@@ -69,3 +69,9 @@ iptables : Tables contain Chains,Chains contain Rules
 
 
 
+DMZ (Demilitarized Zone) 
+if public server is compromised, the other machines are still protected
+
+NIDS
+traffic that can be observed
+detect long running attacks, detect suspicious flows,N
