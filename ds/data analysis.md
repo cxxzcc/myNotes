@@ -138,3 +138,11 @@ d) If a reporting tool can get data either from SQL or from MDX, why not queryin
 gather analytical data.
 data warehouse using MDX, because it facilitates the analysis of multi-dimensional data
 data warehouse contains pre-computed measures
+
+
+
+
+# VIEWS
+```
+```
+CREATE VIEW myview AS SELECT …
