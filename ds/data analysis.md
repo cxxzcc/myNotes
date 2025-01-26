@@ -143,6 +143,8 @@ data warehouse contains pre-computed measures
 
 
 # VIEWS
-```
-```
+```sql
 CREATE VIEW myview AS SELECT …
+```
+
+
