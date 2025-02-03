@@ -184,7 +184,10 @@ OLAP
 * Performance metric is ‘Query response time’
 
 
-
+Surrogate keys
+* Provide independence from keys in the original data sources
+* Solve inconsistencies between keys from multiple sources
+* Keys as integers to improve efficiency
 
 
 
