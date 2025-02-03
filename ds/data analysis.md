@@ -116,8 +116,8 @@ Once the data warehouse has been created, we need to analyze the data contained 
 
 a) What is the purpose of a tool called Pentaho Schema Workbench (PSW)? What is the relationship between PSW and an OLAP tool such as Saiku Analytics?
 
-PSW allow the user to define an OLAP cube
-PSW export an XML file that can be imported into an OLAP tool
+PSW allow user define OLAP cube with dimensions, hierarchies, levels and measures
+PSW export XML file that can be imported into OLAP tool
 This OLAP tool will allow querying the cube with MDX.
 
 b) If you use only ROWS and COLUMNS in an MDX query, how can you analyze data in three or more dimensions?
@@ -130,7 +130,7 @@ c) What is the purpose of the WHERE clause in an MDX query? Give two different e
 slicing or dicing by selecting.
 For example: WHERE Customer.Country.Italy.
 
-specify the measures that should be included in the result.
+specify measures that result included
 For example: WHERE Measures.Sales.
 
 d) If a reporting tool can get data either from SQL or from MDX, why not querying the database directly with SQL, instead of querying the data warehouse with MDX?
