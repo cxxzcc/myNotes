@@ -148,5 +148,6 @@ CREATE VIEW myview AS SELECT …
 DROP VIEW myview
 
 ```
-
+Views map data from tables the physical model toa new logical model
+Views support logical independence from the physical model
 
