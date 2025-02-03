@@ -182,3 +182,11 @@ OLAP
 * Low number of long data load transactions
 * Slow response to very complex queries involve aggregations
 * Performance metric is ‘Query response time’
+
+
+
+
+
+
+
+
