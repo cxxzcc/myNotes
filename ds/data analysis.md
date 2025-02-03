@@ -151,3 +151,11 @@ DROP VIEW myview
 Views map data from tables the physical model toa new logical model
 Views support logical independence from the physical model
 
+
+
+# String matching
+* String matching is based on measures
+– measures of distance between strings
+• lower is better, higher is worse
+– measures of similarity between strings
+• higher is better, lower is worse
