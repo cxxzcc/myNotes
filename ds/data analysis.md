@@ -165,4 +165,7 @@ Views support logical independence from the physical model
 	* Jaro measure
 	* Jaro-Winkler measure
 * set-based
+	* Jaccard measure
 * phonetic
+	* Soundex
+		Refined Soundex
