@@ -5,7 +5,7 @@ a) What is the relationship between views and a mediated schema?
 
 mediated schema defines a common set of attributes that serve as an abstraction over multiple data sources.
 
-view use to define the schema mapping between the data sources and the mediated schema.
+view define the schema mapping between the data sources and the mediated schema.
 
 b) A view can be defined based on other views. What is the purpose of doing this when defining a mediated schema?
 
@@ -13,7 +13,7 @@ define local views as wrappers over data sources.
 
 The mediated schema can then be defined based on a set of global views over local views.
 
-Views over views simplify the definition of global views, and also provide an abstraction layer over data source schemas.
+Views over views simplify the definition of global views, provide an abstraction layer over data source schemas.
 
 c) Explain the concept of query unfolding and describe when it should be applied.
 
