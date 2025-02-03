@@ -27,7 +27,7 @@ a) ETL tools are used to build materialized or non-materialized views? Justify y
 
 ETL process consists extract transform and load
 
-The output is materialized because it is stored in a persistent way and becomes available without recomputation.
+The output is materialized because it is stored persistent and available without recomputation.
 
 b) Suppose you use PDI to migrate data from an input table to an output table. The input table is 20GB in size, but you only have 8 GB of RAM. Do you think it will work? Justify your answer.
 
@@ -37,11 +37,11 @@ PDI works in streaming mode
 c) In PDI, there is a dialog to define a database connection. In which other tools have you seen a similar dialog? What was the purpose of defining a database connection in those other tools?
 
 Schema Workbench
-(to connect to the data warehouse tables that are needed to define the OLAP cube),
+(connect data warehouse tables to define the OLAP cube),
 
-Pentaho Server (to connect to the data warehouse in order to run MDX queries)
+Pentaho Server (connect data warehouse to run MDX queries)
 
-Report Designer (to connect to a database/data warehouse in order to run SQL or MDX queries to generate a report).
+Report Designer (connect database/data warehouse to run SQL/MDX to generate a report).
 # 3
 Suppose you are building a transformation to detect approximate duplicate records in a database table with customers (first name, last name, e-mail, phone).
 
