@@ -169,3 +169,16 @@ Views support logical independence from the physical model
 * phonetic
 	* Soundex
 		Refined Soundex
+
+
+
+OLTP
+* Focus on the operation of a system
+* Large number of short transactions
+* Very fast query response
+* Performance metric is ‘TransacKons per second’
+OLAP
+* Focus on analysis of historical data
+* Low number of long data load transactions
+* Slow response to very complex queries involve aggregations
+* Performance metric is ‘Query response time’
