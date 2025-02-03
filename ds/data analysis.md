@@ -155,7 +155,14 @@ Views support logical independence from the physical model
 
 # String matching
 * String matching is based on measures
-– measures of distance between strings
-• lower is better, higher is worse
-– measures of similarity between strings
-• higher is better, lower is worse
+	measures of distance - lower is better, higher is worse
+	measures of similarity - higher is better, lower is worse
+
+* sequence-based
+	* Edit distance (Levenshtein)
+	* Damerau-Levenshtein distance
+	* Needleman-Wunsch measure
+	* Jaro measure
+	* Jaro-Winkler measure
+* set-based
+* phonetic
