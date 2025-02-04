@@ -82,7 +82,6 @@ Without it, these operations are limited to customer and country levels.
 b) If the customer dimension has four levels (customer, city, state, country) and the state level can be skipped, what do you call this kind of hierarchy? Also, how would you implement (in the data warehouse schema) this possibility of skipping the state?
 
 ragged hierarchy.
-
 allow that attribute to be NULL (star structure) or
 a foreign key between city table and country table (snow structure)
 
