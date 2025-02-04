@@ -77,7 +77,6 @@ Consider a data warehouse that stores 3-D facts such as “customer C bought pro
 a) Suppose you have the option of defining a customer hierarchy with two levels (customer, country) or three levels (customer, city, country). What is the impact of this decision on the OLAP operations that you will be able to perform on the data warehouse? Justify your answer.
 
 with city enables OLAP operations like roll-up from customer to city, drill-down from country to city, and slicing or dicing by city.
-
 Without it, these operations are limited to customer and country levels.
 
 b) If the customer dimension has four levels (customer, city, state, country) and the state level can be skipped, what do you call this kind of hierarchy? Also, how would you implement (in the data warehouse schema) this possibility of skipping the state?
@@ -110,7 +109,6 @@ In slowly-changing dimension there may be multiple versions of same record.
 c) When you use a surrogate key instead of the natural key, what do you have to change in the transformation that populates the fact table?
 
 include a database lookup.
-
 surrogate key can be found in a dimension table
 # 7
 Once the data warehouse has been created, we need to analyze the data contained therein.
@@ -141,16 +139,6 @@ data warehouse using MDX, because it facilitates the analysis of multi-dimension
 data warehouse contains pre-computed measures
 
 
-
-
-# VIEWS
-```sql
-CREATE VIEW myview AS SELECT …
-DROP VIEW myview
-
-```
-Views map data from tables the physical model toa new logical model
-Views support logical independence from the physical model
 
 
 
