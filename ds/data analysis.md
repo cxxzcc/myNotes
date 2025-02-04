@@ -36,10 +36,8 @@ PDI works in streaming mode
 
 c) In PDI, there is a dialog to define a database connection. In which other tools have you seen a similar dialog? What was the purpose of defining a database connection in those other tools?
 
-Schema Workbench(connect data warehouse tables to define the OLAP cube),
-
+Schema Workbench(connect data warehouse to define OLAP cube),
 Pentaho Server (connect data warehouse to run MDX queries)
-
 Report Designer (connect database/data warehouse to run SQL/MDX to generate a report).
 # 3
 Suppose you are building a transformation to detect approximate duplicate records in a database table with customers (first name, last name, e-mail, phone).
