@@ -36,8 +36,7 @@ PDI works in streaming mode
 
 c) In PDI, there is a dialog to define a database connection. In which other tools have you seen a similar dialog? What was the purpose of defining a database connection in those other tools?
 
-Schema Workbench
-(connect data warehouse tables to define the OLAP cube),
+Schema Workbench(connect data warehouse tables to define the OLAP cube),
 
 Pentaho Server (connect data warehouse to run MDX queries)
 
@@ -57,7 +56,7 @@ last name-Soundex-base on phonetics
 
 e-mail-edit distance - align characters such as @ or dots.
 
-phone-Jaccard, considers transpositions and useful to compare phone numbers with the same digits but in a different order.
+phone-Jaccard, considers transpositions and useful to compare phone numbers with same digits but in a different order.
 
 c) After you have computed the string matching result for each field, how do you decide if two records are duplicates or not? Please explain.
 
