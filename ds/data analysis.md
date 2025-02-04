@@ -98,22 +98,22 @@ In the topic of data warehousing, you were introduced to the concept of surrogat
 
 a) Why use a surrogate key instead of the same primary key as in the original database?
 
-primary keys of data sources may be inconsistent or change over time.
-have all keys in the data warehouse as integers for faster processing
+primary keys of data sources may be change over time.
+keys as integers for faster processing
 * Provide independence from keys in the original data sources
 * Solve inconsistencies between keys from multiple sources
-* Keys as integers to improve efficiency
+
 
 
 b) Why do slowly-changing dimensions always require a surrogate key?
 
-In a slowly-changing dimension there may be multiple versions of the same record.
+In slowly-changing dimension there may be multiple versions of same record.
 
 c) When you use a surrogate key instead of the natural key, what do you have to change in the transformation that populates the fact table?
 
 include a database lookup.
 
-That surrogate key can be found in a dimension table
+surrogate key can be found in a dimension table
 # 7
 Once the data warehouse has been created, we need to analyze the data contained therein.
 
