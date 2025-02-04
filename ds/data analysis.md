@@ -100,6 +100,10 @@ a) Why use a surrogate key instead of the same primary key as in the original da
 
 primary keys of data sources may be inconsistent or change over time.
 have all keys in the data warehouse as integers for faster processing
+* Provide independence from keys in the original data sources
+* Solve inconsistencies between keys from multiple sources
+* Keys as integers to improve efficiency
+
 
 b) Why do slowly-changing dimensions always require a surrogate key?
 
