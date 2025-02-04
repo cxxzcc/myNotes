@@ -3,21 +3,21 @@
 
 a) What is the relationship between views and a mediated schema?
 
-mediated schema defines a common set of attributes that serve as an abstraction over multiple data sources.
+mediated schema define a common set of attributes that serve as an abstraction over multiple data sources.
 
-view define the schema mapping between the data sources and the mediated schema.
+view define schema mapping between data sources and mediated schema.
 
 b) A view can be defined based on other views. What is the purpose of doing this when defining a mediated schema?
 
 define local views as wrappers over data sources.
 
-The mediated schema can then be defined based on a set of global views over local views.
+then mediated schema defined based on a set of global views over local views.
 
 Views over views simplify the definition of global views, provide an abstraction layer over data source schemas.
 
 c) Explain the concept of query unfolding and describe when it should be applied.
 
-Query unfolding is the process of replacing and expanding a query with the definitions of the views used in that query.
+the process of replacing and expanding a query with the definitions of the views used in that query.
 
 This process can be repeated until the original query is fully expanded into a query that no longer refers to views.
 # 2
