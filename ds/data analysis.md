@@ -176,7 +176,7 @@ Views support logical independence from the physical model
 
 
 OLTP
-* Focus on the operation of a system
+* Focus on operation of system
 * Large number of short transactions
 * Very fast query response
 * Performance metric is ‘TransacKons per second’
