@@ -179,11 +179,11 @@ OLTP
 * Focus on operation of system
 * Large number of short transactions
 * Very fast query response
-* Performance metric is ‘TransacKons per second’
+* Performance metric is ‘Transactions per second’
 OLAP
 * Focus on analysis of historical data
 * Low number of long data load transactions
-* Slow response to very complex queries involve aggregations
+* Slow response to complex queries
 * Performance metric is ‘Query response time’
 
 
