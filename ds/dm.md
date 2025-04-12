@@ -14,4 +14,20 @@ index(B,C) will have more values to be indexed than  index B
 the height of the tree for (B,C) >= b
 
 2b
-b
+b have more same values
+hash(b,c) have more distinct entries than hash(b)
+
+3a
+nested-loop or block nested-loop join
+it cannot use index on C
+
+3b
+merge-join
+data are sorted on C in both tables
+fastest algorithm
+
+4a
+
+
+
+
