@@ -27,6 +27,20 @@ data are sorted on C in both tables
 fastest algorithm
 
 4a
+number of rows B=5 is large 
+not use non-clustered index, prefer table scan 
+
+4b
+number of rows B>=6 is low or no rows B>=6
+
+
+5a
+uncommitted values, non-repeatable reads, or phantom reads
+
+5b
+
+
+
 
 
 
