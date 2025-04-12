@@ -78,6 +78,13 @@ query can be answered straight from the index without going to the actual table 
 
 
 9b
+rewrite select * to only query columns which covered by index
+
+10a
+
+
+
+
 
 
 
