@@ -60,6 +60,24 @@ If all dirty pages have already been written to disk by the checkpoint, then tra
 Because it committed, it is marked for redo.
 
 7b
+redo phase redo CLR
+undo phase  undo next LSN
+
+8a
+ Queries that (A,)B or (A,)C 
+avoid get data that they do not use 
+
+8b
+ create a materialized view with the precomputed results of the inner 
+query
+in order to avoid having to repeatedly compute those results multiple times 
+
+
+9a
+query can be answered straight from the index without going to the actual table data
+
+
+9b
 
 
 
