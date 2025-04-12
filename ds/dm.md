@@ -85,6 +85,15 @@ In write-ahead logging, system writes the actions to the log before execute.
 if...  need multiple seek operations to write to the log and then act on the data. 
 
 10b
+sort-merge algorithm is based on runs (temp files). 
+more RAM, the larger runs, fewer merge
+
+
+
+ 
+
+
+
 
 
 
