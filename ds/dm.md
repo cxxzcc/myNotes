@@ -36,8 +36,26 @@ number of rows B>=6 is low or no rows B>=6
 
 5a
 uncommitted values, non-repeatable reads, or phantom reads
+Read Uncommitted, Read Committed, Repeatable Read
+not Serializable 
 
 5b
+No, T only have read operations
+
+
+6a
+T1 S-lock on the table
+T2 IX-lock on the table before X-lock on the record 
+
+6b
+yes
+
+
+
+
+
+
+
 
 
 
