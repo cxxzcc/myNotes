@@ -49,6 +49,17 @@ T2 IX-lock on the table before X-lock on the record
 
 6b
 yes
+T1 read, and T2 write on the same object (Q), 
+if T2 before T1 
+T1 rolled back.
+
+
+7a
+ Yes. 
+If all dirty pages have already been written to disk by the checkpoint, then transaction commit  between checkpoint and crash
+Because it committed, it is marked for redo.
+
+7b
 
 
 
