@@ -108,6 +108,12 @@ A materialized view is a view whose contents are computed and stored
 
 
 
+Serializable
+REPEATABLE READ
+READ COMMITTED
+READ UNCOMMITTED
+
+
 
 
 
