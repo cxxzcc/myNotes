@@ -90,6 +90,29 @@ more RAM, the larger runs, fewer merge
 
 
 
+
+sort
+Sort-Merge
+
+join
+Nested-Loop Join
+Block Nested-Loop Join
+Indexed Nested-Loop Join
+Merge-Join
+Hash-Join
+Complex Joins
+
+
+
+
+
+
+
+
+
+
+
+
  
 
 
