@@ -119,7 +119,7 @@ Horizontal partitioning
 
 
 
-
+ Put the log on a separate disk to avoid seeks
 
 
  
