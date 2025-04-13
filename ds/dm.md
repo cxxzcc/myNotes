@@ -113,6 +113,9 @@ REPEATABLE READ
 READ COMMITTED
 READ UNCOMMITTED
 
+Vertical partitioning
+Horizontal partitioning
+
 
 
 
