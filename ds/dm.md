@@ -104,7 +104,7 @@ Complex Joins
 
 
 
-
+A materialized view is a view whose contents are computed and stored
 
 
 
