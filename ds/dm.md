@@ -81,7 +81,6 @@ query can be answered straight from the index without going to the actual table 
 rewrite select * to only query columns which covered by index
 
 10a
-In write-ahead logging, system writes the actions to the log before execute. 
 if...  need multiple seek operations to write to the log and then act on the data. 
 
 10b
