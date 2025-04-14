@@ -68,9 +68,8 @@ undo phase  undo next LSN
 avoid get data that they do not use 
 
 8b
- create a materialized view with the precomputed results of the inner 
-query
-in order to avoid having to repeatedly compute those results multiple times 
+create a materialized view with precomputed results of inner query
+avoid having to repeatedly compute those results multiple times 
 
 
 9a
