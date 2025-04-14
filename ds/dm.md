@@ -7,7 +7,7 @@ only one seek operation, then can read all data sequentially
 
 1b.
 yes,  logical order does not match the physical order
-need a seek operation to locate each block that is out of order
+need a seek operation to locate each block that is out of order.y
 
 2a
 index(B,C) will have more values to be indexed than  index B
@@ -81,6 +81,7 @@ query can be answered straight from the index without going to the actual table 
 rewrite select * to only query columns which covered by index
 
 10a
+In write-ahead logging, system writes the actions to the log before execute. 
 if...  need multiple seek operations to write to the log and then act on the data. 
 
 10b
@@ -118,7 +119,7 @@ Horizontal partitioning
 
 
 
- Put the log on a separate disk to avoid seeks
+
 
 
  
